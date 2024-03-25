@@ -61,7 +61,7 @@ namespace MegaBios
                         Console.WriteLine("Login successful!");
 
                         Console.WriteLine("1. Display Account Information \n2. Delete Account\n3. Update Account Information");
-                        string userChoice = Console.Readline();
+                        string userChoice = Console.ReadLine();
 
                         switch (userChoice)
                         {
