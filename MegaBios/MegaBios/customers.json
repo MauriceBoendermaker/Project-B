@@ -56,32 +56,15 @@
     "achternaam": "Boendermaker",
     "geboorte_datum": "2003-09-01",
     "adres": {
-      "straat": "Teststraat 1",
-      "huisnummer": "86",
-      "woonplaats": "Capelle aan den IJssel",
-      "postcode": "0000 AB"
-    },
-    "email": "mauriceboendermaker@gmail.com",
-    "wachtwoord": "Pass1234",
-    "telefoonnummer": "00 0000000",
-    "voorkeur_betaalwijze": "PayPal",
-    "is_student": true
-  },
-  {
-    "voornaam": "Alper",
-    "tussenvoegsel": "the",
-    "achternaam": "Great",
-    "geboorte_datum": "2003-04-10",
-    "adres": {
-      "straat": "Alexander the Great street 1",
-      "huisnummer": "122",
+      "straat": "Teststraat",
+      "huisnummer": "1",
       "woonplaats": "Rotterdam",
-      "postcode": "3074VJ"
+      "postcode": "2901 AB"
     },
-    "email": "info@alper.nl",
-    "wachtwoord": "Alper2003",
-    "telefoonnummer": "0640518191",
-    "voorkeur_betaalwijze": "IDeal",
+    "email": "example@domain.com",
+    "wachtwoord": "Pass123",
+    "telefoonnummer": "06 1234567890",
+    "voorkeur_betaalwijze": "PayPal",
     "is_student": true
   }
 ]
