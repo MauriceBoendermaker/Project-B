@@ -1,0 +1,87 @@
+[
+  {
+    "voornaam": "Lotte",
+    "tussenvoegsel": "van",
+    "achternaam": "Dijk",
+    "geboorte_datum": "1988-07-15",
+    "adres": {
+      "straat": "Kerkstraat",
+      "huisnummer": "23",
+      "woonplaats": "Amsterdam",
+      "postcode": "1011 CX"
+    },
+    "email": "lotte.vandijk@example.com",
+    "wachtwoord": "W4chtwo0rd!",
+    "telefoonnummer": "\u002B31 6 12345678",
+    "voorkeur_betaalwijze": "iDeal",
+    "is_student": true
+  },
+  {
+    "voornaam": "Daan",
+    "tussenvoegsel": "",
+    "achternaam": "Bakker",
+    "geboorte_datum": "1975-04-20",
+    "adres": {
+      "straat": "Voorstraat",
+      "huisnummer": "45",
+      "woonplaats": "Rotterdam",
+      "postcode": "3011 HN"
+    },
+    "email": "daan.bakker@example.com",
+    "wachtwoord": "G3heim!",
+    "telefoonnummer": "\u002B31 10 98765432",
+    "voorkeur_betaalwijze": "Creditcard",
+    "is_student": false
+  },
+  {
+    "voornaam": "Eva",
+    "tussenvoegsel": "de",
+    "achternaam": "Groot",
+    "geboorte_datum": "1993-11-03",
+    "adres": {
+      "straat": "Schoolstraat",
+      "huisnummer": "7",
+      "woonplaats": "Utrecht",
+      "postcode": "3511 LN"
+    },
+    "email": "eva.degroot@example.com",
+    "wachtwoord": "P@ssw0rd!",
+    "telefoonnummer": "\u002B31 30 55554444",
+    "voorkeur_betaalwijze": "PayPal",
+    "is_student": true
+  },
+  {
+    "voornaam": "Maurice",
+    "tussenvoegsel": "",
+    "achternaam": "Boendermaker",
+    "geboorte_datum": "2003-09-01",
+    "adres": {
+      "straat": "Teststraat 1",
+      "huisnummer": "86",
+      "woonplaats": "Capelle aan den IJssel",
+      "postcode": "0000 AB"
+    },
+    "email": "mauriceboendermaker@gmail.com",
+    "wachtwoord": "Pass1234",
+    "telefoonnummer": "00 0000000",
+    "voorkeur_betaalwijze": "PayPal",
+    "is_student": true
+  },
+  {
+    "voornaam": "Alper",
+    "tussenvoegsel": "the",
+    "achternaam": "Great",
+    "geboorte_datum": "2003-04-10",
+    "adres": {
+      "straat": "Alexander the Great street 1",
+      "huisnummer": "122",
+      "woonplaats": "Rotterdam",
+      "postcode": "3074VJ"
+    },
+    "email": "info@alper.nl",
+    "wachtwoord": "Alper2003",
+    "telefoonnummer": "0640518191",
+    "voorkeur_betaalwijze": "IDeal",
+    "is_student": true
+  }
+]
