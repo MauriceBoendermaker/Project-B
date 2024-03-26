@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -10,11 +11,12 @@ namespace MegaBios
     class Program
     {
         public static List<TestAccount> jsonData = new();
+        public static string jsonFilePath = "../../../customers.json";
         static void Main(string[] args)
         {
 
             // JSON bestand ophalen
-            string jsonFilePath = "../../../customers.json";
+            
             string jsonText = File.ReadAllText(jsonFilePath);
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
             JsonElement root = jsonDocument.RootElement;
@@ -72,7 +74,8 @@ namespace MegaBios
                                 DeleteAccount.RemoveAccount(jsonData, account);
                                 break;
                             case "3":
-                                // Hier komt code van John
+                                UpdateAccount.UpdateField(account);
+                                System.Console.WriteLine("Successfully updated your data!");
                                 break;
                             default:
                                 Console.WriteLine("Invalid choice. Please try again.");

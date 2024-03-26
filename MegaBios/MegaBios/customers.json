@@ -51,18 +51,18 @@
     "is_student": true
   },
   {
-    "voornaam": "Maurice",
+    "voornaam": "Xander",
     "tussenvoegsel": "",
-    "achternaam": "Boendermaker",
+    "achternaam": "Bos",
     "geboorte_datum": "2003-09-01",
     "adres": {
-      "straat": "Teststraat",
-      "huisnummer": "1",
-      "woonplaats": "Rotterdam",
-      "postcode": "2901 AB"
+      "straat": "Van der Hoevenlaan",
+      "huisnummer": "23",
+      "woonplaats": "Berkel en Rodenrijs",
+      "postcode": "2651 DE"
     },
     "email": "example@domain.com",
-    "wachtwoord": "Pass123",
+    "wachtwoord": "TestPassword",
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true
