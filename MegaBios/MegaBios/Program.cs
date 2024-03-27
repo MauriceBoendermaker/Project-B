@@ -71,7 +71,19 @@ namespace MegaBios
                                 ReadAccount.DisplayUserInfo(account);
                                 break;
                             case "2":
-                                DeleteAccount.RemoveAccount(jsonData, account);
+                                while (true) {
+                                    System.Console.WriteLine("Are you sure you want to delete your account? (yes/no)");
+                                    string confirmInput = Console.ReadLine()!;
+                                    if (confirmInput == "yes") {
+                                        DeleteAccount.RemoveAccount(jsonData, account);
+                                    }
+                                    else if (confirmInput == "no") {
+                                        break;
+                                    }
+                                    else {
+                                        System.Console.WriteLine("Invalid input.");
+                                    }
+                                }
                                 break;
                             case "3":
                                 UpdateAccount.UpdateField(account);

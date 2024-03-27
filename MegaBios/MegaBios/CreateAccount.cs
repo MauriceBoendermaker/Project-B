@@ -35,19 +35,34 @@ namespace MegaBios
             adres["postcode"] = Console.ReadLine();
 
             Console.Write("Enter email: ");
-            string email = Console.ReadLine();
-
-            Console.Write("Enter password: ");
-            string wachtwoord = HelperFunctions.MaskPasswordInput();
+            string email = Console.ReadLine()!;
+            
+            string wachtwoord;
+            while (true) {
+                Console.Write("Enter password: ");
+                string inputWachtwoord = HelperFunctions.MaskPasswordInput();
+                string confirmWachtwoord = HelperFunctions.MaskPasswordInput();
+                if (inputWachtwoord == confirmWachtwoord) {
+                    wachtwoord = inputWachtwoord;
+                    break;
+                }
+            }
 
             Console.Write("Enter phone number: ");
-            string telefoonNr = Console.ReadLine();
+            string telefoonNr = Console.ReadLine()!;
 
             Console.Write("Enter preferred payment method: ");
-            string betaalwijze = Console.ReadLine();
+            string betaalwijze = Console.ReadLine()!;
 
-            Console.Write("Are you a student? (true/false): ");
-            bool is_student = Convert.ToBoolean(Console.ReadLine());
+            bool is_student;
+            while (true) {
+                Console.Write("Are you a student? (true/false): ");
+                string is_studentString = Console.ReadLine()!;
+                if (is_studentString == "true" || is_studentString == "false") {
+                    is_student = Convert.ToBoolean(is_studentString);
+                    break;
+                }
+            }
 
             TestAccount newAccount = new TestAccount(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student);
             jsonData.Add(newAccount);
