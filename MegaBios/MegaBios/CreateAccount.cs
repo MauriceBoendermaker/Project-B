@@ -36,13 +36,16 @@ namespace MegaBios
 
             Console.Write("Enter email: ");
             string email = Console.ReadLine()!;
-            
+
             string wachtwoord;
-            while (true) {
-                Console.Write("Enter password: ");
+            while (true)
+            {
+                Console.WriteLine("Enter password: ");
                 string inputWachtwoord = HelperFunctions.MaskPasswordInput();
+                Console.WriteLine("Confirm your password: ");
                 string confirmWachtwoord = HelperFunctions.MaskPasswordInput();
-                if (inputWachtwoord == confirmWachtwoord) {
+                if (inputWachtwoord == confirmWachtwoord)
+                {
                     wachtwoord = inputWachtwoord;
                     break;
                 }
@@ -55,10 +58,12 @@ namespace MegaBios
             string betaalwijze = Console.ReadLine()!;
 
             bool is_student;
-            while (true) {
+            while (true)
+            {
                 Console.Write("Are you a student? (true/false): ");
                 string is_studentString = Console.ReadLine()!;
-                if (is_studentString == "true" || is_studentString == "false") {
+                if (is_studentString == "true" || is_studentString == "false")
+                {
                     is_student = Convert.ToBoolean(is_studentString);
                     break;
                 }
