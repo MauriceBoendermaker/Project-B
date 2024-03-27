@@ -16,7 +16,7 @@ namespace MegaBios
         {
 
             // JSON bestand ophalen
-            
+
             string jsonText = File.ReadAllText(jsonFilePath);
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
             JsonElement root = jsonDocument.RootElement;
@@ -33,6 +33,7 @@ namespace MegaBios
             {
                 case 1:
                     CreateAccount.CreateNewAccount(jsonData);
+                    Login();
                     break;
                 case 2:
                     Login();
@@ -61,37 +62,51 @@ namespace MegaBios
                     {
                         isAuthenticated = true;
                         Console.WriteLine("Login successful!");
-
-                        Console.WriteLine("1. Display Account Information \n2. Delete Account\n3. Update Account Information");
-                        string userChoice = Console.ReadLine();
-
-                        switch (userChoice)
+                        bool isLoggedIn = true;
+                        while (true)
                         {
-                            case "1":
-                                ReadAccount.DisplayUserInfo(account);
-                                break;
-                            case "2":
-                                while (true) {
-                                    System.Console.WriteLine("Are you sure you want to delete your account? (yes/no)");
-                                    string confirmInput = Console.ReadLine()!;
-                                    if (confirmInput == "yes") {
-                                        DeleteAccount.RemoveAccount(jsonData, account);
+
+                            Console.WriteLine("1. Display Account Information \n2. Delete Account\n3. Update Account Information\n");
+                            string userChoice = Console.ReadLine();
+
+                            switch (userChoice)
+                            {
+                                case "1":
+                                    ReadAccount.DisplayUserInfo(account);
+                                    break;
+                                case "2":
+                                    while (true)
+                                    {
+                                        System.Console.WriteLine("Are you sure you want to delete your account? (yes/no)\n");
+                                        string confirmInput = Console.ReadLine()!;
+                                        if (confirmInput == "yes")
+                                        {
+                                            DeleteAccount.RemoveAccount(jsonData, account);
+                                            isLoggedIn = false;
+                                            break;
+                                        }
+                                        else if (confirmInput == "no")
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            System.Console.WriteLine("Invalid input.");
+                                        }
                                     }
-                                    else if (confirmInput == "no") {
-                                        break;
-                                    }
-                                    else {
-                                        System.Console.WriteLine("Invalid input.");
-                                    }
-                                }
+                                    break;
+                                case "3":
+                                    UpdateAccount.UpdateField(account);
+                                    System.Console.WriteLine("Successfully updated your data!");
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid choice. Please try again.");
+                                    break;
+                            }
+                            if (!isLoggedIn)
+                            {
                                 break;
-                            case "3":
-                                UpdateAccount.UpdateField(account);
-                                System.Console.WriteLine("Successfully updated your data!");
-                                break;
-                            default:
-                                Console.WriteLine("Invalid choice. Please try again.");
-                                break;
+                            }
                         }
                         break;
                     }
