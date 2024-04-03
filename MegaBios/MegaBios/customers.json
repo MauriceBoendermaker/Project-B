@@ -61,8 +61,8 @@
       "woonplaats": "Berkel en Rodenrijs",
       "postcode": "2651 DE"
     },
-    "email": "example@domain.com",
-    "wachtwoord": "TestPassword",
+    "email": "1",
+    "wachtwoord": "1",
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true

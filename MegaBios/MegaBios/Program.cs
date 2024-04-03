@@ -66,7 +66,7 @@ namespace MegaBios
                         while (true)
                         {
 
-                            Console.WriteLine("1. Display Account Information \n2. Delete Account\n3. Update Account Information\n");
+                            Console.WriteLine("1. Display Account Information \n2. Delete Account\n3. Update Account Information\n4. Order ticket\n");
                             string userChoice = Console.ReadLine();
 
                             switch (userChoice)
@@ -98,6 +98,11 @@ namespace MegaBios
                                 case "3":
                                     UpdateAccount.UpdateField(account);
                                     System.Console.WriteLine("Successfully updated your data!");
+                                    break;
+                                case "4":
+                                    string movie = "Doornroosje";
+                                    SeatSelect seatSelect = new();
+                                    seatSelect.SelectSeats(10, 10, movie);
                                     break;
                                 default:
                                     Console.WriteLine("Invalid choice. Please try again.");
