@@ -5,7 +5,6 @@ namespace MegaBios
 {
     public class UpdateAccount
     {
-
         public static void UpdateField(TestAccount account)
         {
             int index = -1;
@@ -16,14 +15,17 @@ namespace MegaBios
                     index = i;
                 }
             }
+
             if (index == -1)
             {
                 System.Console.WriteLine("For some reason. your account was not found...");
                 return;
             }
+
             Console.WriteLine("What would you like to update?\n1. Email\n2. Password\n3. Student status");
             Console.WriteLine("Enter only the number of the option you want to update!");
             Console.WriteLine("Enter your choice: ");
+
             bool loopBreak = false;
             while (true)
             {
@@ -84,6 +86,7 @@ namespace MegaBios
                             System.Console.WriteLine("Please enter your new password");
                             string newPassword = Console.ReadLine()!;
                             System.Console.WriteLine("Please confirm your new password");
+
                             if (newPassword == Console.ReadLine())
                             {
                                 Program.jsonData[index].Wachtwoord = newPassword;
@@ -124,9 +127,11 @@ namespace MegaBios
                          break; */
                     case "3":
                         System.Console.WriteLine("Are you a student? (yes/no)");
+
                         while (true)
                         {
                             string studentInput = System.Console.ReadLine()!;
+
                             if (studentInput == "yes")
                             {
                                 Program.jsonData[index].IsStudent = true;
@@ -146,6 +151,7 @@ namespace MegaBios
                         loopBreak = true;
                         break;
                 }
+
                 if (loopBreak)
                 {
                     break;

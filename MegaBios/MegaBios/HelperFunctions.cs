@@ -29,7 +29,8 @@ namespace MegaBios
                     password = password.Substring(0, password.Length - 1);
                     Console.Write("\b \b"); // Delete laatste char van console
                 }
-            } while (key.Key != ConsoleKey.Enter);
+            }
+            while (key.Key != ConsoleKey.Enter);
 
             Console.WriteLine();
             return password;

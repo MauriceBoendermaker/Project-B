@@ -42,8 +42,10 @@ namespace MegaBios
             {
                 Console.WriteLine("Enter password: ");
                 string inputWachtwoord = HelperFunctions.MaskPasswordInput();
+
                 Console.WriteLine("Confirm your password: ");
                 string confirmWachtwoord = HelperFunctions.MaskPasswordInput();
+
                 if (inputWachtwoord == confirmWachtwoord)
                 {
                     wachtwoord = inputWachtwoord;
@@ -62,6 +64,7 @@ namespace MegaBios
             {
                 Console.Write("Are you a student? (true/false): ");
                 string is_studentString = Console.ReadLine()!;
+
                 if (is_studentString == "true" || is_studentString == "false")
                 {
                     is_student = Convert.ToBoolean(is_studentString);
@@ -71,6 +74,7 @@ namespace MegaBios
 
             TestAccount newAccount = new TestAccount(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student);
             jsonData.Add(newAccount);
+
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);
 
             Console.WriteLine("New account created successfully!");

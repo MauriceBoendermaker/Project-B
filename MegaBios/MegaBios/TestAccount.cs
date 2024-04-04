@@ -33,8 +33,16 @@ namespace MegaBios
         [JsonPropertyName("is_student")]
         public bool IsStudent { get; set; }
 
-        public TestAccount(string voornaam, string tussenvoegsel, string achternaam, string geboorteDatum, Dictionary<string, string> adres,
-                            string email, string wachtwoord, string telefoonNr, string voorkeur_Betaalwijze, bool isStudent)
+        public TestAccount(string voornaam,
+                            string tussenvoegsel,
+                            string achternaam,
+                            string geboorteDatum,
+                            Dictionary<string, string> adres,
+                            string email,
+                            string wachtwoord,
+                            string telefoonNr,
+                            string voorkeur_Betaalwijze,
+                            bool isStudent)
         {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;

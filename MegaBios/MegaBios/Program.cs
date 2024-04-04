@@ -12,12 +12,13 @@ namespace MegaBios
     {
         public static List<TestAccount> jsonData = new();
         public static string jsonFilePath = "../../../customers.json";
+
         static void Main(string[] args)
         {
-
             // JSON bestand ophalen
 
             string jsonText = File.ReadAllText(jsonFilePath);
+
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
             JsonElement root = jsonDocument.RootElement;
             jsonData = JsonFunctions.ConvertJsonToList(root);
@@ -61,7 +62,9 @@ namespace MegaBios
                     if (account.Email == username && account.Wachtwoord == password)
                     {
                         isAuthenticated = true;
+
                         Console.WriteLine("Login successful!");
+
                         bool isLoggedIn = true;
                         while (true)
                         {
