@@ -14,7 +14,8 @@
     "wachtwoord": "W4chtwo0rd!",
     "telefoonnummer": "\u002B31 6 12345678",
     "voorkeur_betaalwijze": "iDeal",
-    "is_student": true
+    "is_student": true,
+    "history": []
   },
   {
     "voornaam": "Daan",
@@ -31,7 +32,8 @@
     "wachtwoord": "G3heim!",
     "telefoonnummer": "\u002B31 10 98765432",
     "voorkeur_betaalwijze": "Creditcard",
-    "is_student": false
+    "is_student": false,
+    "history": []
   },
   {
     "voornaam": "Eva",
@@ -48,7 +50,8 @@
     "wachtwoord": "P@ssw0rd!",
     "telefoonnummer": "\u002B31 30 55554444",
     "voorkeur_betaalwijze": "PayPal",
-    "is_student": true
+    "is_student": true,
+    "history": []
   },
   {
     "voornaam": "Xander",
@@ -65,6 +68,13 @@
     "wachtwoord": "1",
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
-    "is_student": true
+    "is_student": true,
+    "history": [
+      {
+        "reservation_number": "9a113541-8a44-4ff3-b39b-e0bf33dc4452",
+        "movie_title": null,
+        "reservation_date": "2024-04-04T11:25:12.0790017+02:00"
+      }
+    ]
   }
 ]
