@@ -10,6 +10,8 @@ namespace MegaBios
 {
     class Program
     {
+        public static List<Movie> movies = new();
+        public static List<CinemaRoom> cinemaRooms = new();
         public static List<TestAccount> jsonData = new();
         public static string jsonFilePath = "../../../customers.json";
 
@@ -65,11 +67,14 @@ namespace MegaBios
 
                         Console.WriteLine("Login successful!");
 
+                        movies = JsonFunctions.LoadMovies("../../../Movies.json");
+                        cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
+
                         bool isLoggedIn = true;
                         while (true)
                         {
 
-                            Console.WriteLine("1. Display Account Information \n2. Delete Account\n3. Update Account Information\n4. Order ticket\n");
+                            Console.WriteLine("1. Display Account Information \n2. Delete Account\n3. Update Account Information\n4. Order ticket\n5. Make a Reservation\n");
                             string userChoice = Console.ReadLine();
 
                             switch (userChoice)
@@ -107,6 +112,9 @@ namespace MegaBios
                                     SeatSelect seatSelect = new();
                                     seatSelect.SelectSeats(10, 10, movie);
                                     break;
+                                case "5":
+                                    MakeReservation(account);
+                                    break;
                                 default:
                                     Console.WriteLine("Invalid choice. Please try again.");
                                     break;
@@ -128,6 +136,46 @@ namespace MegaBios
             }
 
             //CreateAccount.CreateNewAccount(jsonData);
+        }
+
+        public static void ListMovies()
+        {
+            foreach (var movie in movies)
+            {
+                Console.WriteLine($"Title: {movie.Title}, Genre: {movie.Genre}, Rating: {movie.Rating}");
+            }
+        }
+
+        public static void MakeReservation(TestAccount user)
+        {
+            Console.WriteLine("Select a movie to make a reservation:");
+            for (int i = 0; i < movies.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {movies[i].Title}");
+            }
+            Console.Write("Enter the number of the movie you want to reserve: ");
+            int selectedMovieIndex = Convert.ToInt32(Console.ReadLine()) - 1;
+
+            if (selectedMovieIndex < 0 || selectedMovieIndex >= movies.Count)
+            {
+                Console.WriteLine("Invalid selection.");
+                return;
+            }
+
+            var selectedMovie = movies[selectedMovieIndex];
+            var reservationNumber = Guid.NewGuid().ToString(); // GUID voor uniek reserverings nummer
+            var reservation = new ReservationHistory
+            {
+                ReservationNumber = reservationNumber,
+                MovieTitle = selectedMovie.Title,
+                ReservationDate = DateTime.Now
+            };
+
+            user.History.Add(reservation);
+
+            JsonFunctions.WriteToJson(jsonFilePath, jsonData);
+
+            Console.WriteLine($"Reservation made successfully for '{selectedMovie.Title}'. Your reservation number is {reservationNumber}.");
         }
     }
 }

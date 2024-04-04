@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MegaBios
@@ -32,6 +33,9 @@ namespace MegaBios
 
         [JsonPropertyName("is_student")]
         public bool IsStudent { get; set; }
+
+        [JsonPropertyName("history")]
+        public List<ReservationHistory> History { get; set; } = new List<ReservationHistory>();
 
         public TestAccount(string voornaam,
                             string tussenvoegsel,
