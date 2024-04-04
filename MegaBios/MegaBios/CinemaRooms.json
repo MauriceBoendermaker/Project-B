@@ -1,0 +1,98 @@
+{
+  "cinema_rooms": [
+    {
+      "room_number": "Room 1",
+      "seating": [
+        [
+          {
+            "seat_number": "A1",
+            "status": "available"
+          },
+          {
+            "seat_number": "A2",
+            "status": "available"
+          }
+        ],
+        [
+          {
+            "seat_number": "B1",
+            "status": "available"
+          },
+          {
+            "seat_number": "B2",
+            "status": "available"
+          }
+        ]
+      ],
+      "schedule": {
+        "2024-04-01": [
+          {
+            "movie": "The Shawshank Redemption",
+            "start_time": "09:00"
+          },
+          {
+            "movie": "Inception",
+            "start_time": "09:15"
+          }
+        ],
+        "2024-04-02": [
+          {
+            "movie": "Inception",
+            "start_time": "09:00"
+          },
+          {
+            "movie": "The Shawshank Redemption",
+            "start_time": "09:15"
+          }
+        ]
+      }
+    },
+    {
+      "room_number": "Room 2",
+      "seating": [
+        [
+          {
+            "seat_number": "A1",
+            "status": "available"
+          },
+          {
+            "seat_number": "A2",
+            "status": "available"
+          }
+        ],
+        [
+          {
+            "seat_number": "B1",
+            "status": "available"
+          },
+          {
+            "seat_number": "B2",
+            "status": "available"
+          }
+        ]
+      ],
+      "schedule": {
+        "2024-04-01": [
+          {
+            "movie": "Inception",
+            "start_time": "09:00"
+          },
+          {
+            "movie": "The Shawshank Redemption",
+            "start_time": "09:15"
+          }
+        ],
+        "2024-04-02": [
+          {
+            "movie": "The Shawshank Redemption",
+            "start_time": "09:00"
+          },
+          {
+            "movie": "Inception",
+            "start_time": "09:15"
+          }
+        ]
+      }
+    }
+  ]
+}
