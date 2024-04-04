@@ -19,7 +19,7 @@ namespace MegaBios {
                 System.Console.WriteLine("");
                 for (int j = 1; j <= columns; j++) {
                     // Special color for handicapped seats
-                    if (i == 1 && new List<int>() {0, 1, 2, columns, columns - 1, columns - 2}.Contains(j)) {
+                    if (i == 1 && new List<int>() {1, 2, 3, columns, columns - 1, columns - 2}.Contains(j)) {
                         Console.ForegroundColor = ConsoleColor.Blue;
                     }
                     // If cursor is hovering over Seat:
@@ -28,7 +28,7 @@ namespace MegaBios {
                         Console.BackgroundColor = ConsoleColor.Green;
                     }
                     
-
+                    // Print misc chairs
                     if (j == columns) {
                         Console.Write($"{rowLetter}{j}", Console.ForegroundColor, Console.BackgroundColor);
                     }
@@ -73,7 +73,7 @@ namespace MegaBios {
                         break;
                     
                     case ConsoleKey.Enter:
-                        System.Console.WriteLine("You selected seat {rowLetter}{j}");
+                        System.Console.WriteLine($"You selected seat {rowLetters[cursor[1]]}{cursor[0]}");
                         // FinishedSelectingSeats
                         break;
                 }
