@@ -55,15 +55,15 @@ namespace MegaBios
         }
 
         public static List<CinemaRoom> LoadCinemaRooms(string filePath)
-{
-    string jsonString = File.ReadAllText(filePath);
-    var options = new JsonSerializerOptions
-    {
-        PropertyNameCaseInsensitive = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-    };
-    var cinemaData = JsonSerializer.Deserialize<CinemaData>(jsonString, options);
-    return cinemaData?.CinemaRooms ?? new List<CinemaRoom>();
-}
+        {
+            string jsonString = File.ReadAllText(filePath);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+            var cinemaData = JsonSerializer.Deserialize<CinemaData>(jsonString, options);
+            return cinemaData?.CinemaRooms ?? new List<CinemaRoom>();
+        }
     }
 }

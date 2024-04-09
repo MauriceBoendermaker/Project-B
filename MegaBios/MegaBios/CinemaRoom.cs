@@ -16,13 +16,14 @@ namespace MegaBios
         public Dictionary<string, List<MovieSchedule>> Schedule { get; set; }
     }
 
-    public class Seat
-    {
+    public class Seat {
         [JsonPropertyName("seat_number")]
-        public string SeatNumber { get; set; }
-
-        [JsonPropertyName("status")]
-        public string Status { get; set; }
+        public string SeatNumber {get;set;} 
+        [JsonPropertyName("is_taken")]
+        public bool SeatTaken {get;set;}
+        [JsonPropertyName("type")]
+        public string SeatType {get;set;}
+        
     }
 
     public class MovieSchedule

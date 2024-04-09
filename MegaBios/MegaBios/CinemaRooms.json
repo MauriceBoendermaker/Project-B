@@ -6,21 +6,337 @@
         [
           {
             "seat_number": "A1",
-            "status": "available"
+            "is_taken": true,
+            "type": "handicap"
           },
           {
             "seat_number": "A2",
-            "status": "available"
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A3",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "A5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "A6",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A7",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A8",
+            "is_taken": false,
+            "type": "handicap"
           }
         ],
         [
           {
             "seat_number": "B1",
-            "status": "available"
+            "is_taken": false,
+            "type": "normal"
           },
           {
             "seat_number": "B2",
-            "status": "available"
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B3",
+            "is_taken": true,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B8",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "C1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C4",
+            "is_taken": true,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C7",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C8",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "D1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D8",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "E1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E7",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E8",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "F1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F8",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "G1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G7",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G8",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "H1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H8",
+            "is_taken": false,
+            "type": "normal"
           }
         ]
       ],
@@ -53,26 +369,352 @@
         [
           {
             "seat_number": "A1",
-            "status": "available"
+            "is_taken": false,
+            "type": "handicap"
           },
           {
             "seat_number": "A2",
-            "status": "available"
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A3",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "A5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "A6",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A7",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A8",
+            "is_taken": false,
+            "type": "handicap"
           }
         ],
         [
           {
             "seat_number": "B1",
-            "status": "available"
+            "is_taken": false,
+            "type": "normal"
           },
           {
             "seat_number": "B2",
-            "status": "available"
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B8",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "C1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C7",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C8",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "D1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D8",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "E1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E7",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E8",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "F1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F8",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "G1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G7",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G8",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "H1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H8",
+            "is_taken": false,
+            "type": "normal"
           }
         ]
       ],
       "schedule": {
         "2024-04-01": [
+          {
+            "movie": "The Shawshank Redemption",
+            "start_time": "09:00"
+          },
+          {
+            "movie": "Inception",
+            "start_time": "09:15"
+          }
+        ],
+        "2024-04-02": [
           {
             "movie": "Inception",
             "start_time": "09:00"
@@ -81,14 +723,454 @@
             "movie": "The Shawshank Redemption",
             "start_time": "09:15"
           }
+        ]
+      }
+    },
+    {
+      "room_number": "Room 3",
+      "seating": [
+        [
+          {
+            "seat_number": "A1",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A2",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A3",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "A5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "A6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "A7",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A8",
+            "is_taken": false,
+            "type": "handicap"
+          },
+          {
+            "seat_number": "A9",
+            "is_taken": false,
+            "type": "handicap"
+          }
         ],
-        "2024-04-02": [
+        [
+          {
+            "seat_number": "B1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B8",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "B9",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "C1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "C8",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "C9",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "D1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D8",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "D9",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "E1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "E8",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "E9",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "F1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F8",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "F9",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "G1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "G8",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "G9",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ],
+        [
+          {
+            "seat_number": "H1",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H2",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H8",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "H9",
+            "is_taken": false,
+            "type": "normal"
+          }
+        ],
+        [
+          {
+            "seat_number": "I1",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "I2",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "I3",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "I4",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "I5",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "I6",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "I7",
+            "is_taken": false,
+            "type": "normal"
+          },
+          {
+            "seat_number": "I8",
+            "is_taken": false,
+            "type": "love seat"
+          },
+          {
+            "seat_number": "I9",
+            "is_taken": false,
+            "type": "love seat"
+          }
+        ]
+      ],
+      "schedule": {
+        "2024-04-01": [
           {
             "movie": "The Shawshank Redemption",
             "start_time": "09:00"
           },
           {
             "movie": "Inception",
+            "start_time": "09:15"
+          }
+        ],
+        "2024-04-02": [
+          {
+            "movie": "Inception",
+            "start_time": "09:00"
+          },
+          {
+            "movie": "The Shawshank Redemption",
             "start_time": "09:15"
           }
         ]

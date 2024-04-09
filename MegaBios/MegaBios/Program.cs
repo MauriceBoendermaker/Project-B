@@ -109,8 +109,9 @@ namespace MegaBios
                                     break;
                                 case "4":
                                     string movie = "Doornroosje";
-                                    SeatSelect seatSelect = new();
-                                    seatSelect.SelectSeats(10, 10, movie);
+                                    List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");                     
+                                    SeatSelect seatSelect = new(cinemaRooms[0]);
+                                    seatSelect.SelectSeats();
                                     break;
                                 case "5":
                                     MakeReservation(account);
