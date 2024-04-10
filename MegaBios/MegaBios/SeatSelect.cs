@@ -239,7 +239,6 @@ namespace MegaBios
             // Check if seat selected is on the right row and if the selected seat is adjacent to the currnet selected seats or not
             else if (cursor[1] == _selectedSeatsRow) {
                 if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) > 1) {
-                    System.Console.WriteLine("too big gab");
                     return false;
                 }
                 else  if (Math.Abs(cursor[0] - _selectedSeatsRightBound) == 1 || Math.Abs(cursor[0] - _selectedSeatsLeftBound) == 1) {
