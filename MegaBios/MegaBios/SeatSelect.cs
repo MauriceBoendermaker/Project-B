@@ -223,7 +223,13 @@ namespace MegaBios
             System.Console.Write("[]", Console.BackgroundColor);
             Console.ResetColor();
 
-            System.Console.Write(" = Taken seats\n");
+            System.Console.Write(" = Taken seats, ");
+            Console.BackgroundColor = ConsoleColor.Green;
+
+            System.Console.Write("[]", Console.BackgroundColor);
+            Console.ResetColor();
+
+            System.Console.Write(" = Chosen seats\n");
             System.Console.WriteLine("\n");
 
         }
