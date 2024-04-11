@@ -9,9 +9,12 @@ namespace MegaBios
         private List<Seat> _selectedSeats = new() {};
         private bool _confirmedSeats = false;
         private Seat _selectedSeat;
-        private int _selectedSeatsRow;
-        private int _selectedSeatsLeftBound;
-        private int _selectedSeatsRightBound;
+        private int _selectedSeatsRow = -1;
+        private int _selectedSeatsLeftBound = -1;
+        private int _selectedSeatsRightBound = -1;
+        private string _extraMessage;
+        
+
         public CinemaRoom Room {get; set;}
         // public bool FinishedSelectingSeats = false;
 
@@ -39,7 +42,7 @@ namespace MegaBios
         public void DisplaySeats(CinemaRoom room, List<int> cursorPos)
         {
             List<List<Seat>> seating = room.Seating;
-
+            System.Console.WriteLine("\n\n");
             for (int i = 0; i < seating.Count; i++)
             {
                 string rowLetter = rowLetters[i];
@@ -93,8 +96,10 @@ namespace MegaBios
                 selectedSeatsString += seat.SeatNumber+ " ";
             }
             System.Console.Write(selectedSeatsString);
-            System.Console.WriteLine();
+            System.Console.WriteLine("\n");
             PrintLegend();
+            System.Console.WriteLine("\nPress arrow keys to navigate. Press Space to select seat. Press enter to confirm tickets. Press Backspace to clear selection");
+            System.Console.WriteLine(_extraMessage);
         }
 
         private List<int> NavigateMenu(List<int> cursor)
@@ -127,15 +132,17 @@ namespace MegaBios
                         cursor = CorrectCursorPos(cursor, seating.Count, seating[0].Count);
                         moved = true;
                         break;
-                    case ConsoleKey.Enter:
+                    case ConsoleKey.Spacebar:
                         moved = true;
                         bool isAdjacent = AdjacentSeatCheck(cursor);
                         if (_selectedSeats.Contains(_selectedSeat)) {
-                            System.Console.WriteLine("You have already selected that seat!");
+                            // System.Console.WriteLine("You have already selected that seat!");
+                            _extraMessage = "Je hebt deze stoel al geselecteerd!";
                         }
 
                         else if (_selectedSeat.SeatTaken == true) {
-                            System.Console.WriteLine("Seat is already taken!");
+                            // System.Console.WriteLine("Seat is already taken!");
+                            _extraMessage = "Deze stoel is al bezet!";
                         }
 
                         else if (isAdjacent) {
@@ -146,34 +153,55 @@ namespace MegaBios
                             else if (cursor[0] > _selectedSeatsRightBound) {
                                 _selectedSeatsRightBound = cursor[0];
                             }
-                            System.Console.WriteLine($"You selected seat {_selectedSeat.SeatNumber}");
+                            // System.Console.WriteLine($"You selected seat {_selectedSeat.SeatNumber}");
+                            _extraMessage = $"You selected seat {_selectedSeat.SeatNumber}";
                         }
 
                         else if (!isAdjacent) {
-                            System.Console.WriteLine("Seat is not adjacent to your currently selected seat(s). Please select an adjacent seat");
+                            // System.Console.WriteLine("Seat is not adjacent to your currently selected seat(s). Please select an adjacent seat");
+                            _extraMessage = "Deze stoel is niet aangrenzend aan je huidige geselecteerde stoelen. Selecteer alstublieft een aangrenzende stoel.";
                         }
 
+                        // if (_selectedSeats.Count == 0) {
+                        //     System.Console.WriteLine("Press any button (except enter) to continue selecting seats");
+                        //     keyInfo = Console.ReadKey(true);
+                        //     break;
+                        // 
+                        // FinishedSelectingSeats
+                        break;
+                    case ConsoleKey.Enter:
+                        moved = true;
                         if (_selectedSeats.Count == 0) {
-                            System.Console.WriteLine("Press any button (except enter) to continue selecting seats");
-                            keyInfo = Console.ReadKey(true);
+                            _extraMessage = "Je hebt nog geen stoelen geselecteerd";
                             break;
                         }
-                        System.Console.WriteLine("Press enter again if you want to Confirm your seat selection.\nPress any button (except enter) to continue selecting seats");
-                        // FinishedSelectingSeats
-                        
-                        keyInfo = Console.ReadKey(true);
-                        switch (keyInfo.Key) {
-                            case ConsoleKey.Enter:
+                        else if (_selectedSeats.Count > 0){
+                            System.Console.WriteLine("Weet je zeker dat je deze stoelen wilt selecteren? Druk nogmaals op enter om je keuze te bevestigen of een andere knop om terug te gaan.");
+                            if (Console.ReadKey(true).Key == ConsoleKey.Enter) {
                                 _confirmedSeats = true;
                                 break;
-                            //If you press anything other than enter
-                            default:
+                            }
+                        }
+                        break;
+                    case ConsoleKey.Backspace:
+                        moved = true;
+                        if (_selectedSeats.Count == 0) {
+                            _extraMessage = "Je hebt nog geen stoelen geselecteerd";
+                            break;
+                        }
+                        else if (_selectedSeats.Count > 0){
+                            System.Console.WriteLine("Weet je zeker dat je je selectie wil wissen? Druk nogmaals op Backspace om je selectie te wissen.");
+                            if (Console.ReadKey(true).Key == ConsoleKey.Backspace) {
+                                _selectedSeats.Clear();
+                                _selectedSeatsLeftBound = -1;
+                                _selectedSeatsRightBound = -1;
+                                _selectedSeatsRow = -1;
                                 break;
-
+                            }
                         }
                         break;
                     default:
-                        System.Console.WriteLine("Please press the arrow keys or enter");
+                        System.Console.WriteLine("Please press the arrow keys, space or enter");
                         break;
                 }
             }
@@ -236,7 +264,7 @@ namespace MegaBios
 
         public bool AdjacentSeatCheck(List<int> cursor) {
             // If no seat has been selected prior
-            if (_selectedSeats.Count == 0) {
+            if (_selectedSeats.Count == 0 ) {
                 _selectedSeatsRow = cursor[1];
                 _selectedSeatsLeftBound = cursor[0];
                 _selectedSeatsRightBound = cursor[0];
