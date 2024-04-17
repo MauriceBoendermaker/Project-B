@@ -50,6 +50,7 @@ namespace MegaBios
 
         static void LoginAsGuest()
         {
+            LoggedInAsGuest = true; // Setting LoggedInAsGuest to True
             movies = JsonFunctions.LoadMovies("../../../Movies.json");
             cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
             while (true)
