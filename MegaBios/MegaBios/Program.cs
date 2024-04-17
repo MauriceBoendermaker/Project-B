@@ -167,6 +167,13 @@ namespace MegaBios
 
         public static void MakeReservation()
         {
+            string voornaam = "";
+            string tussenvoegsel = "";
+            string achternaam = "";
+            string email = "";
+            string telefoonNr = "";
+            bool is_student = false;
+
             Console.WriteLine("Select a movie to make a reservation:");
             for (int i = 0; i < movies.Count; i++)
             {
@@ -181,6 +188,37 @@ namespace MegaBios
                 return;
             }
 
+            // Ask information only to Guest userrs
+            if (LoggedInAsGuest == true)
+            {
+                Console.Write("Enter first name: ");
+                voornaam = Console.ReadLine();
+
+                Console.Write("Enter middle name (if any): ");
+                tussenvoegsel = Console.ReadLine();
+
+                Console.Write("Enter last name: ");
+                achternaam = Console.ReadLine();
+
+                Console.Write("Enter email: ");
+                email = Console.ReadLine()!;
+
+                Console.Write("Enter phone number: ");
+                telefoonNr = Console.ReadLine()!;
+
+                while (true)
+                {
+                    Console.Write("Are you a student? (true/false): ");
+                    string is_studentString = Console.ReadLine()!;
+
+                    if (is_studentString == "true" || is_studentString == "false")
+                    {
+                        is_student = Convert.ToBoolean(is_studentString);
+                        break;
+                    }
+                }
+            }
+
             var selectedMovie = movies[selectedMovieIndex];
             var reservationNumber = Guid.NewGuid().ToString(); // GUID voor uniek reserveringsnummer
             var reservation = new ReservationHistory
@@ -193,7 +231,30 @@ namespace MegaBios
             // Voeg de reservering toe aan een gast-account (hier wordt geen specifiek account vereist)
             JsonFunctions.WriteToJson(jsonFilePath, jsonData);
 
-            Console.WriteLine($"Reservation made successfully for '{selectedMovie.Title}'. Your reservation number is {reservationNumber}.");
+            if (LoggedInAsGuest == true)
+            {
+                Console.WriteLine($"Reservation made successfully for '{selectedMovie.Title}'. Your reservation number is {reservationNumber}.\n");
+                Console.WriteLine("Bestelling Overzicht:\n");
+                if (tussenvoegsel != "")
+                {
+                    Console.WriteLine($"Naam: {voornaam} {tussenvoegsel} {achternaam}");
+                }
+                else
+                {
+                    Console.WriteLine($"Naam: {voornaam} {achternaam}");
+                }
+                Console.WriteLine($"Email: {email}");
+                Console.WriteLine($"Telefoonnummer: {telefoonNr}");
+                if (is_student)
+                {
+                    Console.WriteLine("Studentenkorting is toegepast!\n");
+                }
+
+            }
+            else
+            {
+                Console.WriteLine($"Reservation made successfully for '{selectedMovie.Title}'. Your reservation number is {reservationNumber}.");
+            }
         }
 
         public static void MakeReservation(TestAccount user)
