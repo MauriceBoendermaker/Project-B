@@ -12,6 +12,7 @@ namespace MegaBios
         public static List<CinemaRoom> cinemaRooms = new List<CinemaRoom>();
         public static List<TestAccount> jsonData = new List<TestAccount>();
         public static string jsonFilePath = "../../../customers.json";
+        public static bool LoggedInAsGuest = false;
 
         static void Main(string[] args)
         {
