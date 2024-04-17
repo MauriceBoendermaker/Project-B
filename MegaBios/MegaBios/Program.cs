@@ -287,6 +287,21 @@ namespace MegaBios
             JsonFunctions.WriteToJson(jsonFilePath, jsonData);
 
             Console.WriteLine($"Reservation made successfully for '{selectedMovie.Title}'. Your reservation number is {reservationNumber}.");
+            Console.WriteLine("Bestelling Overzicht:\n");
+            if (user.Tussenvoegsel != "")
+            {
+                Console.WriteLine($"Naam: {user.Voornaam} {user.Tussenvoegsel} {user.Achternaam}");
+            }
+            else
+            {
+                Console.WriteLine($"Naam: {user.Voornaam} {user.Achternaam}");
+            }
+            Console.WriteLine($"Email: {user.Email}");
+            Console.WriteLine($"Telefoonnummer: {user.TelefoonNr}");
+            if (user.IsStudent)
+            {
+                Console.WriteLine("Studentenkorting is toegepast!\n");
+            }
         }
     }
 }
