@@ -5,21 +5,74 @@ namespace MegaBios
 {
     public class SeatSelect
     {
-        public static List<string> rowLetters = new() {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-        private List<Seat> _selectedSeats = new() {};
+        public static List<string> rowLetters = new() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+        private List<Seat> _selectedSeats = new() { };
         private bool _confirmedSeats = false;
         private Seat _selectedSeat;
         private int _selectedSeatsRow = -1;
         private int _selectedSeatsLeftBound = -1;
         private int _selectedSeatsRightBound = -1;
         private string _extraMessage;
-        
 
-        public CinemaRoom Room {get; set;}
+        public List<List<Seat>> seats = new List<List<Seat>>();
+
+
+        public CinemaRoom Room { get; set; }
         // public bool FinishedSelectingSeats = false;
 
-        public SeatSelect(CinemaRoom room) {
+        public SeatSelect(CinemaRoom room)
+        {
             Room = room;
+            seats = room.Seating;
+        }
+
+        private Seat GetCorrespondingLoveSeatRight(Seat loveSeat)
+        {
+            // Get the row and seat number of the selected love seat
+            int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
+            int seatIndex = int.Parse(loveSeat.SeatNumber.Substring(1)) - 1;
+
+            // Get the corresponding seat number
+            string correspondingSeatNumber = $"{rowLetters[rowIndex]}{seatIndex + 2}";
+
+            // Find and return the corresponding seat
+            foreach (List<Seat> row in Room.Seating)
+            {
+                foreach (Seat seat in row)
+                {
+                    if (seat.SeatNumber == correspondingSeatNumber)
+                    {
+                        return seat;
+                    }
+                }
+            }
+
+            // If no corresponding seat is found, return null
+            return null;
+        }
+        private Seat GetCorrespondingLoveSeatLeft(Seat loveSeat)
+        {
+            // Get the row and seat number of the selected love seat
+            int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
+            int seatIndex = int.Parse(loveSeat.SeatNumber.Substring(1)) - 1;
+
+            // Get the corresponding seat number
+            string correspondingSeatNumber = $"{rowLetters[rowIndex]}{seatIndex}";
+
+            // Find and return the corresponding seat
+            foreach (List<Seat> row in Room.Seating)
+            {
+                foreach (Seat seat in row)
+                {
+                    if (seat.SeatNumber == correspondingSeatNumber)
+                    {
+                        return seat;
+                    }
+                }
+            }
+
+            // If no corresponding seat is found, return null
+            return null;
         }
 
         public void SelectSeats()
@@ -32,10 +85,13 @@ namespace MegaBios
                 DisplaySeats(Room, cursorPos);
                 cursorPos = NavigateMenu(cursorPos);
             }
-            System.Console.WriteLine($"Final seat selection:");
-            foreach(Seat seat in _selectedSeats) {
-                System.Console.WriteLine(seat.SeatNumber);
+            Console.WriteLine($"Final seat selection:");
+            string selectedSeatsString = "";
+            foreach (Seat seat in _selectedSeats)
+            {
+                selectedSeatsString += seat.SeatNumber + " ";
             }
+            Console.WriteLine(selectedSeatsString);
         }
 
 
@@ -51,7 +107,8 @@ namespace MegaBios
                 for (int j = 0; j < seating[i].Count; j++)
                 {
                     // Special color for handicapped seats
-                    if (seating[i][j].SeatTaken == true) {
+                    if (seating[i][j].SeatTaken == true)
+                    {
                         Console.BackgroundColor = ConsoleColor.Red;
                     }
 
@@ -61,7 +118,8 @@ namespace MegaBios
                     }
 
                     // Special color for love seat
-                    else if (seating[i][j].SeatType == "love seat") {
+                    else if (seating[i][j].SeatType == "love seat")
+                    {
                         Console.ForegroundColor = ConsoleColor.Magenta;
                     }
 
@@ -69,7 +127,8 @@ namespace MegaBios
                     if ((i == cursorPos[1] && j == cursorPos[0]) || _selectedSeats.Contains(seating[i][j]))
                     {
                         // Adds the selected seat to the list
-                        if ((i == cursorPos[1] && j == cursorPos[0])) {
+                        if ((i == cursorPos[1] && j == cursorPos[0]))
+                        {
                             _selectedSeat = seating[i][j];
                         }
                         Console.BackgroundColor = ConsoleColor.Green;
@@ -92,8 +151,9 @@ namespace MegaBios
             System.Console.WriteLine("\n");
             System.Console.Write("Selected seats: ");
             string selectedSeatsString = "";
-            foreach (Seat seat in _selectedSeats) {
-                selectedSeatsString += seat.SeatNumber+ " ";
+            foreach (Seat seat in _selectedSeats)
+            {
+                selectedSeatsString += seat.SeatNumber + " ";
             }
             System.Console.Write(selectedSeatsString);
             System.Console.WriteLine("\n");
@@ -106,7 +166,7 @@ namespace MegaBios
         {
             bool moved = false;
             List<List<Seat>> seating = Room.Seating;
-            while (!moved)  
+            while (!moved)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 switch (keyInfo.Key)
@@ -135,49 +195,58 @@ namespace MegaBios
                     case ConsoleKey.Spacebar:
                         moved = true;
                         bool isAdjacent = AdjacentSeatCheck(cursor);
-                        if (_selectedSeats.Contains(_selectedSeat)) {
+                        if (_selectedSeats.Contains(_selectedSeat))
+                        {
                             // System.Console.WriteLine("You have already selected that seat!");
                             _extraMessage = "Je hebt deze stoel al geselecteerd!";
                         }
-
-                        else if (_selectedSeat.SeatTaken == true) {
+                        else if (_selectedSeat.SeatTaken == true)
+                        {
                             // System.Console.WriteLine("Seat is already taken!");
                             _extraMessage = "Deze stoel is al bezet!";
                         }
-
-                        else if (isAdjacent) {
+                        else if (isAdjacent)
+                        {
                             _selectedSeats.Add(_selectedSeat);
-                            if (cursor[0] < _selectedSeatsLeftBound) {
-                                _selectedSeatsLeftBound = cursor[0];
-                            }
-                            else if (cursor[0] > _selectedSeatsRightBound) {
-                                _selectedSeatsRightBound = cursor[0];
+                            UpdateSeatBounds(_selectedSeat);
+                            if (_selectedSeat.SeatType == "love seat")
+                            {
+                                // Get the corresponding seats for the selected love seat
+                                Seat rightCorrespondingSeat = GetCorrespondingLoveSeatRight(_selectedSeat);
+                                Seat leftCorrespondingSeat = GetCorrespondingLoveSeatLeft(_selectedSeat);
+
+                                // If the corresponding seats are not already selected, select them
+                                if (rightCorrespondingSeat != null && !_selectedSeats.Contains(rightCorrespondingSeat) && rightCorrespondingSeat.SeatType == "love seat")
+                                {
+                                    _selectedSeats.Add(rightCorrespondingSeat);
+                                    UpdateSeatBounds(rightCorrespondingSeat);
+                                }
+                                if (leftCorrespondingSeat != null && !_selectedSeats.Contains(leftCorrespondingSeat) && leftCorrespondingSeat.SeatType == "love seat")
+                                {
+                                    _selectedSeats.Add(leftCorrespondingSeat);
+                                    UpdateSeatBounds(leftCorrespondingSeat);
+                                }
                             }
                             // System.Console.WriteLine($"You selected seat {_selectedSeat.SeatNumber}");
                             _extraMessage = $"You selected seat {_selectedSeat.SeatNumber}";
                         }
-
-                        else if (!isAdjacent) {
-                            // System.Console.WriteLine("Seat is not adjacent to your currently selected seat(s). Please select an adjacent seat");
+                        else if (!isAdjacent)
+                        {
                             _extraMessage = "Deze stoel is niet aangrenzend aan je huidige geselecteerde stoelen. Selecteer alstublieft een aangrenzende stoel.";
                         }
-
-                        // if (_selectedSeats.Count == 0) {
-                        //     System.Console.WriteLine("Press any button (except enter) to continue selecting seats");
-                        //     keyInfo = Console.ReadKey(true);
-                        //     break;
-                        // 
-                        // FinishedSelectingSeats
                         break;
                     case ConsoleKey.Enter:
                         moved = true;
-                        if (_selectedSeats.Count == 0) {
+                        if (_selectedSeats.Count == 0)
+                        {
                             _extraMessage = "Je hebt nog geen stoelen geselecteerd";
                             break;
                         }
-                        else if (_selectedSeats.Count > 0){
+                        else if (_selectedSeats.Count > 0)
+                        {
                             System.Console.WriteLine("Weet je zeker dat je deze stoelen wilt selecteren? Druk nogmaals op enter om je keuze te bevestigen of een andere knop om terug te gaan.");
-                            if (Console.ReadKey(true).Key == ConsoleKey.Enter) {
+                            if (Console.ReadKey(true).Key == ConsoleKey.Enter)
+                            {
                                 _confirmedSeats = true;
                                 break;
                             }
@@ -185,13 +254,16 @@ namespace MegaBios
                         break;
                     case ConsoleKey.Backspace:
                         moved = true;
-                        if (_selectedSeats.Count == 0) {
+                        if (_selectedSeats.Count == 0)
+                        {
                             _extraMessage = "Je hebt nog geen stoelen geselecteerd";
                             break;
                         }
-                        else if (_selectedSeats.Count > 0){
+                        else if (_selectedSeats.Count > 0)
+                        {
                             System.Console.WriteLine("Weet je zeker dat je je selectie wil wissen? Druk nogmaals op Backspace om je selectie te wissen.");
-                            if (Console.ReadKey(true).Key == ConsoleKey.Backspace) {
+                            if (Console.ReadKey(true).Key == ConsoleKey.Backspace)
+                            {
                                 _selectedSeats.Clear();
                                 _selectedSeatsLeftBound = -1;
                                 _selectedSeatsRightBound = -1;
@@ -262,25 +334,44 @@ namespace MegaBios
 
         }
 
-        public bool AdjacentSeatCheck(List<int> cursor) {
+        public void UpdateSeatBounds(Seat seat)
+        {
+            int seatIndex = int.Parse(seat.SeatNumber.Substring(1)) - 1;
+            if (seatIndex < _selectedSeatsLeftBound)
+            {
+                _selectedSeatsLeftBound = seatIndex;
+            }
+            else if (seatIndex > _selectedSeatsRightBound)
+            {
+                _selectedSeatsRightBound = seatIndex;
+            }
+        }
+
+        public bool AdjacentSeatCheck(List<int> cursor)
+        {
             // If no seat has been selected prior
-            if (_selectedSeats.Count == 0 ) {
+            if (_selectedSeats.Count == 0)
+            {
                 _selectedSeatsRow = cursor[1];
                 _selectedSeatsLeftBound = cursor[0];
                 _selectedSeatsRightBound = cursor[0];
                 return true;
             }
             // Check if seat selected is on the right row and if the selected seat is adjacent to the currnet selected seats or not
-            else if (cursor[1] == _selectedSeatsRow) {
-                if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) > 1) {
+            else if (cursor[1] == _selectedSeatsRow)
+            {
+                if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) > 1)
+                {
                     return false;
                 }
-                else  if (Math.Abs(cursor[0] - _selectedSeatsRightBound) == 1 || Math.Abs(cursor[0] - _selectedSeatsLeftBound) == 1) {
+                else if (Math.Abs(cursor[0] - _selectedSeatsRightBound) == 1 || Math.Abs(cursor[0] - _selectedSeatsLeftBound) == 1)
+                {
                     return true;
                 }
                 return false;
             }
-            else {
+            else
+            {
                 return false;
             }
         }
