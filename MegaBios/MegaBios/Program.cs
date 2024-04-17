@@ -21,6 +21,7 @@ namespace MegaBios
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
             JsonElement root = jsonDocument.RootElement;
             jsonData = JsonFunctions.ConvertJsonToList(root);
+            string choice = "";
 
             Console.WriteLine("Welcome to MegaBios!");
             Console.WriteLine("Please select an option:");
@@ -28,23 +29,27 @@ namespace MegaBios
             Console.WriteLine("2. Create Account");
             Console.WriteLine("3. Login");
 
-            int choice = int.Parse(Console.ReadLine());
-
-            switch (choice)
+            while (choice != "1" && choice != "2" && choice != "3")
             {
-                case 1:
-                    LoginAsGuest();
-                    break;
-                case 2:
-                    CreateAccount.CreateNewAccount(jsonData);
-                    Login();
-                    break;
-                case 3:
-                    Login();
-                    break;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+
+                choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        LoginAsGuest();
+                        break;
+                    case "2":
+                        CreateAccount.CreateNewAccount(jsonData);
+                        Login();
+                        break;
+                    case "3":
+                        Login();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
             }
         }
 
