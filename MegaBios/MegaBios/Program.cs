@@ -26,7 +26,7 @@ namespace MegaBios
             Console.WriteLine("Welcome to MegaBios!");
             Console.WriteLine("Please select an option:");
             Console.WriteLine("1. Ga verder als gast");
-            Console.WriteLine("2. Create Account");
+            Console.WriteLine("2. Creëer Account");
             Console.WriteLine("3. Login");
 
             while (choice != "1" && choice != "2" && choice != "3")
@@ -47,7 +47,7 @@ namespace MegaBios
                         Login();
                         break;
                     default:
-                        Console.WriteLine("Invalid choice. Please try again.");
+                        Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                         break;
                 }
             }
@@ -60,7 +60,7 @@ namespace MegaBios
             cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
             while (true)
             {
-                Console.WriteLine("1. Order ticket\n2. Make a Reservation\n");
+                Console.WriteLine("1. Bestel ticket\n2. Maak een reservering\n");
                 string userChoice = Console.ReadLine();
 
                 switch (userChoice)
@@ -75,7 +75,7 @@ namespace MegaBios
                         MakeReservation();
                         break;
                     default:
-                        Console.WriteLine("Invalid choice. Please try again.");
+                        Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                         break;
                 }
             }
@@ -83,13 +83,13 @@ namespace MegaBios
 
         static void Login()
         {
-            Console.WriteLine("Login Form");
+            Console.WriteLine("Login Formulier");
             Console.WriteLine("-----------");
 
-            Console.Write("Enter email: ");
+            Console.Write("Voer email in: ");
             string username = Console.ReadLine();
 
-            Console.Write("Enter password: ");
+            Console.Write("Voer wachtwoord in: ");
             string password = HelperFunctions.MaskPasswordInput();
 
             bool isAuthenticated = false;
@@ -100,7 +100,7 @@ namespace MegaBios
                 {
                     isAuthenticated = true;
 
-                    Console.WriteLine("Login successful!");
+                    Console.WriteLine("Succesvol ingelogd!");
 
                     movies = JsonFunctions.LoadMovies("../../../Movies.json");
                     cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
@@ -108,7 +108,7 @@ namespace MegaBios
                     bool isLoggedIn = true;
                     while (true)
                     {
-                        Console.WriteLine("1. Display Account Information \n2. Delete Account\n3. Update Account Information\n4. Order ticket\n5. Make a Reservation\n");
+                        Console.WriteLine("1. Toon Accountinformatie \n2. Verwijder Account\n3. Werk Accountinformatie bij\n4. Bestel ticket\n5. Maak een reservering\n");
                         string userChoice = Console.ReadLine();
 
                         switch (userChoice)
@@ -119,27 +119,27 @@ namespace MegaBios
                             case "2":
                                 while (true)
                                 {
-                                    System.Console.WriteLine("Are you sure you want to delete your account? (yes/no)\n");
+                                    System.Console.WriteLine("Weet u zeker dat u uw account wilt verwijderen? (ja/nee)\n");
                                     string confirmInput = Console.ReadLine()!;
-                                    if (confirmInput == "yes")
+                                    if (confirmInput == "ja")
                                     {
                                         DeleteAccount.RemoveAccount(jsonData, account);
                                         isLoggedIn = false;
                                         break;
                                     }
-                                    else if (confirmInput == "no")
+                                    else if (confirmInput == "nee")
                                     {
                                         break;
                                     }
                                     else
                                     {
-                                        System.Console.WriteLine("Invalid input.");
+                                        System.Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                                     }
                                 }
                                 break;
                             case "3":
                                 UpdateAccount.UpdateField(account);
-                                System.Console.WriteLine("Successfully updated your data!");
+                                System.Console.WriteLine("Uw data is geupdatet!");
                                 break;
                             case "4":
                                 string movie = "Doornroosje";
@@ -151,7 +151,7 @@ namespace MegaBios
                                 MakeReservation(account);
                                 break;
                             default:
-                                Console.WriteLine("Invalid choice. Please try again.");
+                                Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                                 break;
                         }
                         if (!isLoggedIn)
@@ -165,7 +165,7 @@ namespace MegaBios
 
             if (!isAuthenticated)
             {
-                Console.WriteLine("Invalid username or password. Please try again.");
+                Console.WriteLine("Invalide gebruikersnaam of wachtwoord. Probeer het alstublieft opnieuw.");
                 // TODO: Code toevoegen voor verkeerde login pogingen
             }
         }
@@ -179,41 +179,41 @@ namespace MegaBios
             string telefoonNr = "";
             bool is_student = false;
 
-            Console.WriteLine("Select a movie to make a reservation:");
+            System.Console.WriteLine("Selecteer een film om een reservatie te maken:");
             for (int i = 0; i < movies.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {movies[i].Title}");
             }
-            Console.Write("Enter the number of the movie you want to reserve: ");
+            System.Console.WriteLine("Voer het nummer van de film in die u wilt reserveren: ");
             int selectedMovieIndex = Convert.ToInt32(Console.ReadLine()) - 1;
 
             if (selectedMovieIndex < 0 || selectedMovieIndex >= movies.Count)
             {
-                Console.WriteLine("Invalid selection.");
+                Console.WriteLine("Invalide selectie.");
                 return;
             }
 
             // Ask information only to Guest userrs
             if (LoggedInAsGuest == true)
             {
-                Console.Write("Enter first name: ");
+                Console.Write("Voer voornaam in: ");
                 voornaam = Console.ReadLine();
 
-                Console.Write("Enter middle name (if any): ");
+                Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
                 tussenvoegsel = Console.ReadLine();
 
-                Console.Write("Enter last name: ");
+                Console.Write("Voer achternaam in: ");
                 achternaam = Console.ReadLine();
 
-                Console.Write("Enter email: ");
+                Console.Write("Voer email in: ");
                 email = Console.ReadLine()!;
 
-                Console.Write("Enter phone number: ");
+                Console.Write("Voer telefoonnummer in: ");
                 telefoonNr = Console.ReadLine()!;
 
                 while (true)
                 {
-                    Console.Write("Are you a student? (true/false): ");
+                    Console.Write("Bent u student? (true/false): ");
                     string is_studentString = Console.ReadLine()!;
 
                     if (is_studentString == "true" || is_studentString == "false")
@@ -238,7 +238,7 @@ namespace MegaBios
 
             if (LoggedInAsGuest == true)
             {
-                Console.WriteLine($"Reservation made successfully for '{selectedMovie.Title}'. Your reservation number is {reservationNumber}.\n");
+                Console.WriteLine($"Succesvol een reservering gemaakt voor '{selectedMovie.Title}'. Uw reserveringnummer is {reservationNumber}.\n");
                 Console.WriteLine("Bestelling Overzicht:\n");
                 if (tussenvoegsel != "")
                 {
@@ -258,23 +258,23 @@ namespace MegaBios
             }
             else
             {
-                Console.WriteLine($"Reservation made successfully for '{selectedMovie.Title}'. Your reservation number is {reservationNumber}.");
+                Console.WriteLine($"Succesvol een reservering gemaakt voor '{selectedMovie.Title}'. Uw reserveringnummer is {reservationNumber}.");
             }
         }
 
         public static void MakeReservation(TestAccount user)
         {
-            Console.WriteLine("Select a movie to make a reservation:");
+            Console.WriteLine("Selecteer een film om een reservatie te maken:");
             for (int i = 0; i < movies.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {movies[i].Title}");
             }
-            Console.Write("Enter the number of the movie you want to reserve: ");
+            Console.Write("Voer het nummer van de film in die u wilt reserveren: ");
             int selectedMovieIndex = Convert.ToInt32(Console.ReadLine()) - 1;
 
             if (selectedMovieIndex < 0 || selectedMovieIndex >= movies.Count)
             {
-                Console.WriteLine("Invalid selection.");
+                Console.WriteLine("Invalide selectie.");
                 return;
             }
 
@@ -291,7 +291,7 @@ namespace MegaBios
 
             JsonFunctions.WriteToJson(jsonFilePath, jsonData);
 
-            Console.WriteLine($"Reservation made successfully for '{selectedMovie.Title}'. Your reservation number is {reservationNumber}.");
+            Console.WriteLine($"Succesvol een reservering gemaakt voor '{selectedMovie.Title}'. Uw reserveringnummer is {reservationNumber}.");
             Console.WriteLine("Bestelling Overzicht:\n");
             if (user.Tussenvoegsel != "")
             {

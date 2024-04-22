@@ -85,7 +85,7 @@ namespace MegaBios
                 DisplaySeats(Room, cursorPos);
                 cursorPos = NavigateMenu(cursorPos);
             }
-            Console.WriteLine($"Final seat selection:");
+            Console.WriteLine($"Stoelen geselecteerd:");
             string selectedSeatsString = "";
             foreach (Seat seat in _selectedSeats)
             {
@@ -149,7 +149,7 @@ namespace MegaBios
                 }
             }
             System.Console.WriteLine("\n");
-            System.Console.Write("Selected seats: ");
+            System.Console.Write("Geselecteerde stoelen: ");
             string selectedSeatsString = "";
             foreach (Seat seat in _selectedSeats)
             {
@@ -158,7 +158,7 @@ namespace MegaBios
             System.Console.Write(selectedSeatsString);
             System.Console.WriteLine("\n");
             PrintLegend();
-            System.Console.WriteLine("\nPress arrow keys to navigate. Press Space to select seat. Press enter to confirm tickets. Press Backspace to clear selection");
+            System.Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op Space om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op Backspace om stoelselectie te wissen");
             System.Console.WriteLine(_extraMessage);
         }
 
@@ -228,7 +228,7 @@ namespace MegaBios
                                 }
                             }
                             // System.Console.WriteLine($"You selected seat {_selectedSeat.SeatNumber}");
-                            _extraMessage = $"You selected seat {_selectedSeat.SeatNumber}";
+                            _extraMessage = $"Stoel geselecteerd: {_selectedSeat.SeatNumber}";
                         }
                         else if (!isAdjacent)
                         {
@@ -273,7 +273,7 @@ namespace MegaBios
                         }
                         break;
                     default:
-                        System.Console.WriteLine("Please press the arrow keys, space or enter");
+                        System.Console.WriteLine("Druk alstublieft op pijltoetsen, space, enter of backspace");
                         break;
                 }
             }
@@ -305,31 +305,31 @@ namespace MegaBios
 
         public void PrintLegend()
         {
-            System.Console.WriteLine($"Legend: ");
+            System.Console.WriteLine($"Legenda: ");
             Console.ForegroundColor = ConsoleColor.Blue;
 
             System.Console.Write("[]", Console.ForegroundColor);
             Console.ResetColor();
 
-            System.Console.Write(" = Wheelchair seats, ");
+            System.Console.Write(" = Handicap stoelen, ");
             Console.ForegroundColor = ConsoleColor.Magenta;
 
             System.Console.Write("[]", Console.ForegroundColor);
             Console.ResetColor();
 
-            System.Console.Write(" = Loveseats, [] = Regular seats, ");
+            System.Console.Write(" = Loveseats, [] = Normale stoelen, ");
             Console.BackgroundColor = ConsoleColor.Red;
 
             System.Console.Write("[]", Console.BackgroundColor);
             Console.ResetColor();
 
-            System.Console.Write(" = Taken seats, ");
+            System.Console.Write(" = Bezette stoelen, ");
             Console.BackgroundColor = ConsoleColor.Green;
 
             System.Console.Write("[]", Console.BackgroundColor);
             Console.ResetColor();
 
-            System.Console.Write(" = Chosen seats\n");
+            System.Console.Write(" = Gekozen seats\n");
             System.Console.WriteLine("\n");
 
         }

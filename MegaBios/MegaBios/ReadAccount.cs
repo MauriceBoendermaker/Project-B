@@ -6,17 +6,17 @@ namespace MegaBios
     {
         public static void DisplayUserInfo(TestAccount loggedInUser)
         {
-            Console.WriteLine("User Information:");
+            Console.WriteLine("Gebruikersinformatie:");
             Console.WriteLine("-----------------");
-            Console.WriteLine($"Name: {loggedInUser.Voornaam} {loggedInUser.Tussenvoegsel} {loggedInUser.Achternaam}");
-            Console.WriteLine($"Date of Birth: {loggedInUser.GeboorteDatum}");
-            Console.WriteLine("Address:");
+            Console.WriteLine($"Naam: {loggedInUser.Voornaam} {loggedInUser.Tussenvoegsel} {loggedInUser.Achternaam}");
+            Console.WriteLine($"Geboortedatum : {loggedInUser.GeboorteDatum}");
+            Console.WriteLine("Adres:");
             Console.WriteLine($"{loggedInUser.Adres}");
             // Console.WriteLine($"  {loggedInUser.Adres.straat});
             // Console.WriteLine($"  {loggedInUser.Adres.Postcode} {loggedInUser.Adres.Woonplaats}");
             Console.WriteLine($"Email: {loggedInUser.Email}");
-            Console.WriteLine($"Phone Number: {loggedInUser.TelefoonNr}");
-            Console.WriteLine($"Preferred Payment Method: {loggedInUser.Voorkeur_Betaalwijze}");
+            Console.WriteLine($"Telefoonnumber: {loggedInUser.TelefoonNr}");
+            Console.WriteLine($"Voorkeur betaalwijze: {loggedInUser.Voorkeur_Betaalwijze}");
             Console.WriteLine($"Student: {(loggedInUser.IsStudent ? true : false)}");
         }
     }

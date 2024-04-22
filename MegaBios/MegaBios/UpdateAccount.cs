@@ -18,13 +18,13 @@ namespace MegaBios
 
             if (index == -1)
             {
-                System.Console.WriteLine("For some reason. your account was not found...");
+                System.Console.WriteLine("Voor een of andere reden was uw account niet gevonden");
                 return;
             }
 
-            Console.WriteLine("What would you like to update?\n1. Email\n2. Password\n3. Student status");
-            Console.WriteLine("Enter only the number of the option you want to update!");
-            Console.WriteLine("Enter your choice: ");
+            Console.WriteLine("Wat wilt u updaten?\n1. Email\n2. Wachtwoord\n3. Student status");
+            Console.WriteLine("Voer alleen het nummer van de optie in die u wilt updaten!");
+            Console.WriteLine("Voer je keuze in: ");
 
             bool loopBreak = false;
             while (true)
@@ -74,7 +74,7 @@ namespace MegaBios
                          loopBreak = true;
                          break; */
                     case "1":
-                        System.Console.WriteLine("Please enter your new email");
+                        System.Console.WriteLine("Voer de nieuwe email in");
                         string newEmail = Console.ReadLine()!;
                         Program.jsonData[index].Email = newEmail;
                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
@@ -83,9 +83,9 @@ namespace MegaBios
                     case "2":
                         while (true)
                         {
-                            System.Console.WriteLine("Please enter your new password");
+                            System.Console.WriteLine("Voer het nieuwe wachtwoord in");
                             string newPassword = Console.ReadLine()!;
-                            System.Console.WriteLine("Please confirm your new password");
+                            System.Console.WriteLine("Bevestig het wachtwoord");
 
                             if (newPassword == Console.ReadLine())
                             {
@@ -96,7 +96,7 @@ namespace MegaBios
                             }
                             else
                             {
-                                System.Console.WriteLine("The two passwords are different!");
+                                System.Console.WriteLine("Wachtwoorden komen niet overeen!");
                             }
                         }
                         break;
@@ -126,25 +126,25 @@ namespace MegaBios
                          }
                          break; */
                     case "3":
-                        System.Console.WriteLine("Are you a student? (yes/no)");
+                        System.Console.WriteLine("Bent u student? (ja/nee)");
 
                         while (true)
                         {
                             string studentInput = System.Console.ReadLine()!;
 
-                            if (studentInput == "yes")
+                            if (studentInput == "ja")
                             {
                                 Program.jsonData[index].IsStudent = true;
                                 break;
                             }
-                            else if (studentInput == "no")
+                            else if (studentInput == "nee")
                             {
                                 Program.jsonData[index].IsStudent = false;
                                 break;
                             }
                             else
                             {
-                                System.Console.WriteLine("Invalid input!");
+                                System.Console.WriteLine("Invalide input!");
                             }
                         }
                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);

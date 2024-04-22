@@ -6,44 +6,44 @@ namespace MegaBios
     {
         public static void CreateNewAccount(List<TestAccount> jsonData)
         {
-            Console.WriteLine("\nCreate a new account");
+            Console.WriteLine("\nCreëer nieuw account");
             Console.WriteLine("--------------------");
 
-            Console.Write("Enter first name: ");
+            Console.Write("Voer voornaam in: ");
             string voornaam = Console.ReadLine();
 
-            Console.Write("Enter middle name (if any): ");
+            Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
             string tussenvoegsel = Console.ReadLine();
 
-            Console.Write("Enter last name: ");
+            Console.Write("Voer achternaam in:");
             string achternaam = Console.ReadLine();
 
-            Console.Write("Enter date of birth (YYYY-MM-DD): ");
+            Console.Write("Voer geboortedatum in(YYYY-MM-DD): ");
             string geboorteDatum = Console.ReadLine();
 
             Dictionary<string, string> adres = new Dictionary<string, string>();
-            Console.Write("Enter street: ");
+            Console.Write("Voer straatnaam in:");
             adres["straat"] = Console.ReadLine();
 
-            Console.Write("Enter house number: ");
+            Console.Write("Voer huisnummer in:");
             adres["huisnummer"] = Console.ReadLine();
 
-            Console.Write("Enter city: ");
+            Console.Write("Voer woonplaats in");
             adres["woonplaats"] = Console.ReadLine();
 
-            Console.Write("Enter postal code: ");
+            Console.Write("Voer postcode in: ");
             adres["postcode"] = Console.ReadLine();
 
-            Console.Write("Enter email: ");
+            Console.Write("Voer email in: ");
             string email = Console.ReadLine()!;
 
             string wachtwoord;
             while (true)
             {
-                Console.WriteLine("Enter password: ");
+                Console.WriteLine("Voer wachtwoord in: ");
                 string inputWachtwoord = HelperFunctions.MaskPasswordInput();
 
-                Console.WriteLine("Confirm your password: ");
+                Console.WriteLine("Bevestig wachtwoord: ");
                 string confirmWachtwoord = HelperFunctions.MaskPasswordInput();
 
                 if (inputWachtwoord == confirmWachtwoord)
@@ -53,16 +53,16 @@ namespace MegaBios
                 }
             }
 
-            Console.Write("Enter phone number: ");
+            Console.Write("Voer telefoonnummer in: ");
             string telefoonNr = Console.ReadLine()!;
 
-            Console.Write("Enter preferred payment method: ");
+            Console.Write("Voer uw voorkeur voor betaalwijze in: ");
             string betaalwijze = Console.ReadLine()!;
 
             bool is_student;
             while (true)
             {
-                Console.Write("Are you a student? (true/false): ");
+                Console.Write("Bent u student? (true/false): ");
                 string is_studentString = Console.ReadLine()!;
 
                 if (is_studentString == "true" || is_studentString == "false")
@@ -77,7 +77,7 @@ namespace MegaBios
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);
 
-            Console.WriteLine("New account created successfully!");
+            Console.WriteLine("Succesvol nieuw account gemaakt!");
         }
     }
 }
