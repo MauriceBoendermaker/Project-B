@@ -839,12 +839,12 @@
         {
           "seat_number": "B2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "B3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "B4",
@@ -919,17 +919,17 @@
         {
           "seat_number": "B18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "B19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "B20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -941,12 +941,12 @@
         {
           "seat_number": "C2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "C3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "C4",
@@ -1021,17 +1021,17 @@
         {
           "seat_number": "C18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "C19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "C20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -1043,12 +1043,12 @@
         {
           "seat_number": "D2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "D3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "D4",
@@ -1123,17 +1123,17 @@
         {
           "seat_number": "D18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "D19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "D20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -1145,12 +1145,12 @@
         {
           "seat_number": "E2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "E3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "E4",
@@ -1225,17 +1225,17 @@
         {
           "seat_number": "E18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "E19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "E20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -1247,12 +1247,12 @@
         {
           "seat_number": "F2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "F3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "F4",
@@ -1327,17 +1327,17 @@
         {
           "seat_number": "F18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "F19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "F20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -1349,12 +1349,12 @@
         {
           "seat_number": "G2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "G3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "G4",
@@ -1429,17 +1429,17 @@
         {
           "seat_number": "G18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "G19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "G20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -1451,12 +1451,12 @@
         {
           "seat_number": "H2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "H3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "H4",
@@ -1531,17 +1531,17 @@
         {
           "seat_number": "H18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "H19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "H20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -1553,12 +1553,12 @@
         {
           "seat_number": "I2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "I3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "I4",
@@ -1633,17 +1633,17 @@
         {
           "seat_number": "I18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "I19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "I20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -1655,12 +1655,12 @@
         {
           "seat_number": "J2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "J3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "J4",
@@ -1735,17 +1735,17 @@
         {
           "seat_number": "J18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "J19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "J20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -1757,12 +1757,12 @@
         {
           "seat_number": "K2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "K3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "K4",
@@ -1837,17 +1837,17 @@
         {
           "seat_number": "K18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "K19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "K20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -1859,12 +1859,12 @@
         {
           "seat_number": "L2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "L3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "L4",
@@ -1939,17 +1939,17 @@
         {
           "seat_number": "L18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "L19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "L20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -1961,12 +1961,12 @@
         {
           "seat_number": "M2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "M3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "M4",
@@ -2041,17 +2041,17 @@
         {
           "seat_number": "M18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "M19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "M20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -2063,12 +2063,12 @@
         {
           "seat_number": "N2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "N3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "N4",
@@ -2143,17 +2143,17 @@
         {
           "seat_number": "N18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "N19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "N20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -2165,12 +2165,12 @@
         {
           "seat_number": "O2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "O3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "O4",
@@ -2245,17 +2245,17 @@
         {
           "seat_number": "O18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "O19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "O20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -2267,12 +2267,12 @@
         {
           "seat_number": "P2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "P3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "P4",
@@ -2347,17 +2347,17 @@
         {
           "seat_number": "P18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "P19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "P20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -2369,12 +2369,12 @@
         {
           "seat_number": "Q2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "Q3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "Q4",
@@ -2449,17 +2449,17 @@
         {
           "seat_number": "Q18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "Q19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "Q20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -2471,12 +2471,12 @@
         {
           "seat_number": "R2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "R3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "R4",
@@ -2551,17 +2551,17 @@
         {
           "seat_number": "R18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "R19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "R20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ],
       [
@@ -2573,12 +2573,12 @@
         {
           "seat_number": "S2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "S3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "S4",
@@ -2653,17 +2653,17 @@
         {
           "seat_number": "S18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "S19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "S20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         }
       ],
       [
@@ -2675,12 +2675,12 @@
         {
           "seat_number": "T2",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "T3",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "T4",
@@ -2755,17 +2755,17 @@
         {
           "seat_number": "T18",
           "is_taken": false,
-          "type": "handicap"
+          "type": "normal"
         },
         {
           "seat_number": "T19",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         },
         {
           "seat_number": "T20",
           "is_taken": false,
-          "type": "handicap"
+          "type": "love seat"
         }
       ]
     ],

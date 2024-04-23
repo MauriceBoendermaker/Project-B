@@ -87,10 +87,10 @@ namespace MegaBios
                     Seat seat = new Seat();
                     seat.SeatNumber = $"{SeatSelect.rowLetters[i]}{j}";
                     seat.SeatTaken = false;
-                    if (i == 0 && j == 1 || j == 2 || j == 3 || j == width || j == width - 1 || j == width - 2) {
+                    if (i == 0 && (j == 1 || j == 2 || j == 3 || j == width || j == width - 1 || j == width - 2)) {
                         seat.SeatType = "handicap";
                     }
-                    else if (i != 0 && i % 2 != 0 && j == 1 || j == 2 || j == width || j == width - 2) {
+                    else if (i != 0 && i % 2 != 0 && (j == 1 || j == 2 || j == width || j == width - 1)) {
                         seat.SeatType = "love seat";
                     }
                     else {
