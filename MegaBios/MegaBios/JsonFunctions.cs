@@ -9,7 +9,7 @@ namespace MegaBios
 {
     internal class JsonFunctions
     {
-        public static void WriteToJson(string filePath, List<TestAccount> data)
+        public static void WriteToJson<T>(string filePath, List<T> data)
         {
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, jsonString);
@@ -64,6 +64,29 @@ namespace MegaBios
             };
             var cinemaData = JsonSerializer.Deserialize<CinemaData>(jsonString, options);
             return cinemaData?.CinemaRooms ?? new List<CinemaRoom>();
+        }
+
+        public static List<List<Seat>> GenerateSeating(int width, int height) {
+            List<List<Seat>> seating = new List<List<Seat>>(height);
+            for (int i = 0; i < height; i++) {
+                seating.Add(new List<Seat>(width));
+                for (int j = 1; j <= width; j++) {
+                    Seat seat = new Seat();
+                    seat.SeatNumber = $"{SeatSelect.rowLetters[i]}{j}";
+                    seat.SeatTaken = false;
+                    if (i == 0 && j == 1 || j == 2 || j == 3 || j == width || j == width - 1 || j == width - 2) {
+                        seat.SeatType = "handicap";
+                    }
+                    else if (i != 0 && i % 2 != 0 && j == 1 || j == 2 || j == width || j == width - 2) {
+                        seat.SeatType = "love seat";
+                    }
+                    else {
+                        seat.SeatType = "normal";
+                    }
+                    seating[i].Add(seat);
+                }
+            }
+            return seating;
         }
     }
 }

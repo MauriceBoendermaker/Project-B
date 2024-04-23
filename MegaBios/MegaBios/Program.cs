@@ -46,6 +46,43 @@ namespace MegaBios
                     case "3":
                         Login();
                         break;
+                    
+                    case "4763":
+                        List<CinemaRoom> rooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
+                        while(true) {
+                            System.Console.WriteLine($"Welke zaal wil je updaten? Voer het nummer van de zaal in");
+                            for (int i = 0; i < rooms.Count; i++) {
+                                System.Console.WriteLine(rooms[i].RoomNumber);
+                            }
+                            try {
+                                int roomNumber = Convert.ToInt32(Console.ReadLine());
+                                if (0 < roomNumber - 1 && roomNumber - 1 < rooms.Count) {
+                                    while(true) {
+                                        try {
+                                            System.Console.WriteLine("Hoe breed moet de zaal zijn?");
+                                            int roomWidth = Convert.ToInt32(Console.ReadLine());
+                                            System.Console.WriteLine("Hoe lang moet de zaal zijn?");
+                                            int roomHeight = Convert.ToInt32(Console.ReadLine());
+                                            List<List<Seat>> seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
+                                            rooms[roomNumber - 1].Seating = seating;
+                                            JsonFunctions.WriteToJson("../../../CinemaRooms.json", rooms);
+                                            break;
+                                        }
+                                        catch (Exception e) {
+                                            System.Console.WriteLine(e);
+                                            System.Console.WriteLine("Voer alsjeblieft een nummer in");
+                                        }
+                                        
+                                    }
+                                    break;
+                                }
+                            }
+                            catch (Exception e) {
+                                System.Console.WriteLine("Voer alstublieft een valide nummer in");
+                            }
+                        }    
+                        break;
+                        
                     default:
                         Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                         break;

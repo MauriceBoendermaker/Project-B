@@ -106,12 +106,12 @@ namespace MegaBios
 
                 for (int j = 0; j < seating[i].Count; j++)
                 {
-                    // Special color for handicapped seats
+                    
                     if (seating[i][j].SeatTaken == true)
                     {
                         Console.BackgroundColor = ConsoleColor.Red;
                     }
-
+                    // Special color for handicapped seats
                     else if (seating[i][j].SeatType == "handicap")
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
