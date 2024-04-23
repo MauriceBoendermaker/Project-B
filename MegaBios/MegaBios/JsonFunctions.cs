@@ -56,14 +56,27 @@ namespace MegaBios
 
         public static List<CinemaRoom> LoadCinemaRooms(string filePath)
         {
-            string jsonString = File.ReadAllText(filePath);
-            var options = new JsonSerializerOptions
+            try
             {
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            };
-            var cinemaData = JsonSerializer.Deserialize<CinemaData>(jsonString, options);
-            return cinemaData?.CinemaRooms ?? new List<CinemaRoom>();
+                string jsonString = File.ReadAllText(filePath);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                List<CinemaRoom> cinemaRooms = JsonSerializer.Deserialize<List<CinemaRoom>>(jsonString, options);
+                return cinemaRooms ?? new List<CinemaRoom>();
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"Failed to deserialize JSON to type 'List<CinemaRoom>': {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                throw;
+            }
         }
 
         public static List<List<Seat>> GenerateSeating(int width, int height) {
