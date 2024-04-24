@@ -132,13 +132,13 @@ namespace MegaBios
                     {
                         // Adds the selected seat to the list
                         _selectedSeat = seating[i][j];
-                        // Change bg color to green
-                        colorText +=  "\x1b[42m";
+                        // color is yellow
+                        colorText +=  "\x1b[43m";
                     }
                     // If seat has already been selected
                     else if (_selectedSeats.Contains(seating[i][j])) {
-                        // color is yellow
-                        colorText +=  "\x1b[43m";
+                        // color is green
+                        colorText +=  "\x1b[42m";
                     }   
 
                     // Print misc chairs
@@ -311,32 +311,10 @@ namespace MegaBios
 
         public void PrintLegend()
         {
-            System.Console.WriteLine($"Legenda: ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-
-            System.Console.Write("[]", Console.ForegroundColor);
-            Console.ResetColor();
-
-            System.Console.Write(" = Handicap stoelen, ");
-            Console.ForegroundColor = ConsoleColor.Magenta;
-
-            System.Console.Write("[]", Console.ForegroundColor);
-            Console.ResetColor();
-
-            System.Console.Write(" = Loveseats, [] = Normale stoelen, ");
-            Console.BackgroundColor = ConsoleColor.Red;
-
-            System.Console.Write("[]", Console.BackgroundColor);
-            Console.ResetColor();
-
-            System.Console.Write(" = Bezette stoelen, ");
-            Console.BackgroundColor = ConsoleColor.Green;
-
-            System.Console.Write("[]", Console.BackgroundColor);
-            Console.ResetColor();
-
-            System.Console.Write(" = Gekozen seats\n");
-            System.Console.WriteLine("\n");
+            StringBuilder legendText = new StringBuilder();
+            legendText.Append($"Legenda:\n");
+            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen, \x1b[35m[]\x1b[0m = Loveseats, [] = Normale Stoelen, \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
+            System.Console.WriteLine(legendText);
 
         }
 
