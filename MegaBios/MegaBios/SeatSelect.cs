@@ -1,5 +1,6 @@
 using System.Formats.Asn1;
 using System.Reflection.Metadata;
+using System.Text;
 
 namespace MegaBios
 {
@@ -93,61 +94,66 @@ namespace MegaBios
             }
             Console.WriteLine(selectedSeatsString);
         }
-
-
+        
         public void DisplaySeats(CinemaRoom room, List<int> cursorPos)
         {
             List<List<Seat>> seating = room.Seating;
-            System.Console.WriteLine("\n\n");
+            System.Console.WriteLine("\n\x1b[0m");
+            StringBuilder seatingText = new StringBuilder();
             for (int i = 0; i < seating.Count; i++)
             {
                 string rowLetter = rowLetters[i];
-                System.Console.WriteLine("");
 
                 for (int j = 0; j < seating[i].Count; j++)
                 {
-                    
-                    if (seating[i][j].SeatTaken == true)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Red;
-                    }
+                    string colorText = "";
                     // Special color for handicapped seats
-                    else if (seating[i][j].SeatType == "handicap")
+                    if (seating[i][j].SeatType == "handicap")
                     {
+                        colorText = "\x1b[34m";
                         Console.ForegroundColor = ConsoleColor.Blue;
                     }
 
                     // Special color for love seat
                     else if (seating[i][j].SeatType == "love seat")
                     {
+                        colorText = "\x1b[35m";
                         Console.ForegroundColor = ConsoleColor.Magenta;
                     }
 
+                    if (seating[i][j].SeatTaken == true)
+                    {
+                        colorText += "\x1b[41m";
+                        Console.BackgroundColor = ConsoleColor.Red;
+                    }
+
                     // If cursor is hovering over Seat or or if seat is already selected:
-                    if ((i == cursorPos[1] && j == cursorPos[0]) || _selectedSeats.Contains(seating[i][j]))
+                    else if (i == cursorPos[1] && j == cursorPos[0])
                     {
                         // Adds the selected seat to the list
-                        if ((i == cursorPos[1] && j == cursorPos[0]))
-                        {
-                            _selectedSeat = seating[i][j];
-                        }
-                        Console.BackgroundColor = ConsoleColor.Green;
+                        _selectedSeat = seating[i][j];
+                        // Change bg color to green
+                        colorText +=  "\x1b[42m";
                     }
+                    // If seat has already been selected
+                    else if (_selectedSeats.Contains(seating[i][j])) {
+                        // color is yellow
+                        colorText +=  "\x1b[43m";
+                    }   
 
                     // Print misc chairs
                     if (j == seating[i].Count)
                     {
-                        Console.Write($"{seating[i][j].SeatNumber}", Console.ForegroundColor, Console.BackgroundColor);
+                        seatingText.Append($"{colorText}{seating[i][j].SeatNumber}\x1b[0m");
                     }
                     else
                     {
-                        Console.Write($"{seating[i][j].SeatNumber}", Console.ForegroundColor, Console.BackgroundColor);
-                        Console.ResetColor();
-                        Console.Write(" ", Console.ForegroundColor, Console.BackgroundColor);
+                        seatingText.Append($"{colorText}{seating[i][j].SeatNumber}\x1b[0m ");
                     }
-                    Console.ResetColor();
                 }
+                seatingText.Append("\n\x1b[0m");
             }
+            System.Console.WriteLine(seatingText);
             System.Console.WriteLine("\n");
             System.Console.Write("Geselecteerde stoelen: ");
             string selectedSeatsString = "";
@@ -287,18 +293,18 @@ namespace MegaBios
             {
                 cursor[0] = 0;
             }
-            else if (cursor[0] > columns)
+            else if (cursor[0] >= columns)
             {
-                cursor[0] = columns;
+                cursor[0] = columns - 1;
             }
 
             if (cursor[1] < 0)
             {
                 cursor[1] = 0;
             }
-            else if (cursor[1] > rows)
+            else if (cursor[1] >= rows)
             {
-                cursor[1] = rows;
+                cursor[1] = rows - 1;
             }
             return cursor;
         }
