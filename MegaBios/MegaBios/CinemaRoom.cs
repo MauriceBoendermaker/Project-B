@@ -26,6 +26,20 @@ namespace MegaBios
         
     }
 
+    // public class Seat {
+    //     [JsonPropertyName("seat_number")]
+    //     public string SeatNumber {get;set;} 
+    //     [JsonPropertyName("is_taken")]
+    //     public bool SeatTaken {get;set;}
+    //     [JsonPropertyName("type")]
+    //     public string SeatType {get;set;}
+    //     [JsonPropertyName("price")]
+    //     public double Price {get;set;}
+    //     [JsonPropertyName("price_multiplier")]
+    //     public double PriceMultiplier {get;set;}
+        
+    // }
+
     public class MovieSchedule
     {
         [JsonPropertyName("movie")]
