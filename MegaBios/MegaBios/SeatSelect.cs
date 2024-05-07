@@ -94,78 +94,64 @@ namespace MegaBios
             }
             Console.WriteLine(selectedSeatsString);
         }
-        
+
         public void DisplaySeats(CinemaRoom room, List<int> cursorPos)
         {
             List<List<Seat>> seating = room.Seating;
-            System.Console.WriteLine("\n\x1b[0m");
+
+            Console.Clear();
+            Console.WriteLine("\n\x1b[0m");
+
             StringBuilder seatingText = new StringBuilder();
+
+            double currentSeatPrice = 0.0;
+
             for (int i = 0; i < seating.Count; i++)
             {
                 string rowLetter = rowLetters[i];
-
                 for (int j = 0; j < seating[i].Count; j++)
                 {
-                    string colorText = "";
-                    // Special color for handicapped seats
+                    string colorText = ""; // ANSI kleurcode string
                     if (seating[i][j].SeatType == "handicap")
                     {
-                        colorText = "\x1b[34m";
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        colorText = "\x1b[34m"; // Blauw
                     }
-
-                    // Special color for love seat
                     else if (seating[i][j].SeatType == "love seat")
                     {
-                        colorText = "\x1b[35m";
-                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        colorText = "\x1b[35m"; // Magenta
                     }
-
-                    if (seating[i][j].SeatTaken == true)
+                    if (seating[i][j].SeatTaken)
                     {
-                        colorText += "\x1b[41m";
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        colorText += "\x1b[41m"; // Rode kleur voor bezette stoelen
                     }
-
-                    // If cursor is hovering over Seat or or if seat is already selected:
                     else if (i == cursorPos[1] && j == cursorPos[0])
                     {
-                        // Adds the selected seat to the list
                         _selectedSeat = seating[i][j];
-                        // color is yellow
-                        colorText +=  "\x1b[43m";
+                        currentSeatPrice = _selectedSeat.Price; // Update huidige stoel
+                        colorText += "\x1b[43m"; // Gele achtergrond voor huidige stoel
                     }
-                    // If seat has already been selected
-                    else if (_selectedSeats.Contains(seating[i][j])) {
-                        // color is green
-                        colorText +=  "\x1b[42m";
-                    }   
-
-                    // Print misc chairs
-                    if (j == seating[i].Count)
+                    else if (_selectedSeats.Contains(seating[i][j]))
                     {
-                        seatingText.Append($"{colorText}{seating[i][j].SeatNumber}\x1b[0m");
+                        colorText += "\x1b[42m"; // Groene achtergrond voor al bezette stoelen
                     }
-                    else
-                    {
-                        seatingText.Append($"{colorText}{seating[i][j].SeatNumber}\x1b[0m ");
-                    }
+                    seatingText.Append($"{colorText}{seating[i][j].SeatNumber}\x1b[0m ");
                 }
-                seatingText.Append("\n\x1b[0m");
+                seatingText.AppendLine("\x1b[0m");
             }
-            System.Console.WriteLine(seatingText);
-            System.Console.WriteLine("\n");
-            System.Console.Write("Geselecteerde stoelen: ");
-            string selectedSeatsString = "";
-            foreach (Seat seat in _selectedSeats)
-            {
-                selectedSeatsString += seat.SeatNumber + " ";
-            }
-            System.Console.Write(selectedSeatsString);
-            System.Console.WriteLine("\n");
+
+            Console.WriteLine(seatingText);
+            Console.WriteLine("\nGeselecteerde stoelen: ");
+            _selectedSeats.ForEach(seat => Console.Write(seat.SeatNumber + " "));
+
+            double totalPrice = CalculateTotalPrice();
+
+            Console.WriteLine($"\n\nHuidige stoel prijs: {currentSeatPrice:0.00} euro");
+            Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice:0.00} euro\n"); // Totaalprijs
+
             PrintLegend();
-            System.Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op Space om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op Backspace om stoelselectie te wissen");
-            System.Console.WriteLine(_extraMessage);
+
+            Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op Space om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op Backspace om stoelselectie te wissen");
+            Console.WriteLine(_extraMessage);
         }
 
         private List<int> NavigateMenu(List<int> cursor)
@@ -177,7 +163,7 @@ namespace MegaBios
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 switch (keyInfo.Key)
                 {
-                    // The cases with up-down-left-right arrow adjust the cursor accordingly. The enter button selects the current seat
+                    // Cursor voor navigeren, enter is select huidige stoel.
                     case ConsoleKey.UpArrow:
                         cursor[1]--;
                         cursor = CorrectCursorPos(cursor, seating.Count, seating[0].Count);
@@ -203,12 +189,10 @@ namespace MegaBios
                         bool isAdjacent = AdjacentSeatCheck(cursor);
                         if (_selectedSeats.Contains(_selectedSeat))
                         {
-                            // System.Console.WriteLine("You have already selected that seat!");
                             _extraMessage = "Je hebt deze stoel al geselecteerd!";
                         }
                         else if (_selectedSeat.SeatTaken == true)
                         {
-                            // System.Console.WriteLine("Seat is already taken!");
                             _extraMessage = "Deze stoel is al bezet!";
                         }
                         else if (isAdjacent)
@@ -217,11 +201,9 @@ namespace MegaBios
                             UpdateSeatBounds(_selectedSeat);
                             if (_selectedSeat.SeatType == "love seat")
                             {
-                                // Get the corresponding seats for the selected love seat
                                 Seat rightCorrespondingSeat = GetCorrespondingLoveSeatRight(_selectedSeat);
                                 Seat leftCorrespondingSeat = GetCorrespondingLoveSeatLeft(_selectedSeat);
 
-                                // If the corresponding seats are not already selected, select them
                                 if (rightCorrespondingSeat != null && !_selectedSeats.Contains(rightCorrespondingSeat) && rightCorrespondingSeat.SeatType == "love seat")
                                 {
                                     _selectedSeats.Add(rightCorrespondingSeat);
@@ -233,7 +215,6 @@ namespace MegaBios
                                     UpdateSeatBounds(leftCorrespondingSeat);
                                 }
                             }
-                            // System.Console.WriteLine($"You selected seat {_selectedSeat.SeatNumber}");
                             _extraMessage = $"Stoel geselecteerd: {_selectedSeat.SeatNumber}";
                         }
                         else if (!isAdjacent)
@@ -313,7 +294,7 @@ namespace MegaBios
         {
             StringBuilder legendText = new StringBuilder();
             legendText.Append($"Legenda:\n");
-            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen, \x1b[35m[]\x1b[0m = Loveseats, [] = Normale Stoelen, \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
+            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro), \x1b[35m[]\x1b[0m = Loveseats (20.00 euro), [] = Normale Stoelen (10.00 euro), \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
             System.Console.WriteLine(legendText);
 
         }
@@ -358,6 +339,18 @@ namespace MegaBios
             {
                 return false;
             }
+        }
+
+        public double CalculateTotalPrice()
+        {
+            double total = 0.0;
+
+            foreach (Seat seat in _selectedSeats)
+            {
+                total += seat.Price;
+            }
+
+            return total;
         }
     }
 }
