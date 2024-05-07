@@ -64,12 +64,12 @@ namespace MegaBios
                     PropertyNameCaseInsensitive = true,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 };
-                List<CinemaRoom> cinemaRooms = JsonSerializer.Deserialize<List<CinemaRoom>>(jsonString, options);
-                return cinemaRooms ?? new List<CinemaRoom>();
+                CinemaData cinemaData = JsonSerializer.Deserialize<CinemaData>(jsonString, options);
+                return cinemaData?.CinemaRooms ?? new List<CinemaRoom>();
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"Failed to deserialize JSON to type 'List<CinemaRoom>': {ex.Message}");
+                Console.WriteLine($"Failed to deserialize JSON to type 'CinemaData': {ex.Message}");
                 throw;
             }
             catch (Exception ex)
