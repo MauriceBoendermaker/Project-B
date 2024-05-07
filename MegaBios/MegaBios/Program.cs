@@ -147,8 +147,34 @@ namespace MegaBios
                                 System.Console.WriteLine("Uw data is geupdatet!");
                                 break;
                             case "4":
-                                string movie = "Doornroosje";
                                 List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
+                                List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
+                                int cursorPos = 0;
+                                string selectedMovie = "";
+                                while(true) {
+                                    Console.Clear();
+                                    System.Console.WriteLine("Selecteer een film/zaal door het nummer in te voeren.");
+                                    for(int i = 0; i < movies.Count; i++) {
+                                        if (i == cursorPos) {
+                                            System.Console.WriteLine($"> {movies[i].Title}");
+                                        }
+                                        else {
+                                            System.Console.WriteLine($"{movies[i].Title}");
+                                        }
+                                    }
+                                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                                    if (keyInfo.Key == ConsoleKey.Enter) {
+                                        selectedMovie = movies[cursorPos].Title;
+                                        break;
+                                    }
+                                    else {
+                                        cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
+                                    }
+                                }
+                                // for(int i = 0; i < cinemaRooms.Count; i++) {
+                                //     Dictionary<string, MovieSchedule> roomSchedule = cinemaRooms[i].Schedule;
+                                // }
+                            
                                 SeatSelect seatSelect = new(cinemaRooms[2]);
                                 seatSelect.SelectSeats();
                                 break;

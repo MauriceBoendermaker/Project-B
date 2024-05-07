@@ -25,8 +25,10 @@ cinema_data = {
     ]
 }
 
+
 def generate_seat_number(row, col):
     return chr(65 + row) + str(col + 1)
+
 
 for room_number in range(1, 6):
     rows = random.choice([8, 9, 10])
