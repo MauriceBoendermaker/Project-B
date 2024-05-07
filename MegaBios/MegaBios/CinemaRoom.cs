@@ -18,12 +18,14 @@ namespace MegaBios
 
     public class Seat {
         [JsonPropertyName("seat_number")]
-        public string SeatNumber {get;set;} 
+        public string SeatNumber { get; set; } 
         [JsonPropertyName("is_taken")]
-        public bool SeatTaken {get;set;}
+        public bool SeatTaken { get; set; }
         [JsonPropertyName("type")]
-        public string SeatType {get;set;}
-        
+        public string SeatType { get; set; }
+        [JsonPropertyName("price")]
+        public double Price { get; set; }
+
     }
 
     // public class Seat {
@@ -37,7 +39,7 @@ namespace MegaBios
     //     public double Price {get;set;}
     //     [JsonPropertyName("price_multiplier")]
     //     public double PriceMultiplier {get;set;}
-        
+
     // }
 
     public class MovieSchedule
@@ -47,5 +49,8 @@ namespace MegaBios
 
         [JsonPropertyName("start_time")]
         public string StartTime { get; set; }
+
+        [JsonPropertyName("price_multiplier")]
+        public double PriceMultiplier { get; set; } = 1.0; // Standaard multiplier
     }
 }
