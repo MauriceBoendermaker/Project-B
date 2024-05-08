@@ -178,37 +178,42 @@ namespace MegaBios
         }
 
         public static void LoggedInMenu(TestAccount account) {
-            int cursorPos = 0;
-            int userChoice = -1;
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
-                List<string> menuOptions = new() {"Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Maak een reservering"};
-                // Console.WriteLine("1. Toon Accountinformatie \n2. Verwijder Account\n3. Werk Accountinformatie bij\n4. Bestel ticket\n5. Maak een reservering\n");
-                
-                for (int i = 0; i < menuOptions.Count; i++) {
-                    if (cursorPos == i) {
-                        System.Console.WriteLine($"> {menuOptions[i]}");
+            while(true) {
+                int cursorPos = 0;
+                int userChoice = -1;
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
+                    List<string> menuOptions = new() {"Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Maak een reservering"};
+                    // Console.WriteLine("1. Toon Accountinformatie \n2. Verwijder Account\n3. Werk Accountinformatie bij\n4. Bestel ticket\n5. Maak een reservering\n");
+                    
+                    for (int i = 0; i < menuOptions.Count; i++) {
+                        if (cursorPos == i) {
+                            System.Console.WriteLine($"> {menuOptions[i]}");
+                        }
+                        else {
+                            System.Console.WriteLine(menuOptions[i]);
+                        }
+                    }
+                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                    if (keyInfo.Key == ConsoleKey.Enter) {
+                        userChoice = cursorPos + 1;
+                        break;
                     }
                     else {
-                        System.Console.WriteLine(menuOptions[i]);
+                        cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
                     }
+                    
                 }
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Enter) {
-                    userChoice = cursorPos + 1;
-                    break;
-                }
-                else {
-                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
-                }
-                
-            }
                 switch (userChoice)
                 {
                     case 1:
+                        Console.Clear();
                         ReadAccount.DisplayUserInfo(account);
+                        System.Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
+                        ConsoleKeyInfo returnKeyPress = Console.ReadKey(true);
+
                         break;
                     case 2:
                         while (true)
@@ -218,7 +223,7 @@ namespace MegaBios
                             if (confirmInput == "ja")
                             {
                                 DeleteAccount.RemoveAccount(jsonData, account);
-                                break;
+                                return;
                             }
                             else if (confirmInput == "nee")
                             {
@@ -273,6 +278,8 @@ namespace MegaBios
                         Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                         break;
                 }
+            }
+            
 
         }
 
