@@ -21,40 +21,78 @@ namespace MegaBios
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
             JsonElement root = jsonDocument.RootElement;
             jsonData = JsonFunctions.ConvertJsonToList(root);
-            string choice = "";
-
-            Console.WriteLine("Welcome to MegaBios!");
-            Console.WriteLine("Please select an option:");
-            Console.WriteLine("1. Ga verder als gast");
-            Console.WriteLine("2. Creëer Account");
-            Console.WriteLine("3. Login");
-
-            while (choice != "1" && choice != "2" && choice != "3")
-            {
-
-                choice = Console.ReadLine();
-
-                switch (choice)
-                {
-                    case "1":
-                        LoginAsGuest();
-                        break;
-                    case "2":
-                        CreateAccount.CreateNewAccount(jsonData);
-                        Login();
-                        break;
-                    case "3":
-                        Login();
-                        break;
-                    
-                    case "4763":
-                        EditRoomSize();
-                        break;
-                        
-                    default:
-                        Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
-                        break;
+            int userChoice = -1;
+            int cursorPos = 0;
+            List<string> menuOptions = new() {"Ga verder als gast", "Creëer Account", "Login"};
+            while(true) {
+                Console.Clear();
+                Console.WriteLine("Welkom bij MegaBios!");
+                Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
+                // Console.WriteLine("1. Ga verder als gast");
+                // Console.WriteLine("2. Creëer Account");
+                // Console.WriteLine("3. Login");
+                for (int i = 0; i < menuOptions.Count; i++) {
+                    if (cursorPos == i) {
+                        System.Console.WriteLine($"> {menuOptions[i]}");
+                    }
+                    else {
+                        System.Console.WriteLine(menuOptions[i]);
+                    }
                 }
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter) {
+                    userChoice = cursorPos + 1;
+                    break;
+                }
+                else if (keyInfo.Key == ConsoleKey.Tab) {
+                    userChoice = 4;
+                    break;
+                }
+                else {
+                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
+                }
+            }
+            Console.Clear();
+            switch (userChoice)
+            {
+                case 1:
+                    LoginAsGuest();
+                    break;
+                case 2:
+                    CreateAccount.CreateNewAccount(jsonData);
+                    bool firstLogin = true;
+                    while (true) {
+                        (bool, TestAccount) loginInfo = Login(firstLogin);
+                        if (loginInfo.Item1 && loginInfo.Item2 != null) {
+                            LoggedInMenu(loginInfo.Item2);
+                            break;
+                        }
+                        else {
+                            firstLogin = false;
+                        }
+                    } 
+                    break;                   
+                case 3:
+                    firstLogin = true;
+                    while (true) {
+                        (bool, TestAccount) loginInfo = Login(firstLogin);
+                        if (loginInfo.Item1 && loginInfo.Item2 != null) {
+                            LoggedInMenu(loginInfo.Item2);
+                            break;
+                        }
+                        else {
+                            firstLogin = false;
+                        }
+                    } 
+                    break;
+                
+                case 4:
+                    EditRoomSize();
+                    break;
+                    
+                default:
+                    Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
+                    break;
             }
         }
 
@@ -63,31 +101,56 @@ namespace MegaBios
             LoggedInAsGuest = true; // Setting LoggedInAsGuest to True
             movies = JsonFunctions.LoadMovies("../../../Movies.json");
             cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
+            int cursorPos = 0;
+            int userChoice = -1;
             while (true)
             {
-                Console.WriteLine("1. Bestel ticket\n2. Maak een reservering\n");
-                string userChoice = Console.ReadLine();
+                Console.Clear();
+                Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
+                List<string> menuOptions = new() {"Bestel ticket", "Maak een reservering"};
+                for (int i = 0; i < menuOptions.Count; i++) {
+                    if (cursorPos == i) {
+                        System.Console.WriteLine($"> {menuOptions[i]}");
+                    }
+                    else {
+                        System.Console.WriteLine(menuOptions[i]);
+                    }
+                }
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter) {
+                    userChoice = cursorPos + 1;
+                    break;
+                }
+                else {
+                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
+                }
+                // Console.WriteLine("1. Bestel ticket\n2. Maak een reservering\n");
+            }
 
                 switch (userChoice)
                 {
-                    case "1":
+                    case 1:
                         string movie = "Doornroosje";
                         List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
                         SeatSelect seatSelect = new(cinemaRooms[2]);
                         seatSelect.SelectSeats();
                         break;
-                    case "2":
+                    case 2:
                         MakeReservation();
                         break;
                     default:
                         Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                         break;
                 }
-            }
+            
         }
-
-        static void Login()
+        // Return type is tuple for successful login bool, account info
+        static (bool, TestAccount) Login(bool firstLogin)
         {
+            Console.Clear();
+            if (!firstLogin) {
+                Console.WriteLine("Invalide gebruikersnaam of wachtwoord. Probeer het alstublieft opnieuw.\n");
+            }
             Console.WriteLine("Login Formulier");
             Console.WriteLine("-----------");
 
@@ -97,108 +160,120 @@ namespace MegaBios
             Console.Write("Voer wachtwoord in: ");
             string password = HelperFunctions.MaskPasswordInput();
 
-            bool isAuthenticated = false;
-
             foreach (TestAccount account in jsonData)
             {
                 if (account.Email == username && account.Wachtwoord == password)
                 {
-                    isAuthenticated = true;
 
                     Console.WriteLine("Succesvol ingelogd!");
 
                     movies = JsonFunctions.LoadMovies("../../../Movies.json");
                     cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
 
-                    bool isLoggedIn = true;
-                    while (true)
-                    {
-                        Console.WriteLine("1. Toon Accountinformatie \n2. Verwijder Account\n3. Werk Accountinformatie bij\n4. Bestel ticket\n5. Maak een reservering\n");
-                        string userChoice = Console.ReadLine();
-
-                        switch (userChoice)
-                        {
-                            case "1":
-                                ReadAccount.DisplayUserInfo(account);
-                                break;
-                            case "2":
-                                while (true)
-                                {
-                                    System.Console.WriteLine("Weet u zeker dat u uw account wilt verwijderen? (ja/nee)\n");
-                                    string confirmInput = Console.ReadLine()!;
-                                    if (confirmInput == "ja")
-                                    {
-                                        DeleteAccount.RemoveAccount(jsonData, account);
-                                        isLoggedIn = false;
-                                        break;
-                                    }
-                                    else if (confirmInput == "nee")
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        System.Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
-                                    }
-                                }
-                                break;
-                            case "3":
-                                UpdateAccount.UpdateField(account);
-                                System.Console.WriteLine("Uw data is geupdatet!");
-                                break;
-                            case "4":
-                                List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-                                List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
-                                int cursorPos = 0;
-                                string selectedMovie = "";
-                                while(true) {
-                                    Console.Clear();
-                                    System.Console.WriteLine("Selecteer een film/zaal door het nummer in te voeren.");
-                                    for(int i = 0; i < movies.Count; i++) {
-                                        if (i == cursorPos) {
-                                            System.Console.WriteLine($"> {movies[i].Title}");
-                                        }
-                                        else {
-                                            System.Console.WriteLine($"{movies[i].Title}");
-                                        }
-                                    }
-                                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                                    if (keyInfo.Key == ConsoleKey.Enter) {
-                                        selectedMovie = movies[cursorPos].Title;
-                                        break;
-                                    }
-                                    else {
-                                        cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
-                                    }
-                                }
-                                // for(int i = 0; i < cinemaRooms.Count; i++) {
-                                //     Dictionary<string, MovieSchedule> roomSchedule = cinemaRooms[i].Schedule;
-                                // }
-                            
-                                SeatSelect seatSelect = new(cinemaRooms[2]);
-                                seatSelect.SelectSeats();
-                                break;
-                            case "5":
-                                MakeReservation(account);
-                                break;
-                            default:
-                                Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
-                                break;
-                        }
-                        if (!isLoggedIn)
-                        {
-                            break;
-                        }
-                    }
-                    break;
+                    return (true, account); 
                 }
             }
+            Console.WriteLine("Invalide gebruikersnaam of wachtwoord. Probeer het alstublieft opnieuw.");
+            return (false, null);    
+        }
 
-            if (!isAuthenticated)
+        public static void LoggedInMenu(TestAccount account) {
+            int cursorPos = 0;
+            int userChoice = -1;
+            while (true)
             {
-                Console.WriteLine("Invalide gebruikersnaam of wachtwoord. Probeer het alstublieft opnieuw.");
-                // TODO: Code toevoegen voor verkeerde login pogingen
+                Console.Clear();
+                Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
+                List<string> menuOptions = new() {"Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Maak een reservering"};
+                // Console.WriteLine("1. Toon Accountinformatie \n2. Verwijder Account\n3. Werk Accountinformatie bij\n4. Bestel ticket\n5. Maak een reservering\n");
+                
+                for (int i = 0; i < menuOptions.Count; i++) {
+                    if (cursorPos == i) {
+                        System.Console.WriteLine($"> {menuOptions[i]}");
+                    }
+                    else {
+                        System.Console.WriteLine(menuOptions[i]);
+                    }
+                }
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter) {
+                    userChoice = cursorPos + 1;
+                    break;
+                }
+                else {
+                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
+                }
+                
             }
+                switch (userChoice)
+                {
+                    case 1:
+                        ReadAccount.DisplayUserInfo(account);
+                        break;
+                    case 2:
+                        while (true)
+                        {
+                            System.Console.WriteLine("Weet u zeker dat u uw account wilt verwijderen? (ja/nee)\n");
+                            string confirmInput = Console.ReadLine()!;
+                            if (confirmInput == "ja")
+                            {
+                                DeleteAccount.RemoveAccount(jsonData, account);
+                                break;
+                            }
+                            else if (confirmInput == "nee")
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                System.Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
+                            }
+                        }
+                        break;
+                    case 3:
+                        UpdateAccount.UpdateField(account);
+                        System.Console.WriteLine("Uw data is geupdatet!");
+                        break;
+                    case 4:
+                        List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
+                        List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
+                        cursorPos = 0;
+                        string selectedMovie = "";
+                        while(true) {
+                            Console.Clear();
+                            Console.WriteLine("Selecteer een film met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
+                            for(int i = 0; i < movies.Count; i++) {
+                                if (i == cursorPos) {
+                                    System.Console.WriteLine($"> {movies[i].Title}");
+                                }
+                                else {
+                                    System.Console.WriteLine($"{movies[i].Title}");
+                                }
+                            }
+                            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                            if (keyInfo.Key == ConsoleKey.Enter) {
+                                selectedMovie = movies[cursorPos].Title;
+                                break;
+                            }
+                            else {
+                                cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
+                            }
+                        }
+                        // for(int i = 0; i < cinemaRooms.Count; i++) {
+                        //     Dictionary<string, MovieSchedule> roomSchedule = cinemaRooms[i].Schedule;
+                        // }
+                    
+                        SeatSelect seatSelect = new(cinemaRooms[2]);
+                        seatSelect.SelectSeats();
+                        break;
+                    case 5:
+                        MakeReservation(account);
+                        break;
+                    default:
+                        Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
+                        break;
+                }
+
         }
 
         public static void EditRoomSize() {

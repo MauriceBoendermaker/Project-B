@@ -69,12 +69,6 @@
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true,
-    "history": [
-      {
-        "reservation_number": "c25396f4-b580-477a-8af9-7c655d914402",
-        "movie_title": null,
-        "reservation_date": "2024-04-22T14:12:09.6058292+02:00"
-      }
-    ]
+    "history": []
   }
 ]
