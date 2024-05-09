@@ -10,7 +10,7 @@ namespace MegaBios
         [JsonPropertyName("description")]
         public string Description { get; set; }
         [JsonPropertyName("duration")]
-        public string Duration { get; set; }
+        public int Duration { get; set; }
         [JsonPropertyName("start_date")]
         public DateTime StartDate { get; set; }
         [JsonPropertyName("end_date")]

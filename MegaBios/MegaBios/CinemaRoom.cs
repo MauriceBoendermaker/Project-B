@@ -16,6 +16,23 @@ namespace MegaBios
         public Dictionary<string, List<MovieSchedule>> Schedule { get; set; }
     }
 
+    public class RoomShowing
+    {
+        [JsonPropertyName("room_number")]
+        public string? RoomNumber { get; set; }
+
+        [JsonPropertyName("seating")]
+        public List<List<Seat>>? Seating { get; set; }
+
+        [JsonPropertyName("movie_playing")]
+        public string? Movie { get; set; }
+
+        [JsonPropertyName("show_time")]
+        public DateTime ShowingTime { get; set; }
+        [JsonPropertyName("in_maintenance")]
+        public bool InMaintenance { get; set; }
+    }
+
     public class Seat {
         [JsonPropertyName("seat_number")]
         public string SeatNumber { get; set; } 

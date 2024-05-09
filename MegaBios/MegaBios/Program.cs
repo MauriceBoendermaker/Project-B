@@ -28,9 +28,6 @@ namespace MegaBios
                 Console.Clear();
                 Console.WriteLine("Welkom bij MegaBios!");
                 Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
-                // Console.WriteLine("1. Ga verder als gast");
-                // Console.WriteLine("2. Creëer Account");
-                // Console.WriteLine("3. Login");
                 for (int i = 0; i < menuOptions.Count; i++) {
                     if (cursorPos == i) {
                         System.Console.WriteLine($"> {menuOptions[i]}");
@@ -44,8 +41,14 @@ namespace MegaBios
                     userChoice = cursorPos + 1;
                     break;
                 }
+                // Select option for editing seating
                 else if (keyInfo.Key == ConsoleKey.Tab) {
                     userChoice = 4;
+                    break;
+                }
+                //Select Menu for creating/editing Cinemaroom json files
+                else if (keyInfo.Key == ConsoleKey.LeftArrow) {
+                    userChoice = 5;
                     break;
                 }
                 else {
@@ -89,7 +92,11 @@ namespace MegaBios
                 case 4:
                     EditRoomSize();
                     break;
-                    
+
+                case 5: 
+                    CinemaRoomGenerator cinemaRoomGenerator = new CinemaRoomGenerator();
+                    cinemaRoomGenerator.GenerationMenu();
+                    break;
                 default:
                     Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                     break;
