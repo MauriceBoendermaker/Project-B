@@ -58,7 +58,8 @@ namespace MegaBios
         public void GenerateShowingData() {
             MegaBiosData megaBiosData = JsonFunctions.LoadMegaBiosData("../../../MegaBiosData.json");
             int numberOfRooms = megaBiosData.AmountOfRooms;
-            int? numberOfNewRooms = null;
+            int numberOfNewRooms = -1;
+            List<RoomShowing> roomShowings;
             while (true) {
                 System.Console.WriteLine("Enter the number of the amount of rooms you want to generate:");
                 try {
@@ -68,14 +69,14 @@ namespace MegaBios
                 catch (Exception e) {
                     System.Console.WriteLine(e);
                 }
-                if (numberOfNewRooms != null) {
+                if (numberOfRooms > 0) {
                     break;
                 }
             }
             // Get the seating
-            for (int i = 1 + numberOfRooms; i < numberOfNewRooms + numberOfRooms; i++) {
+            for (int i = 1 + numberOfRooms; i < numberOfNewRooms + numberOfRooms + 1; i++) {
                 string roomName = $"Room {i}";
-                bool in_maintenance = true;
+                bool inMaintenance = false;
                 List<List<Seat>>? seating;
                 while(true) {
                     try {
@@ -85,6 +86,8 @@ namespace MegaBios
                         System.Console.WriteLine("Hoe lang moet de zaal zijn?");
                         int roomHeight = Convert.ToInt32(Console.ReadLine());
                         seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
+                        roomShowings = GenerateRoomShowings(roomName, inMaintenance, seating);
+                        JsonFunctions.WriteToJson($"../../../Room{i}.json", roomShowings);
                         break;
                     }
                     catch (Exception e) {
@@ -92,31 +95,39 @@ namespace MegaBios
                         System.Console.WriteLine("Voer alsjeblieft een nummer in");
                     }
                 }
+                megaBiosData.AmountOfRooms += numberOfNewRooms;
+                JsonFunctions.WriteToJson("../../../MegaBiosData.json", megaBiosData);
             }
 
 
         }
-        // public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating) {
-        //     List<RoomShowing> roomShowings = new();
-        //     List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
-        //     DateTime? generationStartTime;
-        //     while(true) {
-        //         Console.Clear();
-        //         System.Console.WriteLine("Enter the start date and time for the first showing. The showings will generate until a week later.\nFormat: YYYY-MM-DD hh-mm-ss");
-        //         try {
-        //             generationStartTime = Convert.ToDateTime(Console.ReadLine());
-        //             if (generationStartTime.HasValue) {
-        //                 break;
-        //             }
-        //         }
-        //         catch (Exception e) {
-        //             System.Console.WriteLine(e);
-        //         }
-        //     }
-        //     DateTime? generationCurrentTime = generationStartTime;
-        //     Timest
-        //     while (generationTs == null || generationTs.Days)
-        //     return roomShowings;
-        // }
+        public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating) {
+            List<RoomShowing> roomShowings = new();
+            List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
+            DateTime generationStartTime;
+            while(true) {
+                Console.Clear();
+                System.Console.WriteLine("Enter the start date and time for the first showing. The showings will generate until a week later.\nFormat: YYYY-MM-DD hh-mm-ss");
+                try {
+                    generationStartTime = Convert.ToDateTime(Console.ReadLine());
+                    break;
+                }
+                catch (Exception e) {
+                    System.Console.WriteLine(e);
+                }
+            }
+            System.Console.WriteLine("test");
+            DateTime generationCurrentTime = generationStartTime;
+            TimeSpan generationTs = generationCurrentTime - generationStartTime;
+            Random rand = new Random();
+            while (generationTs.Days < 7) {
+                Movie currentMovie = movies[rand.Next(movies.Count)];
+                RoomShowing showingEntry = new RoomShowing(roomName, seating, currentMovie.Title, (DateTime)generationCurrentTime, inMaintenance);
+                generationCurrentTime = generationCurrentTime.AddMinutes(currentMovie.Duration + 15);
+                generationTs = generationCurrentTime - generationStartTime;
+                roomShowings.Add(showingEntry);
+            }
+            return roomShowings;
+        }
     }
 }

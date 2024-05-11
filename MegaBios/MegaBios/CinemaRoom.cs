@@ -31,7 +31,17 @@ namespace MegaBios
         public DateTime ShowingTime { get; set; }
         [JsonPropertyName("in_maintenance")]
         public bool InMaintenance { get; set; }
+
+        public RoomShowing(string roomNumber, List<List<Seat>> seating, string movie, DateTime showTime, bool inMaintenance) {
+            RoomNumber = roomNumber;
+            Seating = seating;
+            Movie = movie;
+            ShowingTime = showTime;
+            InMaintenance = inMaintenance;
+        }
     }
+
+    
 
     public class Seat {
         [JsonPropertyName("seat_number")]

@@ -9,7 +9,7 @@ namespace MegaBios
 {
     internal class JsonFunctions
     {
-        public static void WriteToJson<T>(string filePath, List<T> data)
+        public static void WriteToJson<T>(string filePath, T data)
         {
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, jsonString);
