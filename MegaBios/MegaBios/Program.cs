@@ -248,7 +248,7 @@ namespace MegaBios
                         break;
                     case 4:
                         List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-                        List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");\
+                        List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
                         MegaBiosData megaBiosData = JsonFunctions.LoadMegaBiosData("../../../MegaBiosData.json");
                         cursorPos = 0;
                         string selectedMovie = "";
@@ -278,6 +278,10 @@ namespace MegaBios
                             try {
                                 DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
                                 DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
+                                
+                                for (int i = 1; i <= megaBiosData.AmountOfRooms; i++) {
+                            
+                                }
                             }
                             catch (Exception ex) {
                                 Console.WriteLine("" + ex);
@@ -285,9 +289,7 @@ namespace MegaBios
 
                         }
                         
-                        for (int i = 1; i <= megaBiosData.AmountOfRooms; i++) {
-                            
-                        }
+                        
                         
                         // for(int i = 0; i < cinemaRooms.Count; i++) {
                         //     Dictionary<string, MovieSchedule> roomSchedule = cinemaRooms[i].Schedule;
