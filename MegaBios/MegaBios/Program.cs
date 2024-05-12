@@ -248,7 +248,8 @@ namespace MegaBios
                         break;
                     case 4:
                         List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-                        List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
+                        List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");\
+                        MegaBiosData megaBiosData = JsonFunctions.LoadMegaBiosData("../../../MegaBiosData.json");
                         cursorPos = 0;
                         string selectedMovie = "";
                         while(true) {
@@ -271,6 +272,23 @@ namespace MegaBios
                                 cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
                             }
                         }
+                        while(true) {
+                            Console.Clear();
+                            System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YY-mm-DD hh:mm:ss (Bijvoorbeeld: 2004-08-25 9:00:00))");
+                            try {
+                                DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
+                                DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
+                            }
+                            catch (Exception ex) {
+                                Console.WriteLine("" + ex);
+                            }
+
+                        }
+                        
+                        for (int i = 1; i <= megaBiosData.AmountOfRooms; i++) {
+                            
+                        }
+                        
                         // for(int i = 0; i < cinemaRooms.Count; i++) {
                         //     Dictionary<string, MovieSchedule> roomSchedule = cinemaRooms[i].Schedule;
                         // }
@@ -291,40 +309,73 @@ namespace MegaBios
         }
 
         public static void EditRoomSize() {
-            List<CinemaRoom> rooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-            while(true) {
+            int roomToEdit = -1;
+            // Get the room number
+            while (true) {
+                Console.Clear();
                 System.Console.WriteLine($"Welke zaal wil je updaten? Voer het nummer van de zaal in");
-                for (int i = 0; i < rooms.Count; i++) {
-                    System.Console.WriteLine(rooms[i].RoomNumber);
+                roomToEdit = Convert.ToInt32(System.Console.ReadLine());
+                if (File.Exists($"../../../Room{roomToEdit}.json")) {
+                    break;
                 }
+            }
+            // Get the width and height of the rooms and edit each seating plan in the json
+            List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room{roomToEdit}");
+            for (int i = 0; i < roomShowings.Count; i++) {
                 try {
-                    int roomNumber = Convert.ToInt32(Console.ReadLine());
-                    if (0 < roomNumber - 1 && roomNumber - 1 < rooms.Count) {
-                        while(true) {
-                            try {
-                                System.Console.WriteLine("Hoe breed moet de zaal zijn?");
-                                int roomWidth = Convert.ToInt32(Console.ReadLine());
-                                System.Console.WriteLine("Hoe lang moet de zaal zijn?");
-                                int roomHeight = Convert.ToInt32(Console.ReadLine());
-                                List<List<Seat>> seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
-                                rooms[roomNumber - 1].Seating = seating;
-                                JsonFunctions.WriteToJson("../../../CinemaRooms.json", rooms);
-                                break;
-                            }
-                            catch (Exception e) {
-                                System.Console.WriteLine(e);
-                                System.Console.WriteLine("Voer alsjeblieft een nummer in");
-                            }
-                            
-                        }
+                    while(true) {
+                        System.Console.WriteLine("Hoe breed moet de zaal zijn?");
+                        int roomWidth = Convert.ToInt32(Console.ReadLine());
+                        System.Console.WriteLine("Hoe lang moet de zaal zijn?");
+                        int roomHeight = Convert.ToInt32(Console.ReadLine());
+                        List<List<Seat>> seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
+                        roomShowings[i].Seating = seating;
                         break;
                     }
                 }
                 catch (Exception e) {
                     System.Console.WriteLine("Voer alstublieft een valide nummer in");
                 }
-            }    
+            } 
+            JsonFunctions.WriteToJson($"../../../Room{roomToEdit}", roomShowings);
         }
+
+        // public static void EditRoomSize() {
+        //     List<CinemaRoom> rooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
+        //     while(true) {
+        //         System.Console.WriteLine($"Welke zaal wil je updaten? Voer het nummer van de zaal in");
+        //         for (int i = 0; i < rooms.Count; i++) {
+        //             System.Console.WriteLine(rooms[i].RoomNumber);
+        //         }
+        //         try {
+        //             int roomNumber = Convert.ToInt32(Console.ReadLine());
+        //             if (0 < roomNumber - 1 && roomNumber - 1 < rooms.Count) {
+        //                 while(true) {
+        //                     try {
+        //                         System.Console.WriteLine("Hoe breed moet de zaal zijn?");
+        //                         int roomWidth = Convert.ToInt32(Console.ReadLine());
+        //                         System.Console.WriteLine("Hoe lang moet de zaal zijn?");
+        //                         int roomHeight = Convert.ToInt32(Console.ReadLine());
+        //                         List<List<Seat>> seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
+        //                         rooms[roomNumber - 1].Seating = seating;
+        //                         JsonFunctions.WriteToJson("../../../CinemaRooms.json", rooms);
+        //                         break;
+        //                     }
+        //                     catch (Exception e) {
+        //                         System.Console.WriteLine(e);
+        //                         System.Console.WriteLine("Voer alsjeblieft een nummer in");
+        //                     }
+                            
+        //                 }
+        //                 break;
+        //             }
+        //         }
+        //         catch (Exception e) {
+        //             System.Console.WriteLine("Voer alstublieft een valide nummer in");
+        //         }
+        //     }    
+        // }
+
 
         public static void MakeReservation()
         {
