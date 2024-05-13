@@ -19,19 +19,20 @@ namespace MegaBios
     public class RoomShowing
     {
         [JsonPropertyName("room_number")]
-        public string? RoomNumber { get; set; }
+        public string RoomNumber { get; set; }
 
         [JsonPropertyName("seating")]
-        public List<List<Seat>>? Seating { get; set; }
+        public List<List<Seat>> Seating { get; set; }
 
         [JsonPropertyName("movie_playing")]
-        public string? Movie { get; set; }
+        public string Movie { get; set; }
 
         [JsonPropertyName("show_time")]
         public DateTime ShowingTime { get; set; }
         [JsonPropertyName("in_maintenance")]
         public bool InMaintenance { get; set; }
 
+        
         public RoomShowing(string roomNumber, List<List<Seat>> seating, string movie, DateTime showTime, bool inMaintenance) {
             RoomNumber = roomNumber;
             Seating = seating;

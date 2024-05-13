@@ -15,16 +15,26 @@ namespace MegaBios
         private int _selectedSeatsRightBound = -1;
         private string _extraMessage;
 
-        public List<List<Seat>> seats = new List<List<Seat>>();
+        public List<List<Seat>> Seats = new List<List<Seat>>();
 
 
-        public CinemaRoom Room { get; set; }
+        public List<RoomShowing> RoomShowings {get; set;}
+        public RoomShowing Showing {get; set;}
+        public string RoomNumber {get; set;}
+        public DateTime ShowTime {get; set;}
         // public bool FinishedSelectingSeats = false;
 
-        public SeatSelect(CinemaRoom room)
+        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime)
         {
-            Room = room;
-            seats = room.Seating;
+            RoomShowings = roomShowings;
+            RoomNumber = roomNumber;
+            ShowTime = showTime;
+            foreach (RoomShowing showing in roomShowings) {
+                if (showing.ShowingTime == showTime) {
+                    Seats = showing.Seating;
+                    Showing = showing;
+                }
+            }
         }
 
         private Seat GetCorrespondingLoveSeatRight(Seat loveSeat)
@@ -37,7 +47,7 @@ namespace MegaBios
             string correspondingSeatNumber = $"{rowLetters[rowIndex]}{seatIndex + 2}";
 
             // Find and return the corresponding seat
-            foreach (List<Seat> row in Room.Seating)
+            foreach (List<Seat> row in Seats)
             {
                 foreach (Seat seat in row)
                 {
@@ -61,7 +71,7 @@ namespace MegaBios
             string correspondingSeatNumber = $"{rowLetters[rowIndex]}{seatIndex}";
 
             // Find and return the corresponding seat
-            foreach (List<Seat> row in Room.Seating)
+            foreach (List<Seat> row in Seats)
             {
                 foreach (Seat seat in row)
                 {
@@ -79,11 +89,11 @@ namespace MegaBios
         public void SelectSeats()
         {
             List<int> cursorPos = new() { 1, 1 };
-            DisplaySeats(Room, cursorPos);
+            DisplaySeats(cursorPos);
             while (!_confirmedSeats)
             {
                 Console.Clear();
-                DisplaySeats(Room, cursorPos);
+                DisplaySeats(cursorPos);
                 cursorPos = NavigateMenu(cursorPos);
             }
             Console.WriteLine($"Stoelen geselecteerd:");
@@ -95,9 +105,9 @@ namespace MegaBios
             Console.WriteLine(selectedSeatsString);
         }
 
-        public void DisplaySeats(CinemaRoom room, List<int> cursorPos)
+        public void DisplaySeats(List<int> cursorPos)
         {
-            List<List<Seat>> seating = room.Seating;
+            List<List<Seat>> seating = Seats;
 
             Console.Clear();
             Console.WriteLine("\n\x1b[0m");
@@ -157,7 +167,7 @@ namespace MegaBios
         private List<int> NavigateMenu(List<int> cursor)
         {
             bool moved = false;
-            List<List<Seat>> seating = Room.Seating;
+            List<List<Seat>> seating = Seats;
             while (!moved)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);

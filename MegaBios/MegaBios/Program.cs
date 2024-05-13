@@ -137,10 +137,7 @@ namespace MegaBios
                 switch (userChoice)
                 {
                     case 1:
-                        string movie = "Doornroosje";
-                        List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-                        SeatSelect seatSelect = new(cinemaRooms[2]);
-                        seatSelect.SelectSeats();
+                        TicketReservation();
                         break;
                     case 2:
                         MakeReservation();
@@ -247,57 +244,10 @@ namespace MegaBios
                         System.Console.WriteLine("Uw data is geupdatet!");
                         break;
                     case 4:
-                        List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-                        List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
-                        MegaBiosData megaBiosData = JsonFunctions.LoadMegaBiosData("../../../MegaBiosData.json");
-                        cursorPos = 0;
-                        string selectedMovie = "";
-                        while(true) {
-                            Console.Clear();
-                            Console.WriteLine("Selecteer een film met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
-                            for(int i = 0; i < movies.Count; i++) {
-                                if (i == cursorPos) {
-                                    System.Console.WriteLine($"> {movies[i].Title}");
-                                }
-                                else {
-                                    System.Console.WriteLine($"{movies[i].Title}");
-                                }
-                            }
-                            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                            if (keyInfo.Key == ConsoleKey.Enter) {
-                                selectedMovie = movies[cursorPos].Title;
-                                break;
-                            }
-                            else {
-                                cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
-                            }
-                        }
-                        while(true) {
-                            Console.Clear();
-                            System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YY-mm-DD hh:mm:ss (Bijvoorbeeld: 2004-08-25 9:00:00))");
-                            try {
-                                DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
-                                DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
-                                
-                                for (int i = 1; i <= megaBiosData.AmountOfRooms; i++) {
-                            
-                                }
-                            }
-                            catch (Exception ex) {
-                                Console.WriteLine("" + ex);
-                            }
-
-                        }
-                        
-                        
-                        
-                        // for(int i = 0; i < cinemaRooms.Count; i++) {
-                        //     Dictionary<string, MovieSchedule> roomSchedule = cinemaRooms[i].Schedule;
-                        // }
-                    
-                        SeatSelect seatSelect = new(cinemaRooms[2]);
-                        seatSelect.SelectSeats();
+                        TicketReservation();
                         break;
+                    
+
                     case 5:
                         MakeReservation(account);
                         break;
@@ -342,42 +292,94 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}", roomShowings);
         }
 
-        // public static void EditRoomSize() {
-        //     List<CinemaRoom> rooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-        //     while(true) {
-        //         System.Console.WriteLine($"Welke zaal wil je updaten? Voer het nummer van de zaal in");
-        //         for (int i = 0; i < rooms.Count; i++) {
-        //             System.Console.WriteLine(rooms[i].RoomNumber);
-        //         }
-        //         try {
-        //             int roomNumber = Convert.ToInt32(Console.ReadLine());
-        //             if (0 < roomNumber - 1 && roomNumber - 1 < rooms.Count) {
-        //                 while(true) {
-        //                     try {
-        //                         System.Console.WriteLine("Hoe breed moet de zaal zijn?");
-        //                         int roomWidth = Convert.ToInt32(Console.ReadLine());
-        //                         System.Console.WriteLine("Hoe lang moet de zaal zijn?");
-        //                         int roomHeight = Convert.ToInt32(Console.ReadLine());
-        //                         List<List<Seat>> seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
-        //                         rooms[roomNumber - 1].Seating = seating;
-        //                         JsonFunctions.WriteToJson("../../../CinemaRooms.json", rooms);
-        //                         break;
-        //                     }
-        //                     catch (Exception e) {
-        //                         System.Console.WriteLine(e);
-        //                         System.Console.WriteLine("Voer alsjeblieft een nummer in");
-        //                     }
-                            
-        //                 }
-        //                 break;
-        //             }
-        //         }
-        //         catch (Exception e) {
-        //             System.Console.WriteLine("Voer alstublieft een valide nummer in");
-        //         }
-        //     }    
-        // }
+        public static void TicketReservation() {
+            // List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
+            List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
+            MegaBiosData megaBiosData = JsonFunctions.LoadMegaBiosData("../../../MegaBiosData.json");
+            List<List<Seat>> seating = null;
+            int cursorPos = 0;
+            string selectedMovie = "";
+            while(true) {
+                Console.Clear();
+                Console.WriteLine("Selecteer een film met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
+                for(int i = 0; i < movies.Count; i++) {
+                    if (i == cursorPos) {
+                        System.Console.WriteLine($"> {movies[i].Title}");
+                    }
+                    else {
+                        System.Console.WriteLine($"{movies[i].Title}");
+                    }
+                }
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter) {
+                    selectedMovie = movies[cursorPos].Title;
+                    break;
+                }
+                else {
+                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
+                }
+            }
+            Dictionary<string, DateTime> showingOptions = new(); 
+            string selectedRoom = "";
+            DateTime selectedDate;
+            while(true) {
+                Console.Clear();
+                System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YY-mm-DD hh:mm:ss (Bijvoorbeeld: 2004-08-25 9:00:00))");
+                try {
+                    DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
+                    DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
+                    System.Console.WriteLine("poep111");
+                    // ----------- THIS SHIT IS BROKEN FOR NO REASON (line List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");) to be specific---------------------
+                    for (int i = 1; i <= megaBiosData.AmountOfRooms; i++) {
+                        List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
+                        for (int j = 0; j < showings.Count; j++) {
+                            // If the movie title is equal and the showing time is in between given timestamps
+                            System.Console.WriteLine($"{timestamp1}, {showings[j].ShowingTime}, {timestamp2}");
+                            if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[i].ShowingTime < timestamp2) {
+                                showingOptions.Add($"Room {i}", showings[i].ShowingTime);
+                                System.Console.WriteLine("poe22p");
+                            }
+                        }
+                    }
+                    // ----------- THIS SHIT IS BROKEN FOR NO REASON ---------------------
+                    break;
+                }
+                catch (Exception ex) {
+                    Console.WriteLine("" + ex);
+                    while(true) {
+                        // System.Console.WriteLine("poep");
+                    }
+                }
+            }
 
+            while(true) {
+                // Console.Clear();
+                List<string> keys = showingOptions.Keys.ToList();
+                Console.WriteLine("Selecteer een tijdstip met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
+                for(int i = 0; i < showingOptions.Count; i++) {
+                    DateTime value = showingOptions[keys[i]];
+                    if (i == cursorPos) {
+                        System.Console.WriteLine($"> {keys[i]}");
+                    }
+                    else {
+                        System.Console.WriteLine($"{keys[i]}");
+                    }
+                }
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter) {
+                    selectedRoom = keys[cursorPos].Replace(" ", "");
+                    selectedDate = showingOptions[keys[cursorPos]];
+                    break;
+                }
+                else {
+                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
+                }
+            }
+            List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
+            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
+            seatSelect.SelectSeats();
+            
+        }
 
         public static void MakeReservation()
         {

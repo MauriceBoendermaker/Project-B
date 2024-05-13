@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 namespace MegaBios
 {
     public class CinemaRoomGenerator {
-        private string BaseFileName = "../../../CinemaRoom";
-
         public void GenerationMenu() {
             int userChoice = -1;
             int cursorPos = 0;
@@ -95,9 +93,10 @@ namespace MegaBios
                         System.Console.WriteLine("Voer alsjeblieft een nummer in");
                     }
                 }
-                megaBiosData.AmountOfRooms += numberOfNewRooms;
+                megaBiosData.AmountOfRooms++;
                 JsonFunctions.WriteToJson("../../../MegaBiosData.json", megaBiosData);
             }
+           
 
 
         }
