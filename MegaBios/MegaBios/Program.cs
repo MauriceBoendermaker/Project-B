@@ -365,7 +365,7 @@ namespace MegaBios
             while (true)
             {
                 Console.Clear();
-                System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2004-08-25))");
+                System.Console.WriteLine("Voer de dag in dat je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2024-08-25))");
                 try {
                     DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
                     // DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
