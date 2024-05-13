@@ -361,23 +361,22 @@ namespace MegaBios
             }
             Dictionary<string, DateTime> showingOptions = new();
             string selectedRoom = "";
+            DateTime initialDate;
             DateTime selectedDate;
+            bool redirectedDate = false;
             while (true)
             {
                 Console.Clear();
                 System.Console.WriteLine("Voer de dag in dat je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2024-08-25))");
                 try {
-                    DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
-                    // DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
-                    for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
-                        List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
-                        for (int j = 0; j < showings.Count; j++)
-                        {
-                            // If the movie title is equal and the showing time is in between given timestamps
-                            // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
-                            if (showings[j].Movie == selectedMovie && timestamp1.Date == showings[j].ShowingTime.Date) {
-                                showingOptions.Add($"Room {i} - {showings[j].ShowingTime}", showings[j].ShowingTime);
-                            }
+                    selectedDate = Convert.ToDateTime(Console.ReadLine());
+                    initialDate = selectedDate;
+                    showingOptions = GetShowingOptions(selectedDate, selectedMovie);
+                    if (showingOptions.Count == 0) {
+                        while(showingOptions.Count == 0) {
+                            redirectedDate = true;
+                            selectedDate = selectedDate.AddDays(1);
+                            showingOptions = GetShowingOptions(selectedDate, selectedMovie);
                         }
                     }
                     break;
@@ -397,6 +396,9 @@ namespace MegaBios
             {
                 Console.Clear();
                 List<string> keys = showingOptions.Keys.ToList();
+                if (redirectedDate) {
+                    System.Console.WriteLine($"Er zijn geen tentoonstellingen beschikbaar voor {selectedMovie} op {initialDate.Date}\nOp {selectedDate.Date} zijn er wel films beschikbaar. Hierbij de films van die dag:");
+                }
                 Console.WriteLine("Selecteer een tijdstip met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
                 for (int i = 0; i < showingOptions.Count; i++)
                 {
@@ -427,6 +429,22 @@ namespace MegaBios
             SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
             seatSelect.SelectSeats();
 
+        }
+
+        public static Dictionary<string, DateTime> GetShowingOptions(DateTime date, string selectedMovie) {
+            Dictionary<string, DateTime> showingOptions = new Dictionary<string,DateTime>();
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
+                List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
+                for (int j = 0; j < showings.Count; j++)
+                {
+                    // If the movie title is equal and the showing time is in between given timestamps
+                    // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
+                    if (showings[j].Movie == selectedMovie && date.Date == showings[j].ShowingTime.Date) {
+                        showingOptions.Add($"Room {i} - {showings[j].ShowingTime}", showings[j].ShowingTime);
+                    }
+                }
+            }
+            return showingOptions;
         }
 
         public static void MakeReservation()
