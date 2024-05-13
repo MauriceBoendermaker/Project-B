@@ -328,20 +328,15 @@ namespace MegaBios
                 try {
                     DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
                     DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
-                    System.Console.WriteLine("poep111");
-                    // ----------- THIS SHIT IS BROKEN FOR NO REASON (line List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");) to be specific---------------------
                     for (int i = 1; i <= megaBiosData.AmountOfRooms; i++) {
                         List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
                         for (int j = 0; j < showings.Count; j++) {
                             // If the movie title is equal and the showing time is in between given timestamps
-                            System.Console.WriteLine($"{timestamp1}, {showings[j].ShowingTime}, {timestamp2}");
-                            if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[i].ShowingTime < timestamp2) {
-                                showingOptions.Add($"Room {i}", showings[i].ShowingTime);
-                                System.Console.WriteLine("poe22p");
+                            if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
+                                showingOptions.Add($"Room {i} - {showings[j].ShowingTime}", showings[j].ShowingTime);
                             }
                         }
                     }
-                    // ----------- THIS SHIT IS BROKEN FOR NO REASON ---------------------
                     break;
                 }
                 catch (Exception ex) {
@@ -352,8 +347,9 @@ namespace MegaBios
                 }
             }
 
+            cursorPos = 0;
             while(true) {
-                // Console.Clear();
+                Console.Clear();
                 List<string> keys = showingOptions.Keys.ToList();
                 Console.WriteLine("Selecteer een tijdstip met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
                 for(int i = 0; i < showingOptions.Count; i++) {
@@ -367,14 +363,16 @@ namespace MegaBios
                 }
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 if (keyInfo.Key == ConsoleKey.Enter) {
-                    selectedRoom = keys[cursorPos].Replace(" ", "");
+                    // Extracts only the room number string from the dict
+                    selectedRoom = keys[cursorPos].Split(" - ")[0].Replace(" ", "");
                     selectedDate = showingOptions[keys[cursorPos]];
                     break;
                 }
                 else {
-                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
+                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count - 1);
                 }
             }
+            System.Console.WriteLine($"../../../{selectedRoom}.json");
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
             SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
             seatSelect.SelectSeats();

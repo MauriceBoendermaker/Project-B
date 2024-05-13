@@ -32,7 +32,9 @@ namespace MegaBios
         [JsonPropertyName("in_maintenance")]
         public bool InMaintenance { get; set; }
 
-        
+        public RoomShowing()
+        {
+        }
         public RoomShowing(string roomNumber, List<List<Seat>> seating, string movie, DateTime showTime, bool inMaintenance) {
             RoomNumber = roomNumber;
             Seating = seating;
