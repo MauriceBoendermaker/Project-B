@@ -450,7 +450,7 @@ namespace MegaBios
                 while (true)
                 {
                     Console.WriteLine("Invalide selectie.");
-                    return;
+                    
                     if (!int.TryParse(Console.ReadLine(), out selectedMovieIndex) || selectedMovieIndex < 1 || selectedMovieIndex > movies.Count)
                     {
                         Console.WriteLine("Ongeldige invoer. Voer alstublieft een geldig nummer in.");

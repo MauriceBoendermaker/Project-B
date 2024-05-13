@@ -7,7 +7,7 @@ namespace MegaBios
     public class SeatSelect
     {
         public static List<string> rowLetters = new() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
-        private List<Seat> _selectedSeats = new() { };
+        private List<Seat> _selectedSeats = new();
         private bool _confirmedSeats = false;
         private Seat _selectedSeat;
         private int _selectedSeatsRow = -1;
@@ -86,6 +86,34 @@ namespace MegaBios
             return null;
         }
 
+        public void MarkSeatsAsSelected() {
+            // Get all the seat numbers from the selectedseats and add them into a list
+            List<string> seatNumbers = new();
+            foreach(Seat selectedSeat in _selectedSeats) {
+                seatNumbers.Add(selectedSeat.SeatNumber);
+            }
+
+            // Iterate over 2D List and mark each selected seat as selected in said 2D list.
+            for (int i = 0; i < Seats.Count; i++) {
+                for (int j = 0; j < Seats[i].Count; j++) {
+                    if (seatNumbers.Contains(Seats[i][j].SeatNumber)) {
+                        Seats[i][j].SeatTaken = true;
+                    }
+                }
+            }
+            UpdateRoomSeating();
+        }
+
+        public void UpdateRoomSeating() {
+            for (int i = 0; i < RoomShowings.Count; i++) {
+                if (RoomShowings[i].ShowingTime == ShowTime) {
+                    RoomShowings[i].Seating = Seats;
+                    break;
+                }
+            }
+            JsonFunctions.WriteToJson($"../../../{RoomNumber}.json", RoomShowings);
+        }
+
         public void SelectSeats()
         {
             List<int> cursorPos = new() { 1, 1 };
@@ -103,6 +131,7 @@ namespace MegaBios
                 selectedSeatsString += seat.SeatNumber + " ";
             }
             Console.WriteLine(selectedSeatsString);
+            MarkSeatsAsSelected();
         }
 
         public void DisplaySeats(List<int> cursorPos)
