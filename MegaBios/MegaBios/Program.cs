@@ -23,35 +23,43 @@ namespace MegaBios
             jsonData = JsonFunctions.ConvertJsonToList(root);
             int userChoice = -1;
             int cursorPos = 0;
-            List<string> menuOptions = new() {"Ga verder als gast", "Creëer Account", "Login"};
-            while(true) {
+            List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login" };
+            while (true)
+            {
                 Console.Clear();
                 Console.WriteLine("Welkom bij MegaBios!");
                 Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
-                for (int i = 0; i < menuOptions.Count; i++) {
-                    if (cursorPos == i) {
+                for (int i = 0; i < menuOptions.Count; i++)
+                {
+                    if (cursorPos == i)
+                    {
                         System.Console.WriteLine($"> {menuOptions[i]}");
                     }
-                    else {
+                    else
+                    {
                         System.Console.WriteLine(menuOptions[i]);
                     }
                 }
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Enter) {
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
                     userChoice = cursorPos + 1;
                     break;
                 }
                 // Select option for editing seating
-                else if (keyInfo.Key == ConsoleKey.Tab) {
+                else if (keyInfo.Key == ConsoleKey.Tab)
+                {
                     userChoice = 4;
                     break;
                 }
                 //Select Menu for creating/editing Cinemaroom json files
-                else if (keyInfo.Key == ConsoleKey.LeftArrow) {
+                else if (keyInfo.Key == ConsoleKey.LeftArrow)
+                {
                     userChoice = 5;
                     break;
                 }
-                else {
+                else
+                {
                     cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
                 }
             }
@@ -64,36 +72,42 @@ namespace MegaBios
                 case 2:
                     CreateAccount.CreateNewAccount(jsonData);
                     bool firstLogin = true;
-                    while (true) {
+                    while (true)
+                    {
                         (bool, TestAccount) loginInfo = Login(firstLogin);
-                        if (loginInfo.Item1 && loginInfo.Item2 != null) {
+                        if (loginInfo.Item1 && loginInfo.Item2 != null)
+                        {
                             LoggedInMenu(loginInfo.Item2);
                             break;
                         }
-                        else {
+                        else
+                        {
                             firstLogin = false;
                         }
-                    } 
-                    break;                   
+                    }
+                    break;
                 case 3:
                     firstLogin = true;
-                    while (true) {
+                    while (true)
+                    {
                         (bool, TestAccount) loginInfo = Login(firstLogin);
-                        if (loginInfo.Item1 && loginInfo.Item2 != null) {
+                        if (loginInfo.Item1 && loginInfo.Item2 != null)
+                        {
                             LoggedInMenu(loginInfo.Item2);
                             break;
                         }
-                        else {
+                        else
+                        {
                             firstLogin = false;
                         }
-                    } 
+                    }
                     break;
-                
+
                 case 4:
                     EditRoomSize();
                     break;
 
-                case 5: 
+                case 5:
                     CinemaRoomGenerator cinemaRoomGenerator = new CinemaRoomGenerator();
                     cinemaRoomGenerator.GenerationMenu();
                     break;
@@ -114,45 +128,51 @@ namespace MegaBios
             {
                 Console.Clear();
                 Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
-                List<string> menuOptions = new() {"Bestel ticket", "Maak een reservering"};
-                for (int i = 0; i < menuOptions.Count; i++) {
-                    if (cursorPos == i) {
+                List<string> menuOptions = new() { "Bestel ticket", "Maak een reservering" };
+                for (int i = 0; i < menuOptions.Count; i++)
+                {
+                    if (cursorPos == i)
+                    {
                         System.Console.WriteLine($"> {menuOptions[i]}");
                     }
-                    else {
+                    else
+                    {
                         System.Console.WriteLine(menuOptions[i]);
                     }
                 }
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Enter) {
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
                     userChoice = cursorPos + 1;
                     break;
                 }
-                else {
+                else
+                {
                     cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
                 }
                 // Console.WriteLine("1. Bestel ticket\n2. Maak een reservering\n");
             }
 
-                switch (userChoice)
-                {
-                    case 1:
-                        TicketReservation();
-                        break;
-                    case 2:
-                        MakeReservation();
-                        break;
-                    default:
-                        Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
-                        break;
-                }
-            
+            switch (userChoice)
+            {
+                case 1:
+                    TicketReservation();
+                    break;
+                case 2:
+                    MakeReservation();
+                    break;
+                default:
+                    Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
+                    break;
+            }
+
         }
         // Return type is tuple for successful login bool, account info
         static (bool, TestAccount) Login(bool firstLogin)
         {
             Console.Clear();
-            if (!firstLogin) {
+            if (!firstLogin)
+            {
                 Console.WriteLine("Invalide gebruikersnaam of wachtwoord. Probeer het alstublieft opnieuw.\n");
             }
             Console.WriteLine("Login Formulier");
@@ -174,41 +194,48 @@ namespace MegaBios
                     movies = JsonFunctions.LoadMovies("../../../Movies.json");
                     cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
 
-                    return (true, account); 
+                    return (true, account);
                 }
             }
             Console.WriteLine("Invalide gebruikersnaam of wachtwoord. Probeer het alstublieft opnieuw.");
-            return (false, null);    
+            return (false, null);
         }
 
-        public static void LoggedInMenu(TestAccount account) {
-            while(true) {
+        public static void LoggedInMenu(TestAccount account)
+        {
+            while (true)
+            {
                 int cursorPos = 0;
                 int userChoice = -1;
                 while (true)
                 {
                     Console.Clear();
                     Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
-                    List<string> menuOptions = new() {"Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Maak een reservering"};
+                    List<string> menuOptions = new() { "Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Maak een reservering" };
                     // Console.WriteLine("1. Toon Accountinformatie \n2. Verwijder Account\n3. Werk Accountinformatie bij\n4. Bestel ticket\n5. Maak een reservering\n");
-                    
-                    for (int i = 0; i < menuOptions.Count; i++) {
-                        if (cursorPos == i) {
+
+                    for (int i = 0; i < menuOptions.Count; i++)
+                    {
+                        if (cursorPos == i)
+                        {
                             System.Console.WriteLine($"> {menuOptions[i]}");
                         }
-                        else {
+                        else
+                        {
                             System.Console.WriteLine(menuOptions[i]);
                         }
                     }
                     ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                    if (keyInfo.Key == ConsoleKey.Enter) {
+                    if (keyInfo.Key == ConsoleKey.Enter)
+                    {
                         userChoice = cursorPos + 1;
                         break;
                     }
-                    else {
+                    else
+                    {
                         cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
                     }
-                    
+
                 }
                 switch (userChoice)
                 {
@@ -246,7 +273,7 @@ namespace MegaBios
                     case 4:
                         TicketReservation();
                         break;
-                    
+
 
                     case 5:
                         MakeReservation(account);
@@ -256,26 +283,32 @@ namespace MegaBios
                         break;
                 }
             }
-            
+
 
         }
 
-        public static void EditRoomSize() {
+        public static void EditRoomSize()
+        {
             int roomToEdit = -1;
             // Get the room number
-            while (true) {
+            while (true)
+            {
                 Console.Clear();
                 System.Console.WriteLine($"Welke zaal wil je updaten? Voer het nummer van de zaal in");
                 roomToEdit = Convert.ToInt32(System.Console.ReadLine());
-                if (File.Exists($"../../../Room{roomToEdit}.json")) {
+                if (File.Exists($"../../../Room{roomToEdit}.json"))
+                {
                     break;
                 }
             }
             // Get the width and height of the rooms and edit each seating plan in the json
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room{roomToEdit}");
-            for (int i = 0; i < roomShowings.Count; i++) {
-                try {
-                    while(true) {
+            for (int i = 0; i < roomShowings.Count; i++)
+            {
+                try
+                {
+                    while (true)
+                    {
                         System.Console.WriteLine("Hoe breed moet de zaal zijn?");
                         int roomWidth = Convert.ToInt32(Console.ReadLine());
                         System.Console.WriteLine("Hoe lang moet de zaal zijn?");
@@ -285,43 +318,52 @@ namespace MegaBios
                         break;
                     }
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     System.Console.WriteLine("Voer alstublieft een valide nummer in");
                 }
-            } 
+            }
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}", roomShowings);
         }
 
-        public static void TicketReservation() {
+        public static void TicketReservation()
+        {
             // List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
             List<List<Seat>> seating = null;
             int cursorPos = 0;
             string selectedMovie = "";
-            while(true) {
+            while (true)
+            {
                 Console.Clear();
                 Console.WriteLine("Selecteer een film met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
-                for(int i = 0; i < movies.Count; i++) {
-                    if (i == cursorPos) {
+                for (int i = 0; i < movies.Count; i++)
+                {
+                    if (i == cursorPos)
+                    {
                         System.Console.WriteLine($"> {movies[i].Title}");
                     }
-                    else {
+                    else
+                    {
                         System.Console.WriteLine($"{movies[i].Title}");
                     }
                 }
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Enter) {
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
                     selectedMovie = movies[cursorPos].Title;
                     break;
                 }
-                else {
+                else
+                {
                     cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count);
                 }
             }
-            Dictionary<string, DateTime> showingOptions = new(); 
+            Dictionary<string, DateTime> showingOptions = new();
             string selectedRoom = "";
             DateTime selectedDate;
-            while(true) {
+            while (true)
+            {
                 Console.Clear();
                 System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2004-08-25))");
                 try {
@@ -329,7 +371,8 @@ namespace MegaBios
                     // DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
                     for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
                         List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
-                        for (int j = 0; j < showings.Count; j++) {
+                        for (int j = 0; j < showings.Count; j++)
+                        {
                             // If the movie title is equal and the showing time is in between given timestamps
                             // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
                             if (showings[j].Movie == selectedMovie && timestamp1.Date == showings[j].ShowingTime.Date) {
@@ -339,30 +382,37 @@ namespace MegaBios
                     }
                     break;
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     Console.WriteLine("" + ex);
-                    while(true) {
+                    while (true)
+                    {
                         // System.Console.WriteLine("poep");
                     }
                 }
             }
             
             cursorPos = 0;
-            while(true) {
+            while (true)
+            {
                 Console.Clear();
                 List<string> keys = showingOptions.Keys.ToList();
                 Console.WriteLine("Selecteer een tijdstip met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
-                for(int i = 0; i < showingOptions.Count; i++) {
+                for (int i = 0; i < showingOptions.Count; i++)
+                {
                     DateTime value = showingOptions[keys[i]];
-                    if (i == cursorPos) {
+                    if (i == cursorPos)
+                    {
                         System.Console.WriteLine($"> {keys[i]}");
                     }
-                    else {
+                    else
+                    {
                         System.Console.WriteLine($"{keys[i]}");
                     }
                 }
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Enter) {
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
                     // Extracts only the room number string from the dict
                     selectedRoom = keys[cursorPos].Split(" - ")[0].Replace(" ", "");
                     selectedDate = showingOptions[keys[cursorPos]];
@@ -376,7 +426,7 @@ namespace MegaBios
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
             SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
             seatSelect.SelectSeats();
-            
+
         }
 
         public static void MakeReservation()
@@ -397,10 +447,20 @@ namespace MegaBios
             int selectedMovieIndex = Convert.ToInt32(Console.ReadLine()) - 1;
 
             if (selectedMovieIndex < 0 || selectedMovieIndex >= movies.Count)
-            {
-                Console.WriteLine("Invalide selectie.");
-                return;
-            }
+                while (true)
+                {
+                    Console.WriteLine("Invalide selectie.");
+                    return;
+                    if (!int.TryParse(Console.ReadLine(), out selectedMovieIndex) || selectedMovieIndex < 1 || selectedMovieIndex > movies.Count)
+                    {
+                        Console.WriteLine("Ongeldige invoer. Voer alstublieft een geldig nummer in.");
+                    }
+                    else
+                    {
+                        selectedMovieIndex--;
+                        break;
+                    }
+                }
 
             // Ask information only to Guest userrs
             if (LoggedInAsGuest == true)
