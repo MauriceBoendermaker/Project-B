@@ -326,6 +326,7 @@ namespace MegaBios
                 Console.Clear();
                 System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YY-mm-DD hh:mm:ss (Bijvoorbeeld: 2004-08-25 9:00:00))");
                 try {
+                System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YYYY-mm-DD hh:mm:ss (Bijvoorbeeld: 2004-08-25 9:00:00))");
                     DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
                     DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
                     for (int i = 1; i <= megaBiosData.AmountOfRooms; i++) {
