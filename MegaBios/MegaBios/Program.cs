@@ -295,7 +295,6 @@ namespace MegaBios
         public static void TicketReservation() {
             // List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
-            MegaBiosData megaBiosData = JsonFunctions.LoadMegaBiosData("../../../MegaBiosData.json");
             List<List<Seat>> seating = null;
             int cursorPos = 0;
             string selectedMovie = "";
@@ -324,15 +323,16 @@ namespace MegaBios
             DateTime selectedDate;
             while(true) {
                 Console.Clear();
-                System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YY-mm-DD hh:mm:ss (Bijvoorbeeld: 2004-08-25 9:00:00))");
+                System.Console.WriteLine("Voer in tussen welke twee tijdstippen je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2004-08-25))");
                 try {
                     DateTime timestamp1 = Convert.ToDateTime(Console.ReadLine());
-                    DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
-                    for (int i = 1; i <= megaBiosData.AmountOfRooms; i++) {
+                    // DateTime timestamp2 = Convert.ToDateTime(Console.ReadLine());
+                    for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
                         List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
                         for (int j = 0; j < showings.Count; j++) {
                             // If the movie title is equal and the showing time is in between given timestamps
-                            if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
+                            // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
+                            if (showings[j].Movie == selectedMovie && timestamp1.Date == showings[j].ShowingTime.Date) {
                                 showingOptions.Add($"Room {i} - {showings[j].ShowingTime}", showings[j].ShowingTime);
                             }
                         }
@@ -346,7 +346,7 @@ namespace MegaBios
                     }
                 }
             }
-
+            
             cursorPos = 0;
             while(true) {
                 Console.Clear();
@@ -369,7 +369,7 @@ namespace MegaBios
                     break;
                 }
                 else {
-                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, movies.Count - 1);
+                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, showingOptions.Count);
                 }
             }
             System.Console.WriteLine($"../../../{selectedRoom}.json");

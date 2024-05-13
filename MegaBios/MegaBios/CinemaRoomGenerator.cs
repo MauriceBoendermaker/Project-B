@@ -54,8 +54,10 @@ namespace MegaBios
         }
 
         public void GenerateShowingData() {
-            MegaBiosData megaBiosData = JsonFunctions.LoadMegaBiosData("../../../MegaBiosData.json");
-            int numberOfRooms = megaBiosData.AmountOfRooms;
+            int numberOfRooms = 0; 
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
+                numberOfRooms = i;
+            }
             int numberOfNewRooms = -1;
             List<RoomShowing> roomShowings;
             while (true) {
@@ -93,8 +95,6 @@ namespace MegaBios
                         System.Console.WriteLine("Voer alsjeblieft een nummer in");
                     }
                 }
-                megaBiosData.AmountOfRooms++;
-                JsonFunctions.WriteToJson("../../../MegaBiosData.json", megaBiosData);
             }
            
 
