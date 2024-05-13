@@ -397,9 +397,19 @@ namespace MegaBios
             int selectedMovieIndex = Convert.ToInt32(Console.ReadLine()) - 1;
 
             if (selectedMovieIndex < 0 || selectedMovieIndex >= movies.Count)
+            while (true)
             {
                 Console.WriteLine("Invalide selectie.");
                 return;
+                if (!int.TryParse(Console.ReadLine(), out selectedMovieIndex) || selectedMovieIndex < 1 || selectedMovieIndex > movies.Count)
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer alstublieft een geldig nummer in.");
+                }
+                else
+                {
+                    selectedMovieIndex--;
+                    break;
+                }
             }
 
             // Ask information only to Guest userrs
