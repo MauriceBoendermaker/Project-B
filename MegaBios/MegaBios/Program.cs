@@ -367,9 +367,12 @@ namespace MegaBios
             while (true)
             {
                 Console.Clear();
-                System.Console.WriteLine("Voer de dag in dat je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2024-08-25))");
+                // System.Console.WriteLine("Voer de dag in dat je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2024-08-25))");
+                System.Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op Enter om je selectie te bevestigen");
+                List<DateTime> menuOptions = GetShowDays();
+                int selectedOption = MenuFunctions.Menu(menuOptions);
+                selectedDate = menuOptions[selectedOption];
                 try {
-                    selectedDate = Convert.ToDateTime(Console.ReadLine());
                     initialDate = selectedDate;
                     showingOptions = GetShowingOptions(selectedDate, selectedMovie);
                     if (showingOptions.Count == 0) {
@@ -594,6 +597,18 @@ namespace MegaBios
             {
                 Console.WriteLine("Studentenkorting is toegepast!\n");
             }
+        }
+
+        public static List<DateTime> GetShowDays() {
+            List<DateTime> showDays = new();
+            List<RoomShowing> roomShowings= JsonFunctions.LoadRoomShowings($"../../../Room1.json");
+            DateTime startDate = roomShowings[0].ShowingTime.Date;
+            for (int i = 0; i < 7; i++) {
+                if (startDate.AddDays(i) > DateTime.Now) {
+                    showDays.Add(startDate.AddDays(i));
+                }
+            }
+            return showDays;
         }
     }
 }
