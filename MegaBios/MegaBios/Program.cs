@@ -332,7 +332,7 @@ namespace MegaBios
             System.Console.WriteLine($"../../../{selectedRoom}.json");
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
             SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
-            seatSelect.SelectSeats();
+            List<Seat> selectedSeats = seatSelect.SelectSeats();
 
         }
 
