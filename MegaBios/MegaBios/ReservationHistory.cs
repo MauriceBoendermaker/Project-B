@@ -10,10 +10,18 @@ namespace MegaBios
 
         [JsonPropertyName("movie_title")]
         public string MovieTitle { get; set; }
+        
+        [JsonPropertyName("reserved_seats")]
+        public List<Seat> ReservedSeats { get; set; }
+
+        [JsonPropertyName("reservation_room")]
+        public DateTime ReservationRoom { get; set; }
 
         [JsonPropertyName("reservation_date")]
         public DateTime ReservationDate { get; set; }
         
         // TODO: Add property that saves the reserved seat(s) so it can be iterated over to unoccupy seats in case of ticket cancellation
     }
+
+
 }
