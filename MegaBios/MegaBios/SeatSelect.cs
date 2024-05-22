@@ -424,7 +424,7 @@ namespace MegaBios
 
             if (availableSeats != null && availableSeats.Count > 0)
             {
-                Console.WriteLine("The following seats are available for your group:");
+                Console.WriteLine("De volgende plaatsen zijn beschikbaar voor uw groep:");
                 foreach (var seat in availableSeats)
                 {
                     Console.Write(seat.SeatNumber + " ");
@@ -436,7 +436,7 @@ namespace MegaBios
             }
             else
             {
-                Console.WriteLine("Sorry, we could not find enough adjacent seats for your group.");
+                Console.WriteLine("Sorry, we konden niet genoeg aangrenzende plaatsen vinden voor uw groep.");
                 return new List<Seat>();
             }
         }
