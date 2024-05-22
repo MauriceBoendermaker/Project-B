@@ -15,16 +15,24 @@ namespace MegaBios
         public List<Seat> ReservedSeats { get; set; }
 
         [JsonPropertyName("reservation_room")]
-        public DateTime ReservationRoom { get; set; }
+        public string ReservationRoom { get; set; }
 
         [JsonPropertyName("reservation_date")]
         public DateTime ReservationDate { get; set; }
-        
+
+      
         // TODO: Add property that saves the reserved seat(s) so it can be iterated over to unoccupy seats in case of ticket cancellation
 
         public void AddReservation(TestAccount account, ReservationHistory reservationHistory) {
-        //
-        }
+            List<TestAccount> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
+            for (int i = 0; i < accounts.Count; i++) {
+                TestAccount currentAccount = accounts[i];
+                if (currentAccount == account) {
+                    //
+                } 
+            }
+
+        }   
 
         public bool IsReservationIDTaken(string reservationID) {
             List<TestAccount> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
