@@ -22,13 +22,13 @@ namespace MegaBios
             JsonElement root = jsonDocument.RootElement;
             jsonData = JsonFunctions.ConvertJsonToList(root);
             int cursorPos = 0;
-            List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login", "Admin1", "Admin2"};
+            List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login", "Admin1", "Admin2" };
             int userChoice = MenuFunctions.Menu(menuOptions) + 1;
             // while (true)
             // {
             //     Console.Clear();
             //     // Console.WriteLine("Welkom bij MegaBios!");
-                
+
             //     for (int i = 0; i < menuOptions.Count; i++)
             //     {
             //         if (cursorPos == i)
@@ -272,79 +272,119 @@ namespace MegaBios
 
         public static void TicketReservation()
         {
-            // List<CinemaRoom> cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
-            
+
             // Creates list of movie titles from movies
             List<string> movieTitles = movies.Select(o => o.Title).ToList();
 
-            List<List<Seat>> seating = null;
             int cursorPos = MenuFunctions.Menu(movieTitles);
             string selectedMovie = movies[cursorPos].Title;
-            Dictionary<string, DateTime> showingOptions = new();
+            Dictionary<string, DateTime> showingOptions;
             string selectedRoom = "";
             DateTime initialDate;
             DateTime selectedDate;
             bool redirectedDate = false;
+
             while (true)
             {
                 Console.Clear();
-                // System.Console.WriteLine("Voer de dag in dat je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2024-08-25))");
                 System.Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op Enter om je selectie te bevestigen");
                 List<DateTime> menuOptions = GetShowDays();
                 int selectedOption = MenuFunctions.Menu(menuOptions, false);
                 selectedDate = menuOptions[selectedOption];
 
                 initialDate = selectedDate;
+
                 showingOptions = GetShowingOptions(selectedDate, selectedMovie);
-                if (showingOptions.Count == 0) {
-                    while(showingOptions.Count == 0) {
+
+                if (showingOptions.Count == 0)
+                {
+                    while (showingOptions.Count == 0)
+                    {
                         redirectedDate = true;
                         selectedDate = selectedDate.AddDays(1);
                         showingOptions = GetShowingOptions(selectedDate, selectedMovie);
                     }
                 }
                 break;
-                // }
-                // catch (Exception ex)
-                // {
-                //     Console.WriteLine("" + ex);
-                //     while (true)
-                //     {
-                //         // System.Console.WriteLine("poep");
-                //     }
-                // }
             }
-            
+
             cursorPos = 0;
 
             Console.Clear();
             List<string> keys = showingOptions.Keys.ToList();
-            if (redirectedDate) {
+            if (redirectedDate)
+            {
                 cursorPos = MenuFunctions.Menu(keys, $"Er zijn geen tentoonstellingen beschikbaar voor {selectedMovie} op {initialDate.Date}\nOp {selectedDate.Date} zijn er wel films beschikbaar. Hierbij de films van die dag:");
             }
-            else {
+            else
+            {
                 cursorPos = MenuFunctions.Menu(keys);
             }
-                selectedRoom = keys[cursorPos].Split(" - ")[0].Replace(" ", "");
-                selectedDate = showingOptions[keys[cursorPos]];
-            
+
+            selectedRoom = keys[cursorPos].Split(" - ")[0].Replace(" ", "");
+            selectedDate = showingOptions[keys[cursorPos]];
+
             System.Console.WriteLine($"../../../{selectedRoom}.json");
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
+
+            // Prompt user to choose between individual or group seat selection
+            Console.Clear();
+            List<string> selectionOptions = new List<string> { "Individueel", "Als groep" };
+            cursorPos = 0;
+            while (true)
+            {
+                Console.Clear();
+                for (int i = 0; i < selectionOptions.Count; i++)
+                {
+                    if (cursorPos == i)
+                    {
+                        Console.WriteLine($"\x1b[42m{selectionOptions[i]}\x1b[0m");
+                    }
+                    else
+                    {
+                        Console.WriteLine(selectionOptions[i]);
+                    }
+                }
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+                cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, selectionOptions.Count);
+            }
+
             SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
-            List<Seat> selectedSeats = seatSelect.SelectSeats();
-
+            List<Seat> selectedSeats;
+            if (cursorPos == 0)
+            {
+                selectedSeats = seatSelect.SelectSeats();
+            }
+            else if (cursorPos == 1)
+            {
+                Console.WriteLine("Hoeveel personen zijn er in de groep?");
+                int groupSize = int.Parse(Console.ReadLine());
+                selectedSeats = seatSelect.SelectGroupSeats(groupSize);
+            }
+            else
+            {
+                Console.WriteLine("Ongeldige selectie. Probeer het opnieuw.");
+                TicketReservation(); // Restart the reservation process if invalid option is selected
+                return; // Ensure to return after restarting to avoid continuation of current flow
+            }
         }
-
-        public static Dictionary<string, DateTime> GetShowingOptions(DateTime date, string selectedMovie) {
-            Dictionary<string, DateTime> showingOptions = new Dictionary<string,DateTime>();
-            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
+        public static Dictionary<string, DateTime> GetShowingOptions(DateTime date, string selectedMovie)
+        {
+            Dictionary<string, DateTime> showingOptions = new Dictionary<string, DateTime>();
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
+            {
                 List<RoomShowing> showings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
                 for (int j = 0; j < showings.Count; j++)
                 {
                     // If the movie title is equal and the showing time is in between given timestamps
                     // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
-                    if (showings[j].Movie == selectedMovie && date.Date == showings[j].ShowingTime.Date && !SeatSelect.IsFull(showings[i].Seating)) {
+                    if (showings[j].Movie == selectedMovie && date.Date == showings[j].ShowingTime.Date && !SeatSelect.IsFull(showings[i].Seating))
+                    {
                         showingOptions.Add($"Room {i} - {showings[j].ShowingTime}", showings[j].ShowingTime);
                     }
                 }
@@ -373,7 +413,7 @@ namespace MegaBios
                 while (true)
                 {
                     Console.WriteLine("Invalide selectie.");
-                    
+
                     if (!int.TryParse(Console.ReadLine(), out selectedMovieIndex) || selectedMovieIndex < 1 || selectedMovieIndex > movies.Count)
                     {
                         Console.WriteLine("Ongeldige invoer. Voer alstublieft een geldig nummer in.");
@@ -501,12 +541,15 @@ namespace MegaBios
             }
         }
 
-        public static List<DateTime> GetShowDays() {
+        public static List<DateTime> GetShowDays()
+        {
             List<DateTime> showDays = new();
-            List<RoomShowing> roomShowings= JsonFunctions.LoadRoomShowings($"../../../Room1.json");
+            List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room1.json");
             DateTime startDate = roomShowings[0].ShowingTime.Date;
-            for (int i = 0; i < 7; i++) {
-                if (startDate.AddDays(i) > DateTime.Now) {
+            for (int i = 0; i < 7; i++)
+            {
+                if (startDate.AddDays(i) > DateTime.Now)
+                {
                     showDays.Add(startDate.AddDays(i));
                 }
             }

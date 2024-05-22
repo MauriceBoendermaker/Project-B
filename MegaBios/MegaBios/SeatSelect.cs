@@ -18,10 +18,10 @@ namespace MegaBios
         public List<List<Seat>> Seats = new List<List<Seat>>();
 
 
-        public List<RoomShowing> RoomShowings {get; set;}
-        public RoomShowing Showing {get; set;}
-        public string RoomNumber {get; set;}
-        public DateTime ShowTime {get; set;}
+        public List<RoomShowing> RoomShowings { get; set; }
+        public RoomShowing Showing { get; set; }
+        public string RoomNumber { get; set; }
+        public DateTime ShowTime { get; set; }
         // public bool FinishedSelectingSeats = false;
 
         public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime)
@@ -29,8 +29,10 @@ namespace MegaBios
             RoomShowings = roomShowings;
             RoomNumber = roomNumber;
             ShowTime = showTime;
-            foreach (RoomShowing showing in roomShowings) {
-                if (showing.ShowingTime == showTime) {
+            foreach (RoomShowing showing in roomShowings)
+            {
+                if (showing.ShowingTime == showTime)
+                {
                     Seats = showing.Seating;
                     Showing = showing;
                 }
@@ -86,17 +88,22 @@ namespace MegaBios
             return null;
         }
 
-        public void MarkSeatsAsSelected() {
+        public void MarkSeatsAsSelected()
+        {
             // Get all the seat numbers from the selectedseats and add them into a list
             List<string> seatNumbers = new();
-            foreach(Seat selectedSeat in _selectedSeats) {
+            foreach (Seat selectedSeat in _selectedSeats)
+            {
                 seatNumbers.Add(selectedSeat.SeatNumber);
             }
 
             // Iterate over 2D List and mark each selected seat as selected in said 2D list.
-            for (int i = 0; i < Seats.Count; i++) {
-                for (int j = 0; j < Seats[i].Count; j++) {
-                    if (seatNumbers.Contains(Seats[i][j].SeatNumber)) {
+            for (int i = 0; i < Seats.Count; i++)
+            {
+                for (int j = 0; j < Seats[i].Count; j++)
+                {
+                    if (seatNumbers.Contains(Seats[i][j].SeatNumber))
+                    {
                         Seats[i][j].SeatTaken = true;
                     }
                 }
@@ -104,9 +111,12 @@ namespace MegaBios
             UpdateRoomSeating();
         }
 
-        public void UpdateRoomSeating() {
-            for (int i = 0; i < RoomShowings.Count; i++) {
-                if (RoomShowings[i].ShowingTime == ShowTime) {
+        public void UpdateRoomSeating()
+        {
+            for (int i = 0; i < RoomShowings.Count; i++)
+            {
+                if (RoomShowings[i].ShowingTime == ShowTime)
+                {
                     RoomShowings[i].Seating = Seats;
                     break;
                 }
@@ -393,15 +403,73 @@ namespace MegaBios
             return total;
         }
 
-        public static bool IsFull(List<List<Seat>> seating) {
-            foreach(List<Seat> row in seating) {
-                foreach(Seat seat in row) {
-                    if (seat.SeatTaken == false) {
+        public static bool IsFull(List<List<Seat>> seating)
+        {
+            foreach (List<Seat> row in seating)
+            {
+                foreach (Seat seat in row)
+                {
+                    if (seat.SeatTaken == false)
+                    {
                         return false;
                     }
                 }
             }
             return true;
         }
+
+        public List<Seat> SelectGroupSeats(int groupAmount)
+        {
+            List<List<Seat>> availableSeats = FindAvailableGroupSeats(groupAmount);
+            List<Seat> selectedSeats = new List<Seat>();
+
+            if (availableSeats != null && availableSeats.Count > 0)
+            {
+                Console.WriteLine("The following seats are available for your group:");
+                foreach (var row in availableSeats)
+                {
+                    foreach (var seat in row)
+                    {
+                        Console.Write(seat.SeatNumber + " ");
+                        selectedSeats.Add(seat);
+                    }
+                    Console.WriteLine();
+                }
+                _selectedSeats.AddRange(selectedSeats);
+                MarkSeatsAsSelected();
+                _confirmedSeats = true;
+            }
+            else
+            {
+                Console.WriteLine("Sorry, we could not find enough adjacent seats for your group.");
+            }
+
+            return selectedSeats;
+        }
+
+        private List<List<Seat>> FindAvailableGroupSeats(int groupSize)
+        {
+            foreach (var row in Seats)
+            {
+                List<Seat> availableSeats = new List<Seat>();
+                foreach (var seat in row)
+                {
+                    if (!seat.SeatTaken && seat.SeatType != "handicap")
+                    {
+                        availableSeats.Add(seat);
+                        if (availableSeats.Count == groupSize)
+                        {
+                            return new List<List<Seat>> { availableSeats };
+                        }
+                    }
+                    else
+                    {
+                        availableSeats.Clear();
+                    }
+                }
+            }
+            return null;
+        }
+
     }
 }
