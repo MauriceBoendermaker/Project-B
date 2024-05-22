@@ -420,56 +420,53 @@ namespace MegaBios
 
         public List<Seat> SelectGroupSeats(int groupAmount)
         {
-            List<List<Seat>> availableSeats = FindAvailableGroupSeats(groupAmount);
-            List<Seat> selectedSeats = new List<Seat>();
+            List<Seat> availableSeats = FindAvailableGroupSeats(groupAmount);
 
             if (availableSeats != null && availableSeats.Count > 0)
             {
                 Console.WriteLine("The following seats are available for your group:");
-                foreach (var row in availableSeats)
+                foreach (var seat in availableSeats)
                 {
-                    foreach (var seat in row)
-                    {
-                        Console.Write(seat.SeatNumber + " ");
-                        selectedSeats.Add(seat);
-                    }
-                    Console.WriteLine();
+                    Console.Write(seat.SeatNumber + " ");
+                    _selectedSeats.Add(seat);
                 }
-                _selectedSeats.AddRange(selectedSeats);
+                Console.WriteLine();
                 MarkSeatsAsSelected();
-                _confirmedSeats = true;
+                return _selectedSeats;
             }
             else
             {
                 Console.WriteLine("Sorry, we could not find enough adjacent seats for your group.");
+                return new List<Seat>();
             }
-
-            return selectedSeats;
         }
 
-        private List<List<Seat>> FindAvailableGroupSeats(int groupSize)
+        private List<Seat> FindAvailableGroupSeats(int groupAmount)
         {
-            foreach (var row in Seats)
+            List<List<Seat>> allSeats = Seats;
+            List<Seat> contiguousSeats = new List<Seat>();
+
+            foreach (var row in allSeats)
             {
-                List<Seat> availableSeats = new List<Seat>();
+                List<Seat> currentRowSeats = new List<Seat>();
                 foreach (var seat in row)
                 {
-                    if (!seat.SeatTaken && seat.SeatType != "handicap")
+                    if (!seat.SeatTaken && seat.SeatType == "normal")
                     {
-                        availableSeats.Add(seat);
-                        if (availableSeats.Count == groupSize)
+                        currentRowSeats.Add(seat);
+                        if (currentRowSeats.Count == groupAmount)
                         {
-                            return new List<List<Seat>> { availableSeats };
+                            contiguousSeats.AddRange(currentRowSeats);
+                            return contiguousSeats;
                         }
                     }
                     else
                     {
-                        availableSeats.Clear();
+                        currentRowSeats.Clear();
                     }
                 }
             }
-            return null;
+            return new List<Seat>();
         }
-
     }
 }
