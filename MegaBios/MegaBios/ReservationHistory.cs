@@ -21,7 +21,25 @@ namespace MegaBios
         public DateTime ReservationDate { get; set; }
         
         // TODO: Add property that saves the reserved seat(s) so it can be iterated over to unoccupy seats in case of ticket cancellation
+
+        public void AddReservation(TestAccount account, ReservationHistory reservationHistory) {
+        //
+        }
+
+        public bool IsReservationIDTaken(string reservationID) {
+            List<TestAccount> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
+            foreach(TestAccount account in accounts) {
+                foreach(ReservationHistory reservation in account.History) {
+                    if (reservation.ReservationNumber == reservationID) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } 
+
     }
 
+    
 
 }

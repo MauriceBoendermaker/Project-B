@@ -59,6 +59,11 @@ namespace MegaBios
             return JsonSerializer.Deserialize<List<RoomShowing>>(jsonString);
         }
 
+        public static List<TestAccount> LoadCustomers (string filePath) {
+            string jsonString = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<List<TestAccount>>(jsonString);
+        }
+
         public static List<CinemaRoom> LoadCinemaRooms(string filePath)
         {
             try
