@@ -114,7 +114,7 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../{RoomNumber}.json", RoomShowings);
         }
 
-        public void SelectSeats()
+        public List<Seat> SelectSeats()
         {
             List<int> cursorPos = new() { 1, 1 };
             DisplaySeats(cursorPos);
@@ -132,6 +132,7 @@ namespace MegaBios
             }
             Console.WriteLine(selectedSeatsString);
             MarkSeatsAsSelected();
+            return _selectedSeats;
         }
 
         public void DisplaySeats(List<int> cursorPos)
@@ -390,6 +391,17 @@ namespace MegaBios
             }
 
             return total;
+        }
+
+        public static bool IsFull(List<List<Seat>> seating) {
+            foreach(List<Seat> row in seating) {
+                foreach(Seat seat in row) {
+                    if (seat.SeatTaken == false) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }

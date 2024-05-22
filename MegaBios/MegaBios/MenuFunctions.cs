@@ -38,6 +38,49 @@ namespace MegaBios
                 }
             }
         }
+
+        public static int Menu(List<DateTime> menuOptions, bool showTimes) {
+            int cursorPos = 0;
+            while(true) {
+                Console.Clear();
+                Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op Enter om je keuze te bevestigen\n");
+                StringBuilder menuText = new StringBuilder();
+                for (int i = 0; i < menuOptions.Count; i++)
+                {
+                    if (showTimes) {
+                        if (cursorPos == i)
+                        {
+                            menuText.AppendLine($"\x1b[42m{menuOptions[i]}\x1b[0m");
+                        }
+                        else
+                        {
+                            menuText.AppendLine($"{menuOptions[i]}");
+                        }
+                    }
+                    else {
+                        if (cursorPos == i)
+                        {
+                            menuText.AppendLine($"\x1b[42m{menuOptions[i].ToString("yyyy/MM/dd")}\x1b[0m");
+                        }
+                        else
+                        {   
+                            menuText.AppendLine($"{menuOptions[i].ToString("yyyy/MM/dd")}");
+                        }
+                    }
+                    
+                }
+                System.Console.WriteLine(menuText);
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (keyInfo.Key == ConsoleKey.Enter)
+                {
+                    return cursorPos;
+                }
+                else
+                {
+                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
+                }
+            }
+        }
         public static int Menu<T>(List<T> menuOptions) {
             int cursorPos = 0;
             while(true) {

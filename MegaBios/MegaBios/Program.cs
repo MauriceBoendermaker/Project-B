@@ -292,28 +292,28 @@ namespace MegaBios
                 // System.Console.WriteLine("Voer de dag in dat je wilt kijken:\nformat is YY-mm-DD (Bijvoorbeeld: 2024-08-25))");
                 System.Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op Enter om je selectie te bevestigen");
                 List<DateTime> menuOptions = GetShowDays();
-                int selectedOption = MenuFunctions.Menu(menuOptions);
+                int selectedOption = MenuFunctions.Menu(menuOptions, false);
                 selectedDate = menuOptions[selectedOption];
-                try {
-                    initialDate = selectedDate;
-                    showingOptions = GetShowingOptions(selectedDate, selectedMovie);
-                    if (showingOptions.Count == 0) {
-                        while(showingOptions.Count == 0) {
-                            redirectedDate = true;
-                            selectedDate = selectedDate.AddDays(1);
-                            showingOptions = GetShowingOptions(selectedDate, selectedMovie);
-                        }
-                    }
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("" + ex);
-                    while (true)
-                    {
-                        // System.Console.WriteLine("poep");
+
+                initialDate = selectedDate;
+                showingOptions = GetShowingOptions(selectedDate, selectedMovie);
+                if (showingOptions.Count == 0) {
+                    while(showingOptions.Count == 0) {
+                        redirectedDate = true;
+                        selectedDate = selectedDate.AddDays(1);
+                        showingOptions = GetShowingOptions(selectedDate, selectedMovie);
                     }
                 }
+                break;
+                // }
+                // catch (Exception ex)
+                // {
+                //     Console.WriteLine("" + ex);
+                //     while (true)
+                //     {
+                //         // System.Console.WriteLine("poep");
+                //     }
+                // }
             }
             
             cursorPos = 0;
@@ -344,7 +344,7 @@ namespace MegaBios
                 {
                     // If the movie title is equal and the showing time is in between given timestamps
                     // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
-                    if (showings[j].Movie == selectedMovie && date.Date == showings[j].ShowingTime.Date) {
+                    if (showings[j].Movie == selectedMovie && date.Date == showings[j].ShowingTime.Date && !SeatSelect.IsFull(showings[i].Seating)) {
                         showingOptions.Add($"Room {i} - {showings[j].ShowingTime}", showings[j].ShowingTime);
                     }
                 }

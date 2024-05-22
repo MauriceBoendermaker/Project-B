@@ -70,5 +70,23 @@
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true,
     "history": []
+  },
+  {
+    "voornaam": "mathilda",
+    "tussenvoegsel": "n",
+    "achternaam": "huis",
+    "geboorte_datum": "12-12-12",
+    "adres": {
+      "straat": "",
+      "huisnummer": "38",
+      "woonplaats": "asd",
+      "postcode": "asd"
+    },
+    "email": "asd",
+    "wachtwoord": "",
+    "telefoonnummer": "9878",
+    "voorkeur_betaalwijze": "hff",
+    "is_student": true,
+    "history": []
   }
 ]
