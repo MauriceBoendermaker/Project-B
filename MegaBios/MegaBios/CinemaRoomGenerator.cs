@@ -14,7 +14,7 @@ namespace MegaBios
             int cursorPos = 0;
             while(true) {
                 Console.Clear();
-                List<string> menuOptions = new() {"Generate new rooms", "Edit existing room"};
+                List<string> menuOptions = new() {"Genereer nieuwe zalen", "Werk bestaande zaal bij", "Reset alle seatings"};
                 System.Console.WriteLine("Do you want to generate rooms or edit a room?");
                 for (int i = 0; i < menuOptions.Count; i++) {
                     if (cursorPos == i) {
@@ -41,6 +41,9 @@ namespace MegaBios
                 case 1: 
                     EditRoom();
                     break;
+                case 2:
+                    ResetAllSeatings();
+                    break;
                 default:
                     System.Console.WriteLine("Invalid input");
                     break;
@@ -51,6 +54,25 @@ namespace MegaBios
 
         public void EditRoom() {
             //
+        }
+
+        public void ResetAllSeatings() { 
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
+                List<RoomShowing> roomshowings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
+                for(int j = 0; j < roomshowings.Count; j++) {
+                    roomshowings[i].Seating = ResetSeating(roomshowings[i].Seating);
+                }
+                JsonFunctions.WriteToJson($"../../../Room{i}.json", roomshowings);
+            }
+        }
+
+        public List<List<Seat>> ResetSeating(List<List<Seat>> seating) {
+            for (int i = 0; i < seating.Count; i++) {
+                for (int j = 0; j < seating[i].Count; j++) {
+                    seating[i][j].SeatTaken = false;
+                }
+            }
+            return seating;
         }
 
         public void GenerateShowingData() {

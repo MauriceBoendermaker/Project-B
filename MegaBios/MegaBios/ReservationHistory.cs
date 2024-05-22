@@ -12,7 +12,7 @@ namespace MegaBios
         public string MovieTitle { get; set; }
         
         [JsonPropertyName("reserved_seats")]
-        public List<Seat> ReservedSeats { get; set; }
+        public List<string> ReservedSeats { get; set; }
 
         [JsonPropertyName("reservation_room")]
         public string ReservationRoom { get; set; }
@@ -20,21 +20,30 @@ namespace MegaBios
         [JsonPropertyName("reservation_date")]
         public DateTime ReservationDate { get; set; }
 
-      
+
+        public ReservationHistory(string reservationNumber, string movieTitle, List<string> reservedSeats, string reservationRoom, DateTime reservationDate) {
+            ReservationNumber = reservationNumber;
+            MovieTitle = movieTitle;
+            ReservedSeats = reservedSeats;
+            ReservationRoom = reservationRoom;
+            ReservationDate = reservationDate;
+        } 
+
         // TODO: Add property that saves the reserved seat(s) so it can be iterated over to unoccupy seats in case of ticket cancellation
 
-        public void AddReservation(TestAccount account, ReservationHistory reservationHistory) {
+        public static void AddReservation(TestAccount account, ReservationHistory reservationHistory) {
             List<TestAccount> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
             for (int i = 0; i < accounts.Count; i++) {
-                TestAccount currentAccount = accounts[i];
-                if (currentAccount == account) {
-                    //
+                if (accounts[i] == account) {
+                    accounts[i].History.Add(reservationHistory);
+                    JsonFunctions.WriteToJson("../../../customers.json", accounts);
+                    break;
                 } 
             }
 
         }   
 
-        public bool IsReservationIDTaken(string reservationID) {
+        public static bool IsReservationIDTaken(string reservationID) {
             List<TestAccount> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
             foreach(TestAccount account in accounts) {
                 foreach(ReservationHistory reservation in account.History) {
@@ -46,6 +55,16 @@ namespace MegaBios
             return false;
         } 
 
+        public static string generateReservasionNumber() {
+            Random rand = new Random();
+            while(true) {
+                int reservationNumber = rand.Next(0, 10000);
+                if (!IsReservationIDTaken(reservationNumber.ToString())) {
+                    return reservationNumber.ToString();
+                }
+            }
+            
+        }
     }
 
     

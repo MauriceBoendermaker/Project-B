@@ -93,7 +93,7 @@
         },
         {
           "seat_number": "C3",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },
@@ -751,13 +751,13 @@
       [
         {
           "seat_number": "B1",
-          "is_taken": false,
+          "is_taken": true,
           "type": "love seat",
           "price": 20
         },
         {
           "seat_number": "B2",
-          "is_taken": false,
+          "is_taken": true,
           "type": "love seat",
           "price": 20
         },
@@ -987,13 +987,13 @@
       [
         {
           "seat_number": "B1",
-          "is_taken": false,
+          "is_taken": true,
           "type": "love seat",
           "price": 20
         },
         {
           "seat_number": "B2",
-          "is_taken": false,
+          "is_taken": true,
           "type": "love seat",
           "price": 20
         },
@@ -1273,7 +1273,7 @@
         },
         {
           "seat_number": "C3",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },
@@ -1349,7 +1349,7 @@
         },
         {
           "seat_number": "E3",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },

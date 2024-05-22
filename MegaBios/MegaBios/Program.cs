@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.VisualBasic;
 
 namespace MegaBios
 {
@@ -123,15 +124,12 @@ namespace MegaBios
             cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
             int cursorPos = 0;
             int userChoice = -1;
-            List<string> menuOptions = new() { "Bestel ticket", "Maak een reservering" };
+            List<string> menuOptions = new() { "Bestel ticket"};
             userChoice = MenuFunctions.Menu(menuOptions, "Welkom bij MegaBios!") + 1;
             switch (userChoice)
             {
                 case 1:
-                    TicketReservation();
-                    break;
-                case 2:
-                    MakeReservation();
+                    ReservationHistory reservation = TicketReservation();
                     break;
                 default:
                     Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
@@ -215,12 +213,14 @@ namespace MegaBios
                         System.Console.WriteLine("Uw data is geupdatet!");
                         break;
                     case 4:
-                        TicketReservation();
+                        ReservationHistory reservation = TicketReservation();
+                        ReservationHistory.AddReservation(account, reservation);
+                        while(true) {}
                         break;
 
 
                     case 5:
-                        MakeReservation(account);
+                        // ReservationHistory.MakeReservation(account);
                         break;
                     default:
                         Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
@@ -270,7 +270,7 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}", roomShowings);
         }
 
-        public static void TicketReservation()
+        public static ReservationHistory TicketReservation()
         {
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
 
@@ -359,19 +359,30 @@ namespace MegaBios
             if (cursorPos == 0)
             {
                 selectedSeats = seatSelect.SelectSeats();
+                string reservationNumber = ReservationHistory.generateReservasionNumber();
+                List<string> selectedSeatStrings = selectedSeats.Select(x => x.SeatNumber).ToList();
+                ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeatStrings, selectedRoom, selectedDate);
+                return reservation;
             }
             else if (cursorPos == 1)
             {
                 Console.WriteLine("Hoeveel personen zijn er in de groep?");
                 int groupSize = int.Parse(Console.ReadLine());
                 selectedSeats = seatSelect.SelectGroupSeats(groupSize);
+                string reservationNumber = ReservationHistory.generateReservasionNumber();
+                List<string> selectedSeatStrings = selectedSeats.Select(x => x.ToString()).ToList();
+                ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeatStrings, selectedRoom, selectedDate);
+                return reservation;
             }
-            else
-            {
-                Console.WriteLine("Ongeldige selectie. Probeer het opnieuw.");
-                TicketReservation(); // Restart the reservation process if invalid option is selected
-                return; // Ensure to return after restarting to avoid continuation of current flow
-            }
+            return null;
+            
+            // else
+            // {
+            //     Console.WriteLine("Ongeldige selectie. Probeer het opnieuw.");
+            //     TicketReservation(); // Restart the reservation process if invalid option is selected
+            //     return (null, null, DateTime.MinValue); // Ensure to return after restarting to avoid continuation of current flow
+            // }
+
         }
         public static Dictionary<string, DateTime> GetShowingOptions(DateTime date, string selectedMovie)
         {
@@ -390,155 +401,6 @@ namespace MegaBios
                 }
             }
             return showingOptions;
-        }
-
-        public static void MakeReservation()
-        {
-            string voornaam = "";
-            string tussenvoegsel = "";
-            string achternaam = "";
-            string email = "";
-            string telefoonNr = "";
-            bool is_student = false;
-
-            System.Console.WriteLine("Selecteer een film om een reservatie te maken:");
-            for (int i = 0; i < movies.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {movies[i].Title}");
-            }
-            System.Console.WriteLine("Voer het nummer van de film in die u wilt reserveren: ");
-            int selectedMovieIndex = Convert.ToInt32(Console.ReadLine()) - 1;
-
-            if (selectedMovieIndex < 0 || selectedMovieIndex >= movies.Count)
-                while (true)
-                {
-                    Console.WriteLine("Invalide selectie.");
-
-                    if (!int.TryParse(Console.ReadLine(), out selectedMovieIndex) || selectedMovieIndex < 1 || selectedMovieIndex > movies.Count)
-                    {
-                        Console.WriteLine("Ongeldige invoer. Voer alstublieft een geldig nummer in.");
-                    }
-                    else
-                    {
-                        selectedMovieIndex--;
-                        break;
-                    }
-                }
-
-            // Ask information only to Guest userrs
-            if (LoggedInAsGuest == true)
-            {
-                Console.Write("Voer voornaam in: ");
-                voornaam = Console.ReadLine();
-
-                Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
-                tussenvoegsel = Console.ReadLine();
-
-                Console.Write("Voer achternaam in: ");
-                achternaam = Console.ReadLine();
-
-                Console.Write("Voer email in: ");
-                email = Console.ReadLine()!;
-
-                Console.Write("Voer telefoonnummer in: ");
-                telefoonNr = Console.ReadLine()!;
-
-                while (true)
-                {
-                    Console.Write("Bent u student? (true/false): ");
-                    string is_studentString = Console.ReadLine()!;
-
-                    if (is_studentString == "true" || is_studentString == "false")
-                    {
-                        is_student = Convert.ToBoolean(is_studentString);
-                        break;
-                    }
-                }
-            }
-
-            var selectedMovie = movies[selectedMovieIndex];
-            var reservationNumber = Guid.NewGuid().ToString(); // GUID voor uniek reserveringsnummer
-            var reservation = new ReservationHistory
-            {
-                ReservationNumber = reservationNumber,
-                MovieTitle = selectedMovie.Title,
-                ReservationDate = DateTime.Now
-            };
-
-            // Voeg de reservering toe aan een gast-account (hier wordt geen specifiek account vereist)
-            JsonFunctions.WriteToJson(jsonFilePath, jsonData);
-
-            if (LoggedInAsGuest == true)
-            {
-                Console.WriteLine($"Succesvol een reservering gemaakt voor '{selectedMovie.Title}'. Uw reserveringnummer is {reservationNumber}.\n");
-                Console.WriteLine("Bestelling Overzicht:\n");
-                if (tussenvoegsel != "")
-                {
-                    Console.WriteLine($"Naam: {voornaam} {tussenvoegsel} {achternaam}");
-                }
-                else
-                {
-                    Console.WriteLine($"Naam: {voornaam} {achternaam}");
-                }
-                Console.WriteLine($"Email: {email}");
-                Console.WriteLine($"Telefoonnummer: {telefoonNr}");
-                if (is_student)
-                {
-                    Console.WriteLine("Studentenkorting is toegepast!\n");
-                }
-
-            }
-            else
-            {
-                Console.WriteLine($"Succesvol een reservering gemaakt voor '{selectedMovie.Title}'. Uw reserveringnummer is {reservationNumber}.");
-            }
-        }
-
-        public static void MakeReservation(TestAccount user)
-        {
-            Console.WriteLine("Selecteer een film om een reservatie te maken:");
-            for (int i = 0; i < movies.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {movies[i].Title}");
-            }
-            Console.Write("Voer het nummer van de film in die u wilt reserveren: ");
-            int selectedMovieIndex = Convert.ToInt32(Console.ReadLine()) - 1;
-
-            if (selectedMovieIndex < 0 || selectedMovieIndex >= movies.Count)
-            {
-                Console.WriteLine("Invalide selectie.");
-                return;
-            }
-
-            var selectedMovie = movies[selectedMovieIndex];
-            var reservationNumber = Guid.NewGuid().ToString(); // GUID voor uniek reserverings nummer
-            var reservation = new ReservationHistory
-            {
-                ReservationNumber = reservationNumber,
-                MovieTitle = selectedMovie.Title,
-                ReservationDate = DateTime.Now
-            };
-
-            user.History.Add(reservation);
-
-            JsonFunctions.WriteToJson(jsonFilePath, jsonData);
-
-            Console.WriteLine($"Succesvol een reservering gemaakt voor '{selectedMovie.Title}'. Uw reserveringnummer is {reservationNumber}.");
-            Console.WriteLine("Bestelling Overzicht:\n");
-            if (user.Tussenvoegsel != "")
-            {
-                Console.WriteLine($"Naam: {user.Voornaam} {user.Tussenvoegsel} {user.Achternaam}");
-            }
-            else
-            {
-                Console.WriteLine($"Naam: {user.Voornaam} {user.Achternaam}");
-            }
-            Console.WriteLine($"Email: {user.Email}");
-            Console.WriteLine($"Telefoonnummer: {user.TelefoonNr}");
-            if (user.IsStudent)
-            {
-                Console.WriteLine("Studentenkorting is toegepast!\n");
-            }
         }
 
         public static List<DateTime> GetShowDays()

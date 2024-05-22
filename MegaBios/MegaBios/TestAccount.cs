@@ -59,5 +59,16 @@ namespace MegaBios
             Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
         }
+
+        public static bool operator ==(TestAccount t1, TestAccount t2) {
+            if (t1 is null || t2 is null) {
+                return (t1 is null && t2 is null);
+            }
+            return t1.Email.Equals(t2.Email) && t1.Wachtwoord.Equals(t2.Wachtwoord);
+        }
+
+        public static bool operator !=(TestAccount t1, TestAccount t2) {
+            return !(t1 == t2);
+        }
     }
 }

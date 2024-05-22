@@ -69,15 +69,7 @@
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true,
-    "history": [
-      {
-        "reservation_number": "00001",
-        "movie_title": "The Godfather",
-        "reserved_seats": ["B3", "B4"],
-        "reservation_room": "Room 2",
-        "reservation_date": "2024-08-25T09:00:00"
-      }
-    ]
+    "history": []
   },
   {
     "voornaam": "mathilda",
