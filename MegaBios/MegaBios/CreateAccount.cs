@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MegaBios
 {
@@ -15,27 +17,40 @@ namespace MegaBios
             Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
             string tussenvoegsel = Console.ReadLine();
 
-            Console.Write("Voer achternaam in:");
+            Console.Write("Voer achternaam in: ");
             string achternaam = Console.ReadLine();
 
-            Console.Write("Voer geboortedatum in(YYYY-MM-DD): ");
+            Console.Write("Voer geboortedatum in (YYYY-MM-DD): ");
             string geboorteDatum = Console.ReadLine();
 
             Dictionary<string, string> adres = new Dictionary<string, string>();
-            Console.Write("Voer straatnaam in:");
+            Console.Write("Voer straatnaam in: ");
             adres["straat"] = Console.ReadLine();
 
-            Console.Write("Voer huisnummer in:");
+            Console.Write("Voer huisnummer in: ");
             adres["huisnummer"] = Console.ReadLine();
 
-            Console.Write("Voer woonplaats in");
+            Console.Write("Voer woonplaats in: ");
             adres["woonplaats"] = Console.ReadLine();
 
             Console.Write("Voer postcode in: ");
             adres["postcode"] = Console.ReadLine();
 
-            Console.Write("Voer email in: ");
-            string email = Console.ReadLine()!;
+            string email;
+            while (true)
+            {
+                Console.Write("Voer email in: ");
+                email = Console.ReadLine()!;
+
+                if (IsValidEmail(email))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldig emailadres. Probeer het opnieuw.");
+                }
+            }
 
             string wachtwoord;
             while (true)
@@ -50,6 +65,10 @@ namespace MegaBios
                 {
                     wachtwoord = inputWachtwoord;
                     break;
+                }
+                else
+                {
+                    Console.WriteLine("Wachtwoorden komen niet overeen. Probeer het opnieuw.");
                 }
             }
 
@@ -70,6 +89,10 @@ namespace MegaBios
                     is_student = Convert.ToBoolean(is_studentString);
                     break;
                 }
+                else
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer 'true' of 'false' in.");
+                }
             }
 
             TestAccount newAccount = new TestAccount(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student);
@@ -79,5 +102,15 @@ namespace MegaBios
 
             Console.WriteLine("Succesvol nieuw account gemaakt!");
         }
+
+        private static bool IsValidEmail(string email)
+        {
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern);
+        }
+
     }
+
+
+
 }
