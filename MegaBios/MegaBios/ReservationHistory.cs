@@ -49,6 +49,17 @@ namespace MegaBios
                 }
             }
 
+        }  
+
+        public static void AddReservation(Guest guest, ReservationHistory reservationHistory) {
+            List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
+            for (int i = 0; i < guests.Count; i++) {
+                if (guests[i] == guest) {
+                    guests[i].History.Add(reservationHistory);
+                    JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
+                    break;
+                } 
+            }
         }
 
         public static bool IsReservationIDTaken(string reservationID)
@@ -67,8 +78,7 @@ namespace MegaBios
             return false;
         }
 
-        public static string generateReservasionNumber()
-        {
+        public static string generateReservationNumber() {
             Random rand = new Random();
             while (true)
             {
@@ -100,6 +110,7 @@ namespace MegaBios
                 totalPrice += seat.Price;
             }
             reservationPrint.AppendLine($"--------RESERVERING DATA-----------\n");
+            reservationPrint.AppendLine($"Reservation Number: {reservation.ReservationNumber}");
             reservationPrint.AppendLine($"Film: {reservation.MovieTitle} Room: {reservation.ReservationRoom}");
             reservationPrint.AppendLine($"Stoelen: \n{stoelenString}");
             reservationPrint.AppendLine($"Totaalprijs: {totalPrice} Euro");
@@ -107,30 +118,20 @@ namespace MegaBios
             return reservationPrint;
         }
 
-        public static string PrintReservationUser(ReservationHistory reservation)
-        {
-            string stoelenString = "";
-            double totalPrice = 0;
-            Seat seat; // Declare seat outside the loop
-            for (int i = 0; i < reservation.ReservedSeats.Count; i++)
-            {
-                seat = reservation.ReservedSeats[i]; // Assign value inside the loop
-                stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
-                totalPrice += seat.Price;
+        public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, TestAccount user) {
+            double discount = 0;
+            if (user.IsStudent) {
+                discount = 0.15;
             }
-            return $"--------RESERVERING DATA-----------\n" +
-                $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
-                $"Film: {reservation.MovieTitle}\n" +
-                $"Gereserveerde stoelen:\n{stoelenString}" + // Use stoelenString here
-                $"Reserveringszaal: {reservation.ReservationRoom}\n" +
-                $"Reserveringsdatum: {reservation.ReservationDate}\n";
+            for (int i = 0; i < selectedSeats.Count; i++) {
+                selectedSeats[i].Price *= 1 - discount;
+            }
+            return selectedSeats;
         }
 
-        public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, TestAccount account)
-        {
+        public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Guest guest) {
             double discount = 0;
-            if (account.IsStudent)
-            {
+            if (guest.IsStudent) {
                 discount = 0.15;
             }
             for (int i = 0; i < selectedSeats.Count; i++)

@@ -3,8 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-    public class User
-    {
+    public class Guest {
         [JsonPropertyName("voornaam")]
         public string Voornaam { get; set; }
 
@@ -22,25 +21,113 @@ namespace MegaBios
 
         [JsonPropertyName("history")]
         public List<ReservationHistory> History { get; set; }
+        
+        
 
-        public User(string voornaam, string tussenvoegsel, string achternaam, string email, bool isStudent)
-        {
+        [JsonConstructor]
+        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, bool isStudent, List<ReservationHistory> history) {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
             Achternaam = achternaam;
             Email = email;
             IsStudent = isStudent;
-            History = new List<ReservationHistory>();
+            History = history;
         }
+
+        public static Guest CreateGuest() {
+            Console.WriteLine("\nCreëer gast account");
+            Console.WriteLine("--------------------");
+
+            Console.Write("Voer voornaam in: ");
+            string voornaam = Console.ReadLine();
+
+            Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
+            string tussenvoegsel = Console.ReadLine();
+
+            Console.Write("Voer achternaam in: ");
+            string achternaam = Console.ReadLine();
+
+            string email;
+            while (true)
+            {
+                Console.Write("Voer email in: ");
+                email = Console.ReadLine()!;
+
+                if (CreateAccount.IsValidEmail(email))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldig emailadres. Probeer het opnieuw.");
+                }
+            }
+            bool is_student;
+            while (true)
+            {
+                Console.Write("Bent u student? (true/false): ");
+                string is_studentString = Console.ReadLine()!;
+
+                if (is_studentString == "true" || is_studentString == "false")
+                {
+                    is_student = Convert.ToBoolean(is_studentString);
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer 'true' of 'false' in.");
+                }
+            }
+            Guest newGuest = new Guest(voornaam, tussenvoegsel, achternaam, email, is_student, new());
+            List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
+            if (DoesGuestExist(guests, newGuest)) {
+                guests.Add(newGuest);
+            }
+            JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
+            return newGuest;
+        }
+
+        public static bool DoesGuestExist(List<Guest> guests, Guest guest) {
+            foreach(Guest currentGuest in guests) {
+                if (currentGuest == guest) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool operator ==(Guest t1, Guest t2) {
+            if (t1 is null || t2 is null) {
+                return (t1 is null && t2 is null);
+            }
+            return t1.Email.Equals(t2.Email) && t1.Voornaam.Equals(t2.Voornaam) && t1.Achternaam.Equals(t2.Achternaam);
+        }
+
+        public static bool operator !=(Guest t1, Guest t2) {
+            return !(t1 == t2);
+        }
+        
     }
 
-    public class TestAccount : User
+    public class TestAccount
     {
+        [JsonPropertyName("voornaam")]
+        public string Voornaam { get; set; }
+
+        [JsonPropertyName("tussenvoegsel")]
+        public string Tussenvoegsel { get; set; }
+
+        [JsonPropertyName("achternaam")]
+        public string Achternaam { get; set; }
+
+        [JsonPropertyName("geboorte_datum")]
         public string GeboorteDatum { get; set; }
 
         [JsonPropertyName("adres")]
         public Dictionary<string, string> Adres { get; set; }
-
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
+        
         [JsonPropertyName("wachtwoord")]
         public string Wachtwoord { get; set; }
 
@@ -49,7 +136,14 @@ namespace MegaBios
 
         [JsonPropertyName("voorkeur_betaalwijze")]
         public string Voorkeur_Betaalwijze { get; set; }
+        
+        [JsonPropertyName("is_student")]
+        public bool IsStudent { get; set; }
 
+        [JsonPropertyName("history")]
+        public List<ReservationHistory> History { get; set; }
+
+        [JsonConstructor]
         public TestAccount(string voornaam,
                             string tussenvoegsel,
                             string achternaam,
@@ -59,9 +153,7 @@ namespace MegaBios
                             string wachtwoord,
                             string telefoonNr,
                             string voorkeur_Betaalwijze,
-                            bool isStudent,
-                            List<ReservationHistory> history) : base(voornaam, tussenvoegsel, achternaam, email, isStudent)
-
+                            bool isStudent)
         {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
@@ -73,7 +165,6 @@ namespace MegaBios
             TelefoonNr = telefoonNr;
             Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
-            History = new List<ReservationHistory>();
         }
 
         public static bool operator ==(TestAccount t1, TestAccount t2)

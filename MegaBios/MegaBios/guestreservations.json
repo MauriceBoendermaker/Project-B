@@ -1,0 +1,10 @@
+[
+  {
+    "voornaam": "test",
+    "tussenvoegsel": "test",
+    "achternaam": "test",
+    "email": "test@gmail.com",
+    "is_student": true,
+    "history": []
+  }
+]

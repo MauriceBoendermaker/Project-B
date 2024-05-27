@@ -95,7 +95,15 @@ namespace MegaBios
             {
                 case 1:
                     ReservationHistory reservation = TicketReservation();
+                    Guest guest = Guest.CreateGuest();
+                    reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, guest);
+                    bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
+                    if (confirmedPayment) {
+                        SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
+                        ReservationHistory.AddReservation(guest, reservation);
+                    }
                     break;
+
                 default:
                     Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                     break;
@@ -342,7 +350,7 @@ namespace MegaBios
             if (cursorPos == 0)
             {
                 selectedSeats = seatSelect.SelectSeats();
-                string reservationNumber = ReservationHistory.generateReservasionNumber();
+                string reservationNumber = ReservationHistory.generateReservationNumber();
                 ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
                 return reservation;
             }
@@ -351,7 +359,7 @@ namespace MegaBios
                 Console.WriteLine("Hoeveel personen zijn er in de groep?");
                 int groupSize = int.Parse(Console.ReadLine());
                 selectedSeats = seatSelect.SelectGroupSeats(groupSize);
-                string reservationNumber = ReservationHistory.generateReservasionNumber();
+                string reservationNumber = ReservationHistory.generateReservationNumber();
                 ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
                 return reservation;
             }

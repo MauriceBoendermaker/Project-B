@@ -103,7 +103,7 @@ namespace MegaBios
             Console.WriteLine("Succesvol nieuw account gemaakt!");
         }
 
-        private static bool IsValidEmail(string email)
+        public static bool IsValidEmail(string email)
         {
             string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
             return Regex.IsMatch(email, pattern);
