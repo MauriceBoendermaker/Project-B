@@ -22,7 +22,7 @@ namespace MegaBios
             string jsonText = File.ReadAllText(jsonFilePath);
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
             JsonElement root = jsonDocument.RootElement;
-            jsonData = JsonFunctions.ConvertJsonToList(root);
+            jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
             int cursorPos = 0;
             List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login", "Admin1", "Admin2" };
             int userChoice = MenuFunctions.Menu(menuOptions) + 1;
@@ -85,7 +85,9 @@ namespace MegaBios
             LoggedInAsGuest = true; // Setting LoggedInAsGuest to True
             movies = JsonFunctions.LoadMovies("../../../Movies.json");
             cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-            List<string> menuOptions = new() { "Bestel ticket"};
+            int cursorPos = 0;
+            int userChoice = -1;
+            List<string> menuOptions = new() { "Bestel ticket" };
             StringBuilder sb = new StringBuilder();
             sb.Append("Welkom bij MegaBios!");
             int userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
@@ -138,7 +140,7 @@ namespace MegaBios
         {
             while (true)
             {
-                List<string> menuOptions = new() { "Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Maak een reservering" };
+                List<string> menuOptions = new() { "Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Maak een reservering", "Bestellingen" };
                 int cursorPos = 0;
                 int userChoice = MenuFunctions.Menu(menuOptions) + 1;
 
@@ -179,7 +181,8 @@ namespace MegaBios
                         ReservationHistory reservation = TicketReservation();
                         reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, account);
                         bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
-                        if (confirmedPayment) {
+                        if (confirmedPayment)
+                        {
                             SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
                             ReservationHistory.AddReservation(account, reservation);
                         }
@@ -188,6 +191,17 @@ namespace MegaBios
 
                     case 5:
                         // ReservationHistory.MakeReservation(account);
+                        break;
+                    case 6:
+                        Console.Clear();
+                        Console.WriteLine("Uw actieve bestellingen:");
+
+                        foreach (var userReservation in account.History)
+                        {
+                            Console.WriteLine(ReservationHistory.PrintReservationUser(userReservation));
+                        }
+                        Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
+                        Console.ReadKey(true);
                         break;
                     default:
                         Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
@@ -342,7 +356,7 @@ namespace MegaBios
                 return reservation;
             }
             return null;
-            
+
             // else
             // {
             //     Console.WriteLine("Ongeldige selectie. Probeer het opnieuw.");
