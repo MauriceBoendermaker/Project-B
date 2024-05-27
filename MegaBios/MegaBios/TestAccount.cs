@@ -3,7 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-    public class User {
+    public class User
+    {
         [JsonPropertyName("voornaam")]
         public string Voornaam { get; set; }
 
@@ -12,17 +13,18 @@ namespace MegaBios
 
         [JsonPropertyName("achternaam")]
         public string Achternaam { get; set; }
-        
+
         [JsonPropertyName("email")]
         public string Email { get; set; }
-        
+
         [JsonPropertyName("is_student")]
         public bool IsStudent { get; set; }
 
         [JsonPropertyName("history")]
         public List<ReservationHistory> History { get; set; }
 
-        public User(string voornaam, string tussenvoegsel, string achternaam, string email, bool isStudent) {
+        public User(string voornaam, string tussenvoegsel, string achternaam, string email, bool isStudent)
+        {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
             Achternaam = achternaam;
@@ -57,7 +59,9 @@ namespace MegaBios
                             string wachtwoord,
                             string telefoonNr,
                             string voorkeur_Betaalwijze,
-                            bool isStudent) : base(voornaam, tussenvoegsel, achternaam, email, isStudent)
+                            bool isStudent,
+                            List<ReservationHistory> history) : base(voornaam, tussenvoegsel, achternaam, email, isStudent)
+
         {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
@@ -69,17 +73,20 @@ namespace MegaBios
             TelefoonNr = telefoonNr;
             Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
-            History =new List<ReservationHistory>();
+            History = new List<ReservationHistory>();
         }
 
-        public static bool operator ==(TestAccount t1, TestAccount t2) {
-            if (t1 is null || t2 is null) {
+        public static bool operator ==(TestAccount t1, TestAccount t2)
+        {
+            if (t1 is null || t2 is null)
+            {
                 return (t1 is null && t2 is null);
             }
             return t1.Email.Equals(t2.Email) && t1.Wachtwoord.Equals(t2.Wachtwoord);
         }
 
-        public static bool operator !=(TestAccount t1, TestAccount t2) {
+        public static bool operator !=(TestAccount t1, TestAccount t2)
+        {
             return !(t1 == t2);
         }
     }
