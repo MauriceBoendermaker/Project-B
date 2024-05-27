@@ -26,44 +26,6 @@ namespace MegaBios
             int cursorPos = 0;
             List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login", "Admin1", "Admin2" };
             int userChoice = MenuFunctions.Menu(menuOptions) + 1;
-            // while (true)
-            // {
-            //     Console.Clear();
-            //     // Console.WriteLine("Welkom bij MegaBios!");
-
-            //     for (int i = 0; i < menuOptions.Count; i++)
-            //     {
-            //         if (cursorPos == i)
-            //         {
-            //             System.Console.WriteLine($"> {menuOptions[i]}");
-            //         }
-            //         else
-            //         {
-            //             System.Console.WriteLine(menuOptions[i]);
-            //         }
-            //     }
-            //     ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            //     if (keyInfo.Key == ConsoleKey.Enter)
-            //     {
-            //         userChoice = cursorPos + 1;
-            //         break;
-            //     }
-            //     // Select option for editing seating
-            //     else if (keyInfo.Key == ConsoleKey.Tab)
-            //     {
-            //         userChoice = 4;
-            //         break;
-            //     }
-            //     //Select Menu for creating/editing Cinemaroom json files
-            //     else if (keyInfo.Key == ConsoleKey.LeftArrow)
-            //     {
-            //         userChoice = 5;
-            //         break;
-            //     }
-            //     else
-            //     {
-            //         cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
-            //     }
             Console.Clear();
             switch (userChoice)
             {
@@ -123,12 +85,10 @@ namespace MegaBios
             LoggedInAsGuest = true; // Setting LoggedInAsGuest to True
             movies = JsonFunctions.LoadMovies("../../../Movies.json");
             cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
-            int cursorPos = 0;
-            int userChoice = -1;
             List<string> menuOptions = new() { "Bestel ticket"};
             StringBuilder sb = new StringBuilder();
             sb.Append("Welkom bij MegaBios!");
-            userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
+            int userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
             switch (userChoice)
             {
                 case 1:

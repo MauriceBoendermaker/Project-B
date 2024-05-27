@@ -3,8 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-    public class TestAccount
-    {
+    public class User {
         [JsonPropertyName("voornaam")]
         public string Voornaam { get; set; }
 
@@ -13,14 +12,32 @@ namespace MegaBios
 
         [JsonPropertyName("achternaam")]
         public string Achternaam { get; set; }
-        [JsonPropertyName("geboorte_datum")]
+        
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
+        
+        [JsonPropertyName("is_student")]
+        public bool IsStudent { get; set; }
+
+        [JsonPropertyName("history")]
+        public List<ReservationHistory> History { get; set; }
+
+        public User(string voornaam, string tussenvoegsel, string achternaam, string email, bool isStudent) {
+            Voornaam = voornaam;
+            Tussenvoegsel = tussenvoegsel;
+            Achternaam = achternaam;
+            Email = email;
+            IsStudent = isStudent;
+            History = new List<ReservationHistory>();
+        }
+    }
+
+    public class TestAccount : User
+    {
         public string GeboorteDatum { get; set; }
 
         [JsonPropertyName("adres")]
         public Dictionary<string, string> Adres { get; set; }
-
-        [JsonPropertyName("email")]
-        public string Email { get; set; }
 
         [JsonPropertyName("wachtwoord")]
         public string Wachtwoord { get; set; }
@@ -31,12 +48,6 @@ namespace MegaBios
         [JsonPropertyName("voorkeur_betaalwijze")]
         public string Voorkeur_Betaalwijze { get; set; }
 
-        [JsonPropertyName("is_student")]
-        public bool IsStudent { get; set; }
-
-        [JsonPropertyName("history")]
-        public List<ReservationHistory> History { get; set; } = new List<ReservationHistory>();
-
         public TestAccount(string voornaam,
                             string tussenvoegsel,
                             string achternaam,
@@ -46,7 +57,7 @@ namespace MegaBios
                             string wachtwoord,
                             string telefoonNr,
                             string voorkeur_Betaalwijze,
-                            bool isStudent)
+                            bool isStudent) : base(voornaam, tussenvoegsel, achternaam, email, isStudent)
         {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
@@ -58,6 +69,7 @@ namespace MegaBios
             TelefoonNr = telefoonNr;
             Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
+            History =new List<ReservationHistory>();
         }
 
         public static bool operator ==(TestAccount t1, TestAccount t2) {
