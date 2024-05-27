@@ -98,7 +98,8 @@ namespace MegaBios
                     Guest guest = Guest.CreateGuest();
                     reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, guest);
                     bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
-                    if (confirmedPayment) {
+                    if (confirmedPayment)
+                    {
                         SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
                         ReservationHistory.AddReservation(guest, reservation);
                     }
@@ -202,11 +203,10 @@ namespace MegaBios
                         break;
                     case 6:
                         Console.Clear();
-                        Console.WriteLine("Uw actieve bestellingen:");
 
                         foreach (var userReservation in account.History)
                         {
-                            Console.WriteLine(ReservationHistory.PrintReservation(userReservation));
+                            Console.WriteLine(ReservationHistory.PrintReservationUser(userReservation));
                         }
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
                         Console.ReadKey(true);

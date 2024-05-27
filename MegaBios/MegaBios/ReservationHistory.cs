@@ -49,16 +49,19 @@ namespace MegaBios
                 }
             }
 
-        }  
+        }
 
-        public static void AddReservation(Guest guest, ReservationHistory reservationHistory) {
+        public static void AddReservation(Guest guest, ReservationHistory reservationHistory)
+        {
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
-            for (int i = 0; i < guests.Count; i++) {
-                if (guests[i] == guest) {
+            for (int i = 0; i < guests.Count; i++)
+            {
+                if (guests[i] == guest)
+                {
                     guests[i].History.Add(reservationHistory);
                     JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
                     break;
-                } 
+                }
             }
         }
 
@@ -78,7 +81,8 @@ namespace MegaBios
             return false;
         }
 
-        public static string generateReservationNumber() {
+        public static string generateReservationNumber()
+        {
             Random rand = new Random();
             while (true)
             {
@@ -118,20 +122,45 @@ namespace MegaBios
             return reservationPrint;
         }
 
-        public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, TestAccount user) {
+        public static string PrintReservationUser(ReservationHistory reservation)
+        {
+            string stoelenString = "";
+            double totalPrice = 0;
+            Seat seat; // Declare seat outside the loop
+            for (int i = 0; i < reservation.ReservedSeats.Count; i++)
+            {
+                seat = reservation.ReservedSeats[i]; // Assign value inside the loop
+                stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
+                totalPrice += seat.Price;
+            }
+            return $"--------UW BESTELLINGEN-----------\n\n" +
+                $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                $"Film: {reservation.MovieTitle}\n" +
+                $"Gereserveerde stoelen:\n{stoelenString}" +
+                $"Totaalprijs: {totalPrice} Euro\n" + // Use stoelenString here
+                $"Reserveringszaal: {reservation.ReservationRoom}\n" +
+                $"Reserveringsdatum: {reservation.ReservationDate}";
+        }
+
+        public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, TestAccount user)
+        {
             double discount = 0;
-            if (user.IsStudent) {
+            if (user.IsStudent)
+            {
                 discount = 0.15;
             }
-            for (int i = 0; i < selectedSeats.Count; i++) {
+            for (int i = 0; i < selectedSeats.Count; i++)
+            {
                 selectedSeats[i].Price *= 1 - discount;
             }
             return selectedSeats;
         }
 
-        public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Guest guest) {
+        public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Guest guest)
+        {
             double discount = 0;
-            if (guest.IsStudent) {
+            if (guest.IsStudent)
+            {
                 discount = 0.15;
             }
             for (int i = 0; i < selectedSeats.Count; i++)
