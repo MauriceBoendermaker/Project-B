@@ -88,40 +88,48 @@ namespace MegaBios
             return null;
         }
 
-        public void MarkSeatsAsSelected()
+        public static void MarkSeatsAsSelected(List<Seat> selectedSeats, DateTime showingTime, string roomNumber)
         {
             // Get all the seat numbers from the selectedseats and add them into a list
             List<string> seatNumbers = new();
-            foreach (Seat selectedSeat in _selectedSeats)
+            foreach (Seat selectedSeat in selectedSeats)
             {
                 seatNumbers.Add(selectedSeat.SeatNumber);
             }
 
+            List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../{roomNumber}.json");
+            RoomShowing updatedShowing = null!;
+            foreach (RoomShowing currentShowing in roomShowings) {
+                if (currentShowing.ShowingTime == showingTime) {
+                    updatedShowing = currentShowing;
+                }
+            }
+
             // Iterate over 2D List and mark each selected seat as selected in said 2D list.
-            for (int i = 0; i < Seats.Count; i++)
+            for (int i = 0; i < updatedShowing.Seating.Count; i++)
             {
-                for (int j = 0; j < Seats[i].Count; j++)
+                for (int j = 0; j < updatedShowing.Seating[i].Count; j++)
                 {
-                    if (seatNumbers.Contains(Seats[i][j].SeatNumber))
+                    if (seatNumbers.Contains(updatedShowing.Seating[i][j].SeatNumber))
                     {
-                        Seats[i][j].SeatTaken = true;
+                        updatedShowing.Seating[i][j].SeatTaken = true;
                     }
                 }
             }
-            UpdateRoomSeating();
+            UpdateRoomSeating(roomShowings, updatedShowing, showingTime, roomNumber);
         }
 
-        public void UpdateRoomSeating()
+        public static void UpdateRoomSeating(List<RoomShowing> roomShowings, RoomShowing updatedShowing, DateTime showingTime, string roomNumber)
         {
-            for (int i = 0; i < RoomShowings.Count; i++)
+            for (int i = 0; i < roomShowings.Count; i++)
             {
-                if (RoomShowings[i].ShowingTime == ShowTime)
+                if (roomShowings[i].ShowingTime == showingTime)
                 {
-                    RoomShowings[i].Seating = Seats;
+                    roomShowings[i].Seating = updatedShowing.Seating;
                     break;
                 }
             }
-            JsonFunctions.WriteToJson($"../../../{RoomNumber}.json", RoomShowings);
+            JsonFunctions.WriteToJson($"../../../{roomNumber}.json", roomShowings);
         }
 
         public List<Seat> SelectSeats()
@@ -144,7 +152,6 @@ namespace MegaBios
 
             System.Console.WriteLine("Press any button to go back");
             // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            MarkSeatsAsSelected();
             return _selectedSeats;
         }
 
@@ -434,7 +441,6 @@ namespace MegaBios
                     _selectedSeats.Add(seat);
                 }
                 Console.WriteLine();
-                MarkSeatsAsSelected();
                 return _selectedSeats;
             }
             else

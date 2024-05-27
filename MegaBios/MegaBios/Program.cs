@@ -220,6 +220,7 @@ namespace MegaBios
                         reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, account);
                         bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
                         if (confirmedPayment) {
+                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
                             ReservationHistory.AddReservation(account, reservation);
                         }
                         break;
