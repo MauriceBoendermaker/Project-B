@@ -5,6 +5,35 @@
     "achternaam": "test",
     "email": "test@gmail.com",
     "is_student": true,
+    "history": [
+      {
+        "reservation_number": "1806",
+        "movie_title": "The Godfather",
+        "reserved_seats": [
+          {
+            "seat_number": "C2",
+            "is_taken": false,
+            "type": "normal",
+            "price": 8.5
+          },
+          {
+            "seat_number": "C3",
+            "is_taken": false,
+            "type": "normal",
+            "price": 8.5
+          }
+        ],
+        "reservation_room": "Room3",
+        "reservation_date": "2024-08-30T13:07:00"
+      }
+    ]
+  },
+  {
+    "voornaam": "test",
+    "tussenvoegsel": "test",
+    "achternaam": "test",
+    "email": "test@gmail.com",
+    "is_student": true,
     "history": []
   }
 ]

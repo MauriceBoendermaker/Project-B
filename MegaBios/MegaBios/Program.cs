@@ -90,7 +90,7 @@ namespace MegaBios
             List<string> menuOptions = new() { "Bestel ticket" };
             StringBuilder sb = new StringBuilder();
             sb.Append("Welkom bij MegaBios!");
-            int userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
+            userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
             switch (userChoice)
             {
                 case 1:
@@ -206,7 +206,7 @@ namespace MegaBios
 
                         foreach (var userReservation in account.History)
                         {
-                            Console.WriteLine(ReservationHistory.PrintReservationUser(userReservation));
+                            Console.WriteLine(ReservationHistory.PrintReservation(userReservation));
                         }
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
                         Console.ReadKey(true);
