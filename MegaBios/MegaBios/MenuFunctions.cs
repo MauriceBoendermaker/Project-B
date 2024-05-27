@@ -8,7 +8,7 @@ namespace MegaBios
 {
     public static class MenuFunctions {
         
-        public static int Menu<T>(List<T> menuOptions, string optionalMessage) {
+        public static int Menu<T>(List<T> menuOptions, StringBuilder optionalMessage) {
             int cursorPos = 0;
             while(true) {
                 Console.Clear();

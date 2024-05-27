@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.VisualBasic;
@@ -125,7 +126,9 @@ namespace MegaBios
             int cursorPos = 0;
             int userChoice = -1;
             List<string> menuOptions = new() { "Bestel ticket"};
-            userChoice = MenuFunctions.Menu(menuOptions, "Welkom bij MegaBios!") + 1;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Welkom bij MegaBios!");
+            userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
             switch (userChoice)
             {
                 case 1:
@@ -214,8 +217,11 @@ namespace MegaBios
                         break;
                     case 4:
                         ReservationHistory reservation = TicketReservation();
-                        ReservationHistory.AddReservation(account, reservation);
-                        while(true) {}
+                        reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, account);
+                        bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
+                        if (confirmedPayment) {
+                            ReservationHistory.AddReservation(account, reservation);
+                        }
                         break;
 
 
@@ -315,7 +321,9 @@ namespace MegaBios
             List<string> keys = showingOptions.Keys.ToList();
             if (redirectedDate)
             {
-                cursorPos = MenuFunctions.Menu(keys, $"Er zijn geen tentoonstellingen beschikbaar voor {selectedMovie} op {initialDate.Date}\nOp {selectedDate.Date} zijn er wel films beschikbaar. Hierbij de films van die dag:");
+                StringBuilder sb = new StringBuilder();
+                sb.Append($"Er zijn geen tentoonstellingen beschikbaar voor {selectedMovie} op {initialDate.Date}\nOp {selectedDate.Date} zijn er wel films beschikbaar. Hierbij de films van die dag:");
+                cursorPos = MenuFunctions.Menu(keys, sb);
             }
             else
             {
@@ -360,8 +368,7 @@ namespace MegaBios
             {
                 selectedSeats = seatSelect.SelectSeats();
                 string reservationNumber = ReservationHistory.generateReservasionNumber();
-                List<string> selectedSeatStrings = selectedSeats.Select(x => x.SeatNumber).ToList();
-                ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeatStrings, selectedRoom, selectedDate);
+                ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
                 return reservation;
             }
             else if (cursorPos == 1)
@@ -370,8 +377,7 @@ namespace MegaBios
                 int groupSize = int.Parse(Console.ReadLine());
                 selectedSeats = seatSelect.SelectGroupSeats(groupSize);
                 string reservationNumber = ReservationHistory.generateReservasionNumber();
-                List<string> selectedSeatStrings = selectedSeats.Select(x => x.ToString()).ToList();
-                ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeatStrings, selectedRoom, selectedDate);
+                ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
                 return reservation;
             }
             return null;

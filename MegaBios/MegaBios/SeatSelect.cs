@@ -141,6 +141,9 @@ namespace MegaBios
                 selectedSeatsString += seat.SeatNumber + " ";
             }
             Console.WriteLine(selectedSeatsString);
+
+            System.Console.WriteLine("Press any button to go back");
+            // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             MarkSeatsAsSelected();
             return _selectedSeats;
         }
