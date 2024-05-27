@@ -69,28 +69,7 @@
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true,
-    "history": [
-      {
-        "reservation_number": "3261",
-        "movie_title": "testfilm",
-        "reserved_seats": [
-          {
-            "seat_number": "C1",
-            "is_taken": false,
-            "type": "normal",
-            "price": 8.5
-          },
-          {
-            "seat_number": "C2",
-            "is_taken": false,
-            "type": "normal",
-            "price": 8.5
-          }
-        ],
-        "reservation_room": "Room3",
-        "reservation_date": "2024-08-30T10:30:00"
-      }
-    ]
+    "history": []
   },
   {
     "voornaam": "mathilda",

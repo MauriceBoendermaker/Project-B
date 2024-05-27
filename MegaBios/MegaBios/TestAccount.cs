@@ -80,10 +80,13 @@ namespace MegaBios
             }
             Guest newGuest = new Guest(voornaam, tussenvoegsel, achternaam, email, is_student, new());
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
-            if (DoesGuestExist(guests, newGuest)) {
+            if (!DoesGuestExist(guests, newGuest)) {
                 guests.Add(newGuest);
+                JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
             }
-            JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
+            else {
+                return GetCorrespondingGuest(guests, newGuest);
+            }
             return newGuest;
         }
 
@@ -96,6 +99,15 @@ namespace MegaBios
             return false;
         }
 
+        public static Guest GetCorrespondingGuest(List<Guest> guests, Guest guest) {
+            foreach(Guest currentGuest in guests) {
+                if (currentGuest == guest) {
+                    return currentGuest;
+                }
+            }
+            return null;
+        }
+
         public static bool operator ==(Guest t1, Guest t2) {
             if (t1 is null || t2 is null) {
                 return (t1 is null && t2 is null);
@@ -106,7 +118,18 @@ namespace MegaBios
         public static bool operator !=(Guest t1, Guest t2) {
             return !(t1 == t2);
         }
-        
+
+        public static void UpdateAccount(Guest guest) {
+            List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
+            for (int i = 0; i < guests.Count; i++) {
+                if (guests[i] == guest) {
+                    guests[i] = guest;
+                    JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
+                    break;
+                }
+            }
+        }
+      
     }
 
     public class TestAccount
@@ -179,6 +202,17 @@ namespace MegaBios
         public static bool operator !=(TestAccount t1, TestAccount t2)
         {
             return !(t1 == t2);
+        }
+
+        public static void UpdateAccount(TestAccount account) {
+            List<TestAccount> customers = JsonFunctions.LoadCustomers("../../../customers.json");
+            for (int i = 0; i < customers.Count; i++) {
+                if (customers[i] == account) {
+                    customers[i] = account;
+                    JsonFunctions.WriteToJson("../../../customers.json", customers);
+                    break;
+                }
+            }
         }
     }
 }

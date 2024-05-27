@@ -119,6 +119,37 @@ namespace MegaBios
             UpdateRoomSeating(roomShowings, updatedShowing, showingTime, roomNumber);
         }
 
+        public static void MarkSeatsAsFree(List<Seat> selectedSeats, DateTime showingTime, string roomNumber)
+        {
+            // Get all the seat numbers from the selectedseats and add them into a list
+            List<string> seatNumbers = new();
+            foreach (Seat selectedSeat in selectedSeats)
+            {
+                seatNumbers.Add(selectedSeat.SeatNumber);
+            }
+
+            List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../{roomNumber}.json");
+            RoomShowing updatedShowing = null!;
+            foreach (RoomShowing currentShowing in roomShowings) {
+                if (currentShowing.ShowingTime == showingTime) {
+                    updatedShowing = currentShowing;
+                }
+            }
+
+            // Iterate over 2D List and mark each selected seat as selected in said 2D list.
+            for (int i = 0; i < updatedShowing.Seating.Count; i++)
+            {
+                for (int j = 0; j < updatedShowing.Seating[i].Count; j++)
+                {
+                    if (seatNumbers.Contains(updatedShowing.Seating[i][j].SeatNumber))
+                    {
+                        updatedShowing.Seating[i][j].SeatTaken = false;
+                    }
+                }
+            }
+            UpdateRoomSeating(roomShowings, updatedShowing, showingTime, roomNumber);
+        }
+
         public static void UpdateRoomSeating(List<RoomShowing> roomShowings, RoomShowing updatedShowing, DateTime showingTime, string roomNumber)
         {
             for (int i = 0; i < roomShowings.Count; i++)
