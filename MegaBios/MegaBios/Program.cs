@@ -112,6 +112,21 @@ namespace MegaBios
                         CancelMenu(guest);
                     }
                     break;
+                // Toon reserveringen voor account
+                case 3:
+                    guest = Guest.CreateGuest();
+                    if (guest.History.Count > 0) {
+                        Console.Clear();
+                        foreach (var userReservation in guest.History)
+                        {
+                            Console.WriteLine(ReservationHistory.PrintReservationUser(userReservation));
+                        }
+                        Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
+                        Console.ReadKey(true);
+                        break;
+                    }
+                    break;
+                    
                 default:
                     Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                     break;

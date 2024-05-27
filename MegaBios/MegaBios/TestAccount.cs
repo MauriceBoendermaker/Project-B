@@ -16,21 +16,17 @@ namespace MegaBios
         [JsonPropertyName("email")]
         public string Email { get; set; }
 
-        [JsonPropertyName("is_student")]
-        public bool IsStudent { get; set; }
-
         [JsonPropertyName("history")]
         public List<ReservationHistory> History { get; set; }
         
         
 
         [JsonConstructor]
-        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, bool isStudent, List<ReservationHistory> history) {
+        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<ReservationHistory> history) {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
             Achternaam = achternaam;
             Email = email;
-            IsStudent = isStudent;
             History = history;
         }
 
@@ -62,23 +58,7 @@ namespace MegaBios
                     Console.WriteLine("Ongeldig emailadres. Probeer het opnieuw.");
                 }
             }
-            bool is_student;
-            while (true)
-            {
-                Console.Write("Bent u student? (true/false): ");
-                string is_studentString = Console.ReadLine()!;
-
-                if (is_studentString == "true" || is_studentString == "false")
-                {
-                    is_student = Convert.ToBoolean(is_studentString);
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Ongeldige invoer. Voer 'true' of 'false' in.");
-                }
-            }
-            Guest newGuest = new Guest(voornaam, tussenvoegsel, achternaam, email, is_student, new());
+            Guest newGuest = new Guest(voornaam, tussenvoegsel, achternaam, email, new());
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
             if (!DoesGuestExist(guests, newGuest)) {
                 guests.Add(newGuest);
