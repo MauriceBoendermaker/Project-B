@@ -82,13 +82,13 @@ namespace MegaBios
             double totalPrice = 0;
             for (int i = 0; i < reservation.ReservedSeats.Count; i++) {
                 Seat seat = reservation.ReservedSeats[i];
-                stoelenString += $"{seat.SeatNumber}: €{seat.Price:F2}\n";
+                stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
                 totalPrice += seat.Price;
             }
             reservationPrint.AppendLine($"--------RESERVERING DATA-----------\n");
             reservationPrint.AppendLine($"Film: {reservation.MovieTitle} Room: {reservation.ReservationRoom}");
             reservationPrint.AppendLine($"Stoelen: \n{stoelenString}");
-            reservationPrint.AppendLine($"Totaalprijs: {totalPrice}");
+            reservationPrint.AppendLine($"Totaalprijs: {totalPrice} Euro");
             reservationPrint.AppendLine("\nSelecteer \"ja\" om de bestelling te bevestigen\n");
             return reservationPrint;
         }
