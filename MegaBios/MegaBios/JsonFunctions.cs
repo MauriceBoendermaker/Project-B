@@ -54,12 +54,14 @@ namespace MegaBios
             return JsonSerializer.Deserialize<List<Movie>>(jsonString);
         }
 
-        public static List<RoomShowing> LoadRoomShowings (string filePath) {
+        public static List<RoomShowing> LoadRoomShowings(string filePath)
+        {
             string jsonString = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<List<RoomShowing>>(jsonString);
         }
 
-        public static List<TestAccount> LoadCustomers (string filePath) {
+        public static List<TestAccount> LoadCustomers(string filePath)
+        {
             string jsonString = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<List<TestAccount>>(jsonString);
         }
@@ -112,23 +114,29 @@ namespace MegaBios
         //     return seating;
         // }
 
-        public static List<List<Seat>> GenerateSeating(int width, int height) {
+        public static List<List<Seat>> GenerateSeating(int width, int height)
+        {
             List<List<Seat>> seating = new List<List<Seat>>(height);
-            for (int i = 0; i < height; i++) {
+            for (int i = 0; i < height; i++)
+            {
                 seating.Add(new List<Seat>(width));
-                for (int j = 1; j <= width; j++) {
+                for (int j = 1; j <= width; j++)
+                {
                     Seat seat = new Seat();
                     seat.SeatNumber = $"{SeatSelect.rowLetters[i]}{j}";
                     seat.SeatTaken = false;
-                    if (i == 0 && (j == 1 || j == 2 || j == 3 || j == width || j == width - 1 || j == width - 2)) {
+                    if (i == 0 && (j == 1 || j == 2 || j == 3 || j == width || j == width - 1 || j == width - 2))
+                    {
                         seat.SeatType = "handicap";
                         seat.Price = 10.00;
                     }
-                    else if (i != 0 && i % 2 != 0 && (j == 1 || j == 2 || j == width || j == width - 1)) {
+                    else if (i != 0 && i % 2 != 0 && (j == 1 || j == 2 || j == width || j == width - 1))
+                    {
                         seat.SeatType = "love seat";
                         seat.Price = 20.00;
                     }
-                    else {
+                    else
+                    {
                         seat.SeatType = "normal";
                         seat.Price = 10.00;
                     }
