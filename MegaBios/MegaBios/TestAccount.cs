@@ -3,7 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-    public class Guest {
+    public class Guest
+    {
         [JsonPropertyName("voornaam")]
         public string Voornaam { get; set; }
 
@@ -18,19 +19,24 @@ namespace MegaBios
 
         [JsonPropertyName("history")]
         public List<ReservationHistory> History { get; set; }
-        
-        
+        [JsonPropertyName("is_student")]
+        public bool IsStudent { get; set; } = false;
+
+
 
         [JsonConstructor]
-        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<ReservationHistory> history) {
+        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<ReservationHistory> history, bool isStudent = false)
+        {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
             Achternaam = achternaam;
             Email = email;
             History = history;
+            IsStudent = isStudent;
         }
 
-        public static Guest CreateGuest() {
+        public static Guest CreateGuest()
+        {
             Console.WriteLine("\nCreëer gast account");
             Console.WriteLine("--------------------");
 
@@ -60,56 +66,70 @@ namespace MegaBios
             }
             Guest newGuest = new Guest(voornaam, tussenvoegsel, achternaam, email, new());
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
-            if (!DoesGuestExist(guests, newGuest)) {
+            if (!DoesGuestExist(guests, newGuest))
+            {
                 guests.Add(newGuest);
                 JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
             }
-            else {
+            else
+            {
                 return GetCorrespondingGuest(guests, newGuest);
             }
             return newGuest;
         }
 
-        public static bool DoesGuestExist(List<Guest> guests, Guest guest) {
-            foreach(Guest currentGuest in guests) {
-                if (currentGuest == guest) {
+        public static bool DoesGuestExist(List<Guest> guests, Guest guest)
+        {
+            foreach (Guest currentGuest in guests)
+            {
+                if (currentGuest == guest)
+                {
                     return true;
                 }
             }
             return false;
         }
 
-        public static Guest GetCorrespondingGuest(List<Guest> guests, Guest guest) {
-            foreach(Guest currentGuest in guests) {
-                if (currentGuest == guest) {
+        public static Guest GetCorrespondingGuest(List<Guest> guests, Guest guest)
+        {
+            foreach (Guest currentGuest in guests)
+            {
+                if (currentGuest == guest)
+                {
                     return currentGuest;
                 }
             }
             return null;
         }
 
-        public static bool operator ==(Guest t1, Guest t2) {
-            if (t1 is null || t2 is null) {
+        public static bool operator ==(Guest t1, Guest t2)
+        {
+            if (t1 is null || t2 is null)
+            {
                 return (t1 is null && t2 is null);
             }
             return t1.Email.Equals(t2.Email) && t1.Voornaam.Equals(t2.Voornaam) && t1.Achternaam.Equals(t2.Achternaam);
         }
 
-        public static bool operator !=(Guest t1, Guest t2) {
+        public static bool operator !=(Guest t1, Guest t2)
+        {
             return !(t1 == t2);
         }
 
-        public static void UpdateAccount(Guest guest) {
+        public static void UpdateAccount(Guest guest)
+        {
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
-            for (int i = 0; i < guests.Count; i++) {
-                if (guests[i] == guest) {
+            for (int i = 0; i < guests.Count; i++)
+            {
+                if (guests[i] == guest)
+                {
                     guests[i] = guest;
                     JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
                     break;
                 }
             }
         }
-      
+
     }
 
     public class TestAccount
@@ -130,7 +150,7 @@ namespace MegaBios
         public Dictionary<string, string> Adres { get; set; }
         [JsonPropertyName("email")]
         public string Email { get; set; }
-        
+
         [JsonPropertyName("wachtwoord")]
         public string Wachtwoord { get; set; }
 
@@ -139,7 +159,7 @@ namespace MegaBios
 
         [JsonPropertyName("voorkeur_betaalwijze")]
         public string Voorkeur_Betaalwijze { get; set; }
-        
+
         [JsonPropertyName("is_student")]
         public bool IsStudent { get; set; }
 
@@ -184,10 +204,13 @@ namespace MegaBios
             return !(t1 == t2);
         }
 
-        public static void UpdateAccount(TestAccount account) {
+        public static void UpdateAccount(TestAccount account)
+        {
             List<TestAccount> customers = JsonFunctions.LoadCustomers("../../../customers.json");
-            for (int i = 0; i < customers.Count; i++) {
-                if (customers[i] == account) {
+            for (int i = 0; i < customers.Count; i++)
+            {
+                if (customers[i] == account)
+                {
                     customers[i] = account;
                     JsonFunctions.WriteToJson("../../../customers.json", customers);
                     break;
