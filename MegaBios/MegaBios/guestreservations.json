@@ -5,5 +5,12 @@
     "achternaam": "test",
     "email": "test@gmail.com",
     "history": []
+  },
+  {
+    "voornaam": "test",
+    "tussenvoegsel": "",
+    "achternaam": "test",
+    "email": "test@mail.com",
+    "history": []
   }
 ]

@@ -183,6 +183,9 @@ namespace MegaBios
 
             System.Console.WriteLine("Press any button to go back");
             // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            for (int i = 0; i < _selectedSeats.Count; i++) {
+                _selectedSeats[i].SeatTaken = true;
+            }
             return _selectedSeats;
         }
 

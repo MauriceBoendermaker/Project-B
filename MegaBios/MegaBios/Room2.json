@@ -55,13 +55,13 @@
         },
         {
           "seat_number": "B3",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "B4",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
@@ -1981,7 +1981,7 @@
         },
         {
           "seat_number": "C3",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
@@ -3391,19 +3391,19 @@
         },
         {
           "seat_number": "C2",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "C3",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "C4",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
@@ -3869,7 +3869,7 @@
         },
         {
           "seat_number": "C3",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
@@ -6937,7 +6937,7 @@
         },
         {
           "seat_number": "C3",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
@@ -7167,19 +7167,19 @@
         },
         {
           "seat_number": "C2",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "C3",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "C4",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
@@ -7415,7 +7415,7 @@
         },
         {
           "seat_number": "C4",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
@@ -8583,25 +8583,25 @@
         },
         {
           "seat_number": "C2",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "C3",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "C4",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "C5",
-          "is_taken": true,
+          "is_taken": false,
           "type": "normal",
           "price": 10
         },
