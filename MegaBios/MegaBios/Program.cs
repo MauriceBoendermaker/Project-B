@@ -277,29 +277,53 @@ namespace MegaBios
             }
             // Get the width and height of the rooms and edit each seating plan in the json
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room{roomToEdit}.json");
+            List<List<Seat>> seating;
+            while(true) {
+                try {
+                    System.Console.WriteLine("Hoe lang moet de zaal zijn? (Max 30)");
+                    int roomHeight = Convert.ToInt32(Console.ReadLine());
+                    if (roomHeight > 30) {
+                        System.Console.WriteLine("Kamerlengte te groot, verzet naar 30");
+                        roomHeight = 30;
+                    }
+                    else if (roomHeight <= 0) {
+                        System.Console.WriteLine("Kamerlengte te klein, verzet naar 1");
+                        roomHeight = 1;
+                    }
+                    System.Console.WriteLine("Hoe breed moet de zaal zijn? Max 50");
+                    int roomWidth = Convert.ToInt32(Console.ReadLine());
+                    if (roomWidth > 30) {
+                        System.Console.WriteLine("Kamerbreedte te groot, verzet naar 30");
+                        roomWidth = 30;
+                    }
+                    else if (roomWidth <= 0) {
+                        System.Console.WriteLine("Kamerbreedte te klein, verzet naar 1");
+                        roomWidth = 1;
+                    }
+
+                    seating = JsonFunctions.GenerateSeating(roomHeight, roomWidth);
+                    break;
+                }
+                catch (Exception e) {
+                    System.Console.WriteLine(e);
+                    System.Console.WriteLine("Voer alsjeblieft een nummer in");
+                }
+            } 
+            
             for (int i = 0; i < roomShowings.Count; i++)
             {
                 try
                 {
-                    while (true)
-                    {
-                        System.Console.WriteLine("Hoe lang moet de zaal zijn?");
-                        int roomWidth = Convert.ToInt32(Console.ReadLine());
-                        System.Console.WriteLine("Hoe breed moet de zaal zijn?");
-                        int roomHeight = Convert.ToInt32(Console.ReadLine());
-                        List<List<Seat>> seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
-                        roomShowings[i].Seating = seating;
-                        break;
-                    }
+                    roomShowings[i].Seating = seating;
                 }
                 catch (Exception e)
                 {
                     System.Console.WriteLine("Voer alstublieft een valide nummer in");
                     System.Console.WriteLine(e);
-                    while(true) {}
+                    // while(true) {}
                 }
             }
-            JsonFunctions.WriteToJson($"../../../Room{roomToEdit}", roomShowings);
+            JsonFunctions.WriteToJson($"../../../Room{roomToEdit}.json", roomShowings);
         }
 
         public static ReservationHistory TicketReservation()
