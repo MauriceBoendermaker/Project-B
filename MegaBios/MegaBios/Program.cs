@@ -23,60 +23,53 @@ namespace MegaBios
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
             JsonElement root = jsonDocument.RootElement;
             jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
-            int cursorPos = 0;
-            List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login", "Admin1", "Admin2" };
-            int userChoice = MenuFunctions.Menu(menuOptions) + 1;
-            Console.Clear();
-            switch (userChoice)
-            {
-                case 1:
-                    LoginAsGuest();
-                    break;
-                case 2:
-                    CreateAccount.CreateNewAccount(jsonData);
-                    bool firstLogin = true;
-                    while (true)
-                    {
-                        (bool, TestAccount) loginInfo = Login(firstLogin);
-                        if (loginInfo.Item1 && loginInfo.Item2 != null)
+            while(true) {
+                int cursorPos = 0;
+                List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login"};
+                int userChoice = MenuFunctions.Menu(menuOptions, false) + 1;
+                Console.Clear();
+                switch (userChoice)
+                {
+                    case 1:
+                        LoginAsGuest();
+                        break;
+                    case 2:
+                        CreateAccount.CreateNewAccount(jsonData);
+                        bool firstLogin = true;
+                        while (true)
                         {
-                            LoggedInMenu(loginInfo.Item2);
-                            break;
+                            (bool, TestAccount) loginInfo = Login(firstLogin);
+                            if (loginInfo.Item1 && loginInfo.Item2 != null)
+                            {
+                                LoggedInMenu(loginInfo.Item2);
+                                break;
+                            }
+                            else
+                            {
+                                firstLogin = false;
+                            }
                         }
-                        else
+                        break;
+                    case 3:
+                        firstLogin = true;
+                        while (true)
                         {
-                            firstLogin = false;
+                            (bool, TestAccount) loginInfo = Login(firstLogin);
+                            if (loginInfo.Item1 && loginInfo.Item2 != null)
+                            {
+                                LoggedInMenu(loginInfo.Item2);
+                                break;
+                            }
+                            else
+                            {
+                                firstLogin = false;
+                            }
                         }
-                    }
-                    break;
-                case 3:
-                    firstLogin = true;
-                    while (true)
-                    {
-                        (bool, TestAccount) loginInfo = Login(firstLogin);
-                        if (loginInfo.Item1 && loginInfo.Item2 != null)
-                        {
-                            LoggedInMenu(loginInfo.Item2);
-                            break;
-                        }
-                        else
-                        {
-                            firstLogin = false;
-                        }
-                    }
-                    break;
-
-                case 4:
-                    EditRoomSize();
-                    break;
-
-                case 5:
-                    CinemaRoomGenerator cinemaRoomGenerator = new CinemaRoomGenerator();
-                    cinemaRoomGenerator.GenerationMenu();
-                    break;
-                default:
-                    Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
-                    break;
+                        break;
+                    default:
+                        Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
+                        break;
+                }
             }
         }
 
@@ -91,11 +84,17 @@ namespace MegaBios
             StringBuilder sb = new StringBuilder();
             sb.Append("Welkom bij MegaBios!");
             userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
+            System.Console.WriteLine(userChoice);
             switch (userChoice)
             {
+                case 0:
+                    return;
                 // Bestel ticket
                 case 1:
                     ReservationHistory reservation = TicketReservation();
+                    if (TicketReservation == null) {
+                        break;
+                    }
                     Guest guest = Guest.CreateGuest();
                     reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, guest);
                     bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
@@ -126,7 +125,6 @@ namespace MegaBios
                         break;
                     }
                     break;
-                    
                 default:
                     Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                     break;
@@ -172,11 +170,15 @@ namespace MegaBios
             while (true)
             {
                 List<string> menuOptions = new() { "Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Annuleer ticket(s)", "Bestellingen" };
-                int cursorPos = 0;
+                if (account.IsAdmin()) {
+                    menuOptions.Add("Edit room size");
+                    menuOptions.Add("Misc admin methods");
+                }
                 int userChoice = MenuFunctions.Menu(menuOptions) + 1;
-
                 switch (userChoice)
                 {
+                    case 0: 
+                        return;
                     case 1:
                         Console.Clear();
                         ReadAccount.DisplayUserInfo(account);
@@ -210,6 +212,9 @@ namespace MegaBios
                         break;
                     case 4:
                         ReservationHistory reservation = TicketReservation();
+                        if (reservation == null) {
+                            break;
+                        }
                         reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, account);
                         bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
                         if (confirmedPayment)
@@ -233,6 +238,14 @@ namespace MegaBios
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
                         Console.ReadKey(true);
                         break;
+                    case 7:
+                        EditRoomSize();
+                        break;
+
+                    case 8:
+                        CinemaRoomGenerator cinemaRoomGenerator = new CinemaRoomGenerator();
+                        cinemaRoomGenerator.GenerationMenu();
+                        break;
                     default:
                         Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
                         break;
@@ -249,8 +262,11 @@ namespace MegaBios
             while (true)
             {
                 Console.Clear();
-                System.Console.WriteLine($"Welke zaal wil je updaten? Voer het nummer van de zaal in");
+                System.Console.WriteLine($"Welke zaal wil je updaten? Voer het nummer van de zaal in. Voer -1 in om terug te gaan");
                 roomToEdit = Convert.ToInt32(System.Console.ReadLine());
+                if (roomToEdit == -1) {
+                    return;
+                }
                 if (File.Exists($"../../../Room{roomToEdit}.json"))
                 {
                     break;
@@ -289,6 +305,9 @@ namespace MegaBios
             List<string> movieTitles = movies.Select(o => o.Title).ToList();
 
             int cursorPos = MenuFunctions.Menu(movieTitles);
+            if (cursorPos == -1) {
+                return null;
+            }
             string selectedMovie = movies[cursorPos].Title;
             Dictionary<string, DateTime> showingOptions;
             string selectedRoom = "";
@@ -302,6 +321,9 @@ namespace MegaBios
                 System.Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op Enter om je selectie te bevestigen");
                 List<DateTime> menuOptions = GetShowDays();
                 int selectedOption = MenuFunctions.Menu(menuOptions, false);
+                if (cursorPos == -1) {
+                    return null;
+                }               
                 selectedDate = menuOptions[selectedOption];
 
                 initialDate = selectedDate;
@@ -329,10 +351,16 @@ namespace MegaBios
                 StringBuilder sb = new StringBuilder();
                 sb.Append($"Er zijn geen tentoonstellingen beschikbaar voor {selectedMovie} op {initialDate.Date}\nOp {selectedDate.Date} zijn er wel films beschikbaar. Hierbij de films van die dag:");
                 cursorPos = MenuFunctions.Menu(keys, sb);
+                if (cursorPos == -1) {
+                    return null;
+                }
             }
             else
             {
                 cursorPos = MenuFunctions.Menu(keys);
+                if (cursorPos == -1) {
+                    return null;
+                }
             }
 
             selectedRoom = keys[cursorPos].Split(" - ")[0].Replace(" ", "");
@@ -434,6 +462,9 @@ namespace MegaBios
             StringBuilder sb = new();
             sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
             int selectedOption = MenuFunctions.Menu(new List<string> {"Ja", "Nee"}, sb);
+            if (selectedOption == -1) {
+                return null;
+            }
             switch (selectedOption) {
                 // Ja
                 case 0:
@@ -453,6 +484,9 @@ namespace MegaBios
             StringBuilder sb = new();
             sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
             int selectedOption = MenuFunctions.Menu(new List<string> {"Ja", "Nee"}, sb);
+            if (selectedOption == -1) {
+                return null;
+            }
             switch (selectedOption) {
                 // Ja
                 case 0:
@@ -477,6 +511,9 @@ namespace MegaBios
             StringBuilder sb = new();
             sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
             int selectedOption = MenuFunctions.Menu(new List<string> {"Ja", "Nee"}, sb);
+            if (selectedOption == -1) {
+                return null;
+            }
             switch (selectedOption) {
                 // Ja
                 case 0:
@@ -496,6 +533,9 @@ namespace MegaBios
             StringBuilder sb = new();
             sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
             int selectedOption = MenuFunctions.Menu(new List<string> {"Ja", "Nee"}, sb);
+            if (selectedOption == -1) {
+                return null;
+            }
             switch (selectedOption) {
                 // Ja
                 case 0:
@@ -515,93 +555,130 @@ namespace MegaBios
         }
 
         public static void CancelMenu(TestAccount account) {
-            List<string> reservationNumbers = account.History
-                .Select(x => x.ReservationNumber)
-                .ToList();
-            int selectedOption = MenuFunctions.Menu(reservationNumbers);
-            string reservationNumber = reservationNumbers[selectedOption];
-            ReservationHistory selectedReservation = account.History
-                .Where(x => x.ReservationNumber == reservationNumber)
-                .ToList()[0];
-            List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
-            
-            // Ask user to select whether they want to cancel 1 seat or all seats
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Wat voor annulering wilt u uitvoeren?");
-            selectedOption = MenuFunctions.Menu(menuOptions, sb);
-            switch (selectedOption) {
-                // Cancel 1 seat
-                case 0: 
-                    List<string> seatNumbers = selectedReservation.ReservedSeats
-                        .Select(x => x.SeatNumber)
-                        .ToList();
-                    sb = new StringBuilder();
-                    sb.Append("Welke stoel wilt u annuleren?");
-                    selectedOption = MenuFunctions.Menu(seatNumbers, sb);
-                    
-                    // Get the correct seat from the seats list
-                    Seat selectedSeat = selectedReservation.ReservedSeats
-                        .Where(x => x.SeatNumber == seatNumbers[selectedOption])
-                        .ToList()[0];                                  
-                    ReservationHistory changedReservation = CancelSeat(account, selectedReservation, selectedSeat);
-                    for (int i = 0; i < account.History.Count; i++) {
-                        if (account.History[i].ReservationNumber == changedReservation.ReservationNumber) {
-                            account.History[i] = changedReservation;
+            while(true) {
+                List<string> reservationNumbers = account.History
+                    .Select(x => x.ReservationNumber)
+                    .ToList();
+                int selectedOption = MenuFunctions.Menu(reservationNumbers);
+                if (selectedOption == -1) {
+                    return;
+                }
+                string reservationNumber = reservationNumbers[selectedOption];
+                ReservationHistory selectedReservation = account.History
+                    .Where(x => x.ReservationNumber == reservationNumber)
+                    .ToList()[0];
+                List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
+                
+                // Ask user to select whether they want to cancel 1 seat or all seats
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Wat voor annulering wilt u uitvoeren?");
+                selectedOption = MenuFunctions.Menu(menuOptions, sb);
+                if (selectedOption == -1) {
+                    return;
+                }
+                switch (selectedOption) {
+                    // Cancel 1 seat
+                    case 0: 
+                        List<string> seatNumbers = selectedReservation.ReservedSeats
+                            .Select(x => x.SeatNumber)
+                            .ToList();
+                        sb = new StringBuilder();
+                        sb.Append("Welke stoel wilt u annuleren?");
+                        selectedOption = MenuFunctions.Menu(seatNumbers, sb);
+                        if (selectedOption == -1) {
+                            return;
+                        }
+                        // Get the correct seat from the seats list
+                        Seat selectedSeat = selectedReservation.ReservedSeats
+                            .Where(x => x.SeatNumber == seatNumbers[selectedOption])
+                            .ToList()[0];                                  
+                        ReservationHistory changedReservation = CancelSeat(account, selectedReservation, selectedSeat);
+                        if (changedReservation == selectedReservation) {
                             break;
                         }
-                    }
-                    break;
-                // Cancel whole reservation
-                case 1:
-                    account = CancelReservation(account, selectedReservation, selectedReservation.ReservedSeats);
-                    break;
+                        for (int i = 0; i < account.History.Count; i++) {
+                            if (account.History[i].ReservationNumber == changedReservation.ReservationNumber) {
+                                account.History[i] = changedReservation;
+                                break;
+                            }
+                        }
+                        TestAccount.UpdateAccount(account);
+                        return;
+                    // Cancel whole reservation
+                    case 1:
+                        account = CancelReservation(account, selectedReservation, selectedReservation.ReservedSeats);
+                        if (account == null) {
+                            break;
+                        }
+                        TestAccount.UpdateAccount(account);
+                        return;    
+                }
+
             }
-            TestAccount.UpdateAccount(account);
+            
         }
 
         public static void CancelMenu(Guest guest) {
-            List<string> reservationNumbers = guest.History
-                .Select(x => x.ReservationNumber)
-                .ToList();
-            int selectedOption = MenuFunctions.Menu(reservationNumbers);
-            string reservationNumber = reservationNumbers[selectedOption];
-            ReservationHistory selectedReservation = guest.History
-                .Where(x => x.ReservationNumber == reservationNumber)
-                .ToList()[0];
-            List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
-            
-            // Ask user to select whether they want to cancel 1 seat or all seats
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Wat voor annulering wilt u uitvoeren?");
-            selectedOption = MenuFunctions.Menu(menuOptions, sb);
-            switch (selectedOption) {
-                // Cancel 1 seat
-                case 0: 
-                    List<string> seatNumbers = selectedReservation.ReservedSeats
-                        .Select(x => x.SeatNumber)
-                        .ToList();
-                    sb = new StringBuilder();
-                    sb.Append("Welke stoel wilt u annuleren?");
-                    selectedOption = MenuFunctions.Menu(seatNumbers, sb);
-                    
-                    // Get the correct seat from the seats list
-                    Seat selectedSeat = selectedReservation.ReservedSeats
-                        .Where(x => x.SeatNumber == seatNumbers[selectedOption])
-                        .ToList()[0];                                  
-                    ReservationHistory changedReservation = CancelSeat(guest, selectedReservation, selectedSeat);
-                    for (int i = 0; i < guest.History.Count; i++) {
-                        if (guest.History[i].ReservationNumber == changedReservation.ReservationNumber) {
-                            guest.History[i] = changedReservation;
+            while(true) {
+                List<string> reservationNumbers = guest.History
+                    .Select(x => x.ReservationNumber)
+                    .ToList();
+                int selectedOption = MenuFunctions.Menu(reservationNumbers);
+                if (selectedOption == -1) {
+                    return;
+                }
+                string reservationNumber = reservationNumbers[selectedOption];
+                ReservationHistory selectedReservation = guest.History
+                    .Where(x => x.ReservationNumber == reservationNumber)
+                    .ToList()[0];
+                List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
+                
+                // Ask user to select whether they want to cancel 1 seat or all seats
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Wat voor annulering wilt u uitvoeren?");
+                selectedOption = MenuFunctions.Menu(menuOptions, sb);
+                if (selectedOption == -1) {
+                    return;
+                }
+                switch (selectedOption) {
+                    // Cancel 1 seat
+                    case 0: 
+                        List<string> seatNumbers = selectedReservation.ReservedSeats
+                            .Select(x => x.SeatNumber)
+                            .ToList();
+                        sb = new StringBuilder();
+                        sb.Append("Welke stoel wilt u annuleren?");
+                        selectedOption = MenuFunctions.Menu(seatNumbers, sb);
+                        if (selectedOption == -1) {
+                            return;
+                        }
+                        
+                        // Get the correct seat from the seats list
+                        Seat selectedSeat = selectedReservation.ReservedSeats
+                            .Where(x => x.SeatNumber == seatNumbers[selectedOption])
+                            .ToList()[0];                                  
+                        ReservationHistory changedReservation = CancelSeat(guest, selectedReservation, selectedSeat);
+                        if (changedReservation == selectedReservation) {
                             break;
                         }
-                    }
-                    break;
-                // Cancel whole reservation
-                case 1:
-                    guest = CancelReservation(guest, selectedReservation, selectedReservation.ReservedSeats);
-                    break;
+                        for (int i = 0; i < guest.History.Count; i++) {
+                            if (guest.History[i].ReservationNumber == changedReservation.ReservationNumber) {
+                                guest.History[i] = changedReservation;
+                                break;
+                            }
+                        }
+                        Guest.UpdateAccount(guest);
+                        return;
+                    // Cancel whole reservation
+                    case 1:
+                        guest = CancelReservation(guest, selectedReservation, selectedReservation.ReservedSeats);
+                        if (guest == null) {
+                            break;;
+                        }
+                        Guest.UpdateAccount(guest);
+                        return;
+                }
             }
-            Guest.UpdateAccount(guest);
         }
     }
 }

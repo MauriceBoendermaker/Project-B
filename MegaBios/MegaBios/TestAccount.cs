@@ -217,5 +217,9 @@ namespace MegaBios
                 }
             }
         }
+
+        public bool IsAdmin() {
+            return Voornaam == "admin" && Achternaam == "admin";
+        }
     }
 }

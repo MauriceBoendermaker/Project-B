@@ -10,31 +10,16 @@ namespace MegaBios
 {
     public class CinemaRoomGenerator {
         public void GenerationMenu() {
-            int userChoice = -1;
-            int cursorPos = 0;
-            while(true) {
-                Console.Clear();
-                List<string> menuOptions = new() {"Genereer nieuwe zalen", "Werk bestaande zaal bij", "Reset alle seatings"};
-                System.Console.WriteLine("Do you want to generate rooms or edit a room?");
-                for (int i = 0; i < menuOptions.Count; i++) {
-                    if (cursorPos == i) {
-                        System.Console.WriteLine($"> {menuOptions[i]}");
-                    }
-                    else {
-                        System.Console.WriteLine(menuOptions[i]);
-                    }
-                }
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Enter) {
-                    userChoice = cursorPos;
-                    break;
-                }
-                else {
-                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
-                }
-            }
+            int userChoice;
+
+            Console.Clear();
+            List<string> menuOptions = new() {"Genereer nieuwe zalen", "Werk bestaande zaal bij", "Reset alle seatings"};
+            System.Console.WriteLine("Do you want to generate rooms or edit a room?");
+            userChoice = MenuFunctions.Menu(menuOptions);
 
             switch (userChoice) {
+                case -1: 
+                    return;
                 case 0:
                     GenerateShowingData();
                     break;

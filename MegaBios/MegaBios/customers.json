@@ -88,5 +88,23 @@
     "voorkeur_betaalwijze": "hff",
     "is_student": true,
     "history": []
+  },
+  {
+    "voornaam": "admin",
+    "tussenvoegsel": "n",
+    "achternaam": "admin",
+    "geboorte_datum": "12-12-12",
+    "adres": {
+      "straat": "",
+      "huisnummer": "38",
+      "woonplaats": "asd",
+      "postcode": "asd"
+    },
+    "email": "admin@testmail.com",
+    "wachtwoord": "adminwachtwoord",
+    "telefoonnummer": "9878",
+    "voorkeur_betaalwijze": "hff",
+    "is_student": true,
+    "history": []
   }
 ]
