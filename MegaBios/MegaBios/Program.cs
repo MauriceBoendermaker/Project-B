@@ -96,7 +96,6 @@ namespace MegaBios
                         break;
                     }
                     Guest guest = Guest.CreateGuest();
-                    reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, guest);
                     bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
                     if (confirmedPayment)
                     {

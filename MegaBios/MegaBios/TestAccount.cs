@@ -19,20 +19,17 @@ namespace MegaBios
 
         [JsonPropertyName("history")]
         public List<ReservationHistory> History { get; set; }
-        [JsonPropertyName("is_student")]
-        public bool IsStudent { get; set; } = false;
 
 
 
         [JsonConstructor]
-        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<ReservationHistory> history, bool isStudent = false)
+        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<ReservationHistory> history)
         {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
             Achternaam = achternaam;
             Email = email;
             History = history;
-            IsStudent = isStudent;
         }
 
         public static Guest CreateGuest()

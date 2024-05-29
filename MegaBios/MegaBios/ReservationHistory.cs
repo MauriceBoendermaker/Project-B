@@ -156,19 +156,19 @@ namespace MegaBios
             return selectedSeats;
         }
 
-        public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Guest guest)
-        {
-            double discount = 0;
-            if (guest.IsStudent)
-            {
-                discount = 0.15;
-            }
-            for (int i = 0; i < selectedSeats.Count; i++)
-            {
-                selectedSeats[i].Price *= 1 - discount;
-            }
-            return selectedSeats;
-        }
+        // public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Guest guest)
+        // {
+        //     double discount = 0;
+        //     if (guest.IsStudent)
+        //     {
+        //         discount = 0.15;
+        //     }
+        //     for (int i = 0; i < selectedSeats.Count; i++)
+        //     {
+        //         selectedSeats[i].Price *= 1 - discount;
+        //     }
+        //     return selectedSeats;
+        // }
     }
 
 
