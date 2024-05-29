@@ -206,6 +206,7 @@ namespace MegaBios
 
             for (int i = 0; i < seating.Count; i++)
             {
+                seatingText.Append($"{i} ");
                 for (int j = 0; j < seating[i].Count; j++)
                 {
                     string colorText = ""; // ANSI kleurcode string
@@ -238,7 +239,7 @@ namespace MegaBios
                 }
                 seatingText.AppendLine("\x1b[0m");
             }
-            string doekString = String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7)) + " Doek " + String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7));
+            string doekString = String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7)) + " Scherm " + String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7));
 
             Console.WriteLine(seatingText.ToString());   
             System.Console.WriteLine(doekString);  
@@ -291,11 +292,11 @@ namespace MegaBios
                         bool isAdjacent = AdjacentSeatCheck(cursor);
                         if (_selectedSeats.Contains(_selectedSeat))
                         {
-                            _extraMessage = "Je hebt deze stoel al geselecteerd!";
+                            _extraMessage = "\x1b[41mJe hebt deze stoel al geselecteerd!\x1b[0m";
                         }
                         else if (_selectedSeat.SeatTaken == true)
                         {
-                            _extraMessage = "Deze stoel is al bezet!";
+                            _extraMessage = "\x1b[41mDeze stoel is al bezet!\x1b[0m";
                         }
                         else if (isAdjacent)
                         {
@@ -321,14 +322,14 @@ namespace MegaBios
                         }
                         else if (!isAdjacent)
                         {
-                            _extraMessage = "Deze stoel is niet aangrenzend aan je huidige geselecteerde stoelen. Selecteer alstublieft een aangrenzende stoel.";
+                            _extraMessage = "\x1b[41mDeze stoel is niet aangrenzend aan je huidige geselecteerde stoelen. Selecteer alstublieft een aangrenzende stoel.\x1b[0m";
                         }
                         break;
                     case ConsoleKey.Enter:
                         moved = true;
                         if (_selectedSeats.Count == 0)
                         {
-                            _extraMessage = "Je hebt nog geen stoelen geselecteerd";
+                            _extraMessage = "\x1b[41mJe hebt nog geen stoelen geselecteerd\x1b[0m";
                             break;
                         }
                         else if (_selectedSeats.Count > 0)
@@ -345,7 +346,7 @@ namespace MegaBios
                         moved = true;
                         if (_selectedSeats.Count == 0)
                         {
-                            _extraMessage = "Je hebt nog geen stoelen geselecteerd";
+                            _extraMessage = "\x1b[41mJe hebt nog geen stoelen geselecteerd\x1b[0m";
                             break;
                         }
                         else if (_selectedSeats.Count > 0)
