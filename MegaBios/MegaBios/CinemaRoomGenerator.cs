@@ -87,12 +87,13 @@ namespace MegaBios
                 List<List<Seat>>? seating;
                 while(true) {
                     try {
+                        System.Console.WriteLine("Hoe lang moet de zaal zijn?");
+                        int roomHeight = Convert.ToInt32(Console.ReadLine());
                         System.Console.WriteLine("Hoe breed moet de zaal zijn?");
                         int roomWidth = Convert.ToInt32(Console.ReadLine());
 
-                        System.Console.WriteLine("Hoe lang moet de zaal zijn?");
-                        int roomHeight = Convert.ToInt32(Console.ReadLine());
-                        seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
+
+                        seating = JsonFunctions.GenerateSeating(roomHeight, roomWidth);
                         roomShowings = GenerateRoomShowings(roomName, inMaintenance, seating);
                         JsonFunctions.WriteToJson($"../../../Room{i}.json", roomShowings);
                         break;

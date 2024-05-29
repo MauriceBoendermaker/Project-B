@@ -6,7 +6,8 @@ namespace MegaBios
 {
     public class SeatSelect
     {
-        public static List<string> rowLetters = new() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+        // public static List<string> rowLetters = new() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
         private List<Seat> _selectedSeats = new();
         private bool _confirmedSeats = false;
         private Seat _selectedSeat;
@@ -42,11 +43,12 @@ namespace MegaBios
         private Seat GetCorrespondingLoveSeatRight(Seat loveSeat)
         {
             // Get the row and seat number of the selected love seat
-            int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
-            int seatIndex = int.Parse(loveSeat.SeatNumber.Substring(1)) - 1;
+            int rowIndex = int.Parse(loveSeat.SeatNumber.Split('-')[0]);
+            // int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
+            int seatIndex = int.Parse(loveSeat.SeatNumber.Split('-')[1]);
 
             // Get the corresponding seat number
-            string correspondingSeatNumber = $"{rowLetters[rowIndex]}{seatIndex + 2}";
+            string correspondingSeatNumber = $"{rowIndex}-{seatIndex + 1}";
 
             // Find and return the corresponding seat
             foreach (List<Seat> row in Seats)
@@ -66,11 +68,12 @@ namespace MegaBios
         private Seat GetCorrespondingLoveSeatLeft(Seat loveSeat)
         {
             // Get the row and seat number of the selected love seat
-            int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
-            int seatIndex = int.Parse(loveSeat.SeatNumber.Substring(1)) - 1;
+            int rowIndex = int.Parse(loveSeat.SeatNumber.Split('-')[0]);
+            // int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
+            int seatIndex = int.Parse(loveSeat.SeatNumber.Split('-')[1]);
 
             // Get the corresponding seat number
-            string correspondingSeatNumber = $"{rowLetters[rowIndex]}{seatIndex}";
+            string correspondingSeatNumber = $"{rowIndex}-{seatIndex - 1}";
 
             // Find and return the corresponding seat
             foreach (List<Seat> row in Seats)
@@ -194,15 +197,15 @@ namespace MegaBios
             List<List<Seat>> seating = Seats;
 
             Console.Clear();
-            Console.WriteLine("\n\x1b[0m");
+            // Console.WriteLine("\n\x1b[0m");
 
             StringBuilder seatingText = new StringBuilder();
 
             double currentSeatPrice = 0.0;
+            int displayWidth = 0;
 
             for (int i = 0; i < seating.Count; i++)
             {
-                string rowLetter = rowLetters[i];
                 for (int j = 0; j < seating[i].Count; j++)
                 {
                     string colorText = ""; // ANSI kleurcode string
@@ -228,12 +231,17 @@ namespace MegaBios
                     {
                         colorText += "\x1b[42m"; // Groene achtergrond voor al bezette stoelen
                     }
-                    seatingText.Append($"{colorText}{seating[i][j].SeatNumber}\x1b[0m ");
+                    seatingText.Append($"{colorText}[]\x1b[0m");
+                }
+                if (i == 0) {
+                    displayWidth = seatingText.Length;
                 }
                 seatingText.AppendLine("\x1b[0m");
             }
+            string doekString = String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7)) + " Doek " + String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7));
 
-            Console.WriteLine(seatingText);
+            Console.WriteLine(seatingText.ToString());   
+            System.Console.WriteLine(doekString);  
             Console.WriteLine("\nGeselecteerde stoelen: ");
             _selectedSeats.ForEach(seat => Console.Write(seat.SeatNumber + " "));
 

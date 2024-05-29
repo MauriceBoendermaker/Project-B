@@ -87,7 +87,7 @@ namespace MegaBios
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Welkom bij MegaBios!");
                 userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
-                System.Console.WriteLine(userChoice);
+                // System.Console.WriteLine(userChoice);
                 switch (userChoice)
                 {
                     case 0:
@@ -276,16 +276,16 @@ namespace MegaBios
                 }
             }
             // Get the width and height of the rooms and edit each seating plan in the json
-            List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room{roomToEdit}");
+            List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room{roomToEdit}.json");
             for (int i = 0; i < roomShowings.Count; i++)
             {
                 try
                 {
                     while (true)
                     {
-                        System.Console.WriteLine("Hoe breed moet de zaal zijn?");
-                        int roomWidth = Convert.ToInt32(Console.ReadLine());
                         System.Console.WriteLine("Hoe lang moet de zaal zijn?");
+                        int roomWidth = Convert.ToInt32(Console.ReadLine());
+                        System.Console.WriteLine("Hoe breed moet de zaal zijn?");
                         int roomHeight = Convert.ToInt32(Console.ReadLine());
                         List<List<Seat>> seating = JsonFunctions.GenerateSeating(roomWidth, roomHeight);
                         roomShowings[i].Seating = seating;
@@ -295,6 +295,8 @@ namespace MegaBios
                 catch (Exception e)
                 {
                     System.Console.WriteLine("Voer alstublieft een valide nummer in");
+                    System.Console.WriteLine(e);
+                    while(true) {}
                 }
             }
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}", roomShowings);
@@ -323,7 +325,7 @@ namespace MegaBios
                 Console.Clear();
                 System.Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op Enter om je selectie te bevestigen");
                 List<DateTime> menuOptions = GetShowDays();
-                int selectedOption = MenuFunctions.Menu(menuOptions, false);
+                int selectedOption = MenuFunctions.Menu(menuOptions, false, true);
                 if (cursorPos == -1) {
                     return null;
                 }               
@@ -369,7 +371,6 @@ namespace MegaBios
             selectedRoom = keys[cursorPos].Split(" - ")[0].Replace(" ", "");
             selectedDate = showingOptions[keys[cursorPos]];
 
-            System.Console.WriteLine($"../../../{selectedRoom}.json");
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
 
             // Prompt user to choose between individual or group seat selection
