@@ -219,7 +219,7 @@ namespace MegaBios
         }
 
         public bool IsAdmin() {
-            return Voornaam == "admin" && Achternaam == "admin";
+            return Voornaam == "admin" && Achternaam == "admin" && Email == "admin@testmail.com" && Wachtwoord == "adminwachtwoord";
         }
     }
 }
