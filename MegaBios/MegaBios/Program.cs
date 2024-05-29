@@ -559,6 +559,12 @@ namespace MegaBios
                 List<string> reservationNumbers = account.History
                     .Select(x => x.ReservationNumber)
                     .ToList();
+                if (reservationNumbers.Count <= 0) {
+                    System.Console.WriteLine("U heeft geen reserveringen. Druk op een willekeurige knop om terug te keren");
+                    Console.ReadKey(true);
+                    return;
+                }
+
                 int selectedOption = MenuFunctions.Menu(reservationNumbers);
                 if (selectedOption == -1) {
                     return;
@@ -593,15 +599,22 @@ namespace MegaBios
                             .Where(x => x.SeatNumber == seatNumbers[selectedOption])
                             .ToList()[0];                                  
                         ReservationHistory changedReservation = CancelSeat(account, selectedReservation, selectedSeat);
-                        if (changedReservation == selectedReservation) {
+                        // Remove history from list if no seats are reserved anymore
+                        if (changedReservation.ReservedSeats.Count <= 0) {
+                            account.History.Remove(changedReservation);
+                        }
+                        else if (changedReservation == selectedReservation) {
                             break;
                         }
-                        for (int i = 0; i < account.History.Count; i++) {
-                            if (account.History[i].ReservationNumber == changedReservation.ReservationNumber) {
-                                account.History[i] = changedReservation;
-                                break;
-                            }
+                        else {
+                            for (int i = 0; i < account.History.Count; i++) {
+                                if (account.History[i].ReservationNumber == changedReservation.ReservationNumber) {
+                                    account.History[i] = changedReservation;
+                                    break;
+                                }
+                            }   
                         }
+                        
                         TestAccount.UpdateAccount(account);
                         return;
                     // Cancel whole reservation
