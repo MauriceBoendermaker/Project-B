@@ -202,11 +202,27 @@ namespace MegaBios
             StringBuilder seatingText = new StringBuilder();
 
             double currentSeatPrice = 0.0;
-            int displayWidth = 0;
+            int displayWidth = 0;  
+            
+            // Add the Seat numbers to the legend
+            seatingText.Append("   ");
+            for (int i = 0; i < seating[0].Count; i++) {
+                seatingText.Append(i.ToString().Length == 1 ? "0 " : $"{i.ToString().ToCharArray()[0]} ");
+            }
+            seatingText.Append("\n");
+            seatingText.Append("   ");
+            for (int i = 0; i < seating[0].Count; i++) {
+                seatingText.Append(i.ToString().Length == 1 ? $"{i} " : $"{i.ToString().ToCharArray()[1]} ");
+            }
+            seatingText.Append("\n");
+
+
 
             for (int i = 0; i < seating.Count; i++)
             {
-                seatingText.Append($"{i} ");
+                // Add the Row numbers to the legend
+                seatingText.Append(i.ToString().Length == 1 ? $" {i} " : $"{i} ");
+
                 for (int j = 0; j < seating[i].Count; j++)
                 {
                     string colorText = ""; // ANSI kleurcode string
@@ -239,6 +255,7 @@ namespace MegaBios
                 }
                 seatingText.AppendLine("\x1b[0m");
             }
+            System.Console.WriteLine($"LeftBound = {_selectedSeatsLeftBound} RightBound = {_selectedSeatsRightBound}");
             string doekString = String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7)) + " Scherm " + String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7));
 
             Console.WriteLine(seatingText.ToString());   
@@ -404,7 +421,7 @@ namespace MegaBios
 
         public void UpdateSeatBounds(Seat seat)
         {
-            int seatIndex = int.Parse(seat.SeatNumber.Substring(1)) - 1;
+            int seatIndex = int.Parse(seat.SeatNumber.Substring(2)) - 1;
             if (seatIndex < _selectedSeatsLeftBound)
             {
                 _selectedSeatsLeftBound = seatIndex;

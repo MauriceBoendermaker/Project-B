@@ -95,9 +95,12 @@ namespace MegaBios
                     // Bestel ticket
                     case 1:
                         ReservationHistory reservation = TicketReservation();
-                        if (TicketReservation == null) {
+                        if (reservation == null) {
+                            System.Console.WriteLine("Te22st");
                             break;
                         }
+
+                        Console.ReadKey(true);
                         Guest guest = Guest.CreateGuest();
                         bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
                         if (confirmedPayment)
@@ -326,7 +329,7 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}.json", roomShowings);
         }
 
-        public static ReservationHistory TicketReservation()
+        public static ReservationHistory? TicketReservation()
         {
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
 
@@ -350,7 +353,7 @@ namespace MegaBios
                 System.Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op Enter om je selectie te bevestigen");
                 List<DateTime> menuOptions = GetShowDays();
                 int selectedOption = MenuFunctions.Menu(menuOptions, false, true);
-                if (cursorPos == -1) {
+                if (selectedOption   == -1) {
                     return null;
                 }               
                 selectedDate = menuOptions[selectedOption];
@@ -397,6 +400,15 @@ namespace MegaBios
 
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
 
+            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
+            List<Seat> selectedSeats;
+            selectedSeats = seatSelect.SelectSeats();
+            string reservationNumber = ReservationHistory.generateReservationNumber();
+            ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
+            return reservation;
+
+
+            /*
             // Prompt user to choose between individual or group seat selection
             Console.Clear();
             List<string> selectionOptions = new List<string> { "Individueel", "Als groep" };
@@ -441,7 +453,7 @@ namespace MegaBios
                 ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
                 return reservation;
             }
-            return null;
+           
 
             // else
             // {
@@ -449,6 +461,7 @@ namespace MegaBios
             //     TicketReservation(); // Restart the reservation process if invalid option is selected
             //     return (null, null, DateTime.MinValue); // Ensure to return after restarting to avoid continuation of current flow
             // }
+            */
 
         }
         public static Dictionary<string, DateTime> GetShowingOptions(DateTime date, string selectedMovie)

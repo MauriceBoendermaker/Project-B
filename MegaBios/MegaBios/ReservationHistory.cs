@@ -115,9 +115,9 @@ namespace MegaBios
             }
             reservationPrint.AppendLine($"--------RESERVERING DATA-----------\n");
             reservationPrint.AppendLine($"Reservation Number: {reservation.ReservationNumber}");
-            reservationPrint.AppendLine($"Film: {reservation.MovieTitle} Room: {reservation.ReservationRoom}");
+            reservationPrint.AppendLine($"Film: {reservation.MovieTitle} \nRoom: {reservation.ReservationRoom}");
             reservationPrint.AppendLine($"Stoelen: \n{stoelenString}");
-            reservationPrint.AppendLine($"Totaalprijs: {totalPrice} Euro");
+            reservationPrint.AppendLine($"Totaalprijs: {totalPrice:F2} Euro");
             reservationPrint.AppendLine("\nSelecteer \"ja\" om de bestelling te bevestigen\n");
             return reservationPrint;
         }
