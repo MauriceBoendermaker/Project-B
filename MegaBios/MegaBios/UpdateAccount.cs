@@ -16,7 +16,7 @@ namespace MegaBios
 
             if (index == -1)
             {
-                System.Console.WriteLine("Voor een of andere reden was uw account niet gevonden");
+                Console.WriteLine("Voor een of andere reden was uw account niet gevonden");
                 return;
             }
 
@@ -73,7 +73,7 @@ namespace MegaBios
                          loopBreak = true;
                          break; */
                     case "1":
-                        System.Console.WriteLine("Voer de nieuwe email in");
+                        Console.WriteLine("Voer de nieuwe email in");
 
                         string newEmail = Console.ReadLine()!;
 
@@ -85,9 +85,9 @@ namespace MegaBios
                     case "2":
                         while (true)
                         {
-                            System.Console.WriteLine("Voer het nieuwe wachtwoord in");
+                            Console.WriteLine("Voer het nieuwe wachtwoord in");
                             string newPassword = Console.ReadLine()!;
-                            System.Console.WriteLine("Bevestig het wachtwoord");
+                            Console.WriteLine("Bevestig het wachtwoord");
 
                             if (newPassword == Console.ReadLine())
                             {
@@ -99,7 +99,7 @@ namespace MegaBios
                             }
                             else
                             {
-                                System.Console.WriteLine("Wachtwoorden komen niet overeen!");
+                                Console.WriteLine("Wachtwoorden komen niet overeen!");
                             }
                         }
                         break;
@@ -129,11 +129,11 @@ namespace MegaBios
                          }
                          break; */
                     case "3":
-                        System.Console.WriteLine("Bent u student? (ja/nee)");
+                        Console.WriteLine("Bent u student? (ja/nee)");
 
                         while (true)
                         {
-                            string studentInput = System.Console.ReadLine()!;
+                            string studentInput = Console.ReadLine()!;
 
                             if (studentInput == "ja")
                             {
