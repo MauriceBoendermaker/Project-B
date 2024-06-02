@@ -93,6 +93,7 @@ namespace MegaBios
         {
             // Get alle seat nummers van de selectedseats en voeg ze toe aan een list
             List<string> seatNumbers = new();
+
             foreach (Seat selectedSeat in selectedSeats)
             {
                 seatNumbers.Add(selectedSeat.SeatNumber);
