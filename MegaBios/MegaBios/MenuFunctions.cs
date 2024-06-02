@@ -57,8 +57,8 @@ namespace MegaBios
                 }
             }
         }
-        // Menu but for DateTime functionality
 
+        // Menu maar voor DateTime-functionaliteit
         public static int Menu(List<DateTime> menuOptions, bool showTimes, bool canGoBack = true)
         {
             int cursorPos = 0;
@@ -126,7 +126,7 @@ namespace MegaBios
             }
         }
 
-        // Regular menu
+        // Normaal menu
         public static int Menu<T>(List<T> menuOptions, bool canGoBack = true)
         {
             int cursorPos = 0;

@@ -78,9 +78,9 @@ namespace MegaBios
 
         static void LoginAsGuest()
         {
-                LoggedInAsGuest = true; // Setting LoggedInAsGuest to True
             while(true)
             {
+                LoggedInAsGuest = true; // Zet LoggedInAsGuest naar True
                 movies = JsonFunctions.LoadMovies("../../../Movies.json");
                 cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
                 jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
@@ -157,8 +157,8 @@ namespace MegaBios
                 }
             }
         }
-        // Return type is tuple for successful login bool, account info
 
+        // Return type is Tuple voor succesvolle login Bool, account info
         static (bool, TestAccount) Login(bool firstLogin)
         {
             Console.Clear();
@@ -297,8 +297,8 @@ namespace MegaBios
         public static void EditRoomSize()
         {
             int roomToEdit = -1;
-            // Get the room number
 
+            // Krijg zaal nummer
             while (true)
             {
                 Console.Clear();
@@ -316,8 +316,8 @@ namespace MegaBios
                     break;
                 }
             }
-            // Get the width and height of the rooms and edit each seating plan in the json
 
+            // Get alle width en height van elke zaal en edit elk seating plan in de JSON
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room{roomToEdit}.json");
             List<List<Seat>> seating;
 
