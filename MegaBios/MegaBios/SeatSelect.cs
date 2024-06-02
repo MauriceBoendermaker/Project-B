@@ -102,9 +102,11 @@ namespace MegaBios
 
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../{roomNumber}.json");
             RoomShowing updatedShowing = null!;
-            foreach (RoomShowing currentShowing in roomShowings) {
-                if (currentShowing.ShowingTime == showingTime) {
 
+            foreach (RoomShowing currentShowing in roomShowings)
+            {
+                if (currentShowing.ShowingTime == showingTime)
+                {
                     updatedShowing = currentShowing;
                 }
             }
@@ -136,9 +138,11 @@ namespace MegaBios
 
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../{roomNumber}.json");
             RoomShowing updatedShowing = null!;
-            foreach (RoomShowing currentShowing in roomShowings) {
-                if (currentShowing.ShowingTime == showingTime) {
 
+            foreach (RoomShowing currentShowing in roomShowings)
+            {
+                if (currentShowing.ShowingTime == showingTime)
+                {
                     updatedShowing = currentShowing;
                 }
             }
@@ -192,8 +196,8 @@ namespace MegaBios
             {
                 selectedSeatsString += seat.SeatNumber + " ";
             }
-            Console.WriteLine(selectedSeatsString);
 
+            Console.WriteLine(selectedSeatsString);
             Console.WriteLine("Druk op een willekeurige knop om terug te gaan");
             // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
@@ -214,25 +218,27 @@ namespace MegaBios
             StringBuilder seatingText = new StringBuilder();
 
             double currentSeatPrice = 0.0;
-            int displayWidth = 0;  
             
+            int displayWidth = 0;
 
             // Voeg de stoelnummers toe aan de legenda
             seatingText.Append("   ");
-            for (int i = 0; i < seating[0].Count; i++) {
 
+            for (int i = 0; i < seating[0].Count; i++)
+            {
                 seatingText.Append(i.ToString().Length == 1 ? "0 " : $"{i.ToString().ToCharArray()[0]} ");
             }
 
             seatingText.Append("\n");
             seatingText.Append("   ");
-            for (int i = 0; i < seating[0].Count; i++) {
 
+            for (int i = 0; i < seating[0].Count; i++)
+            {
                 seatingText.Append(i.ToString().Length == 1 ? $"{i} " : $"{i.ToString().ToCharArray()[1]} ");
             }
+
+
             seatingText.Append("\n");
-
-
 
             for (int i = 0; i < seating.Count; i++)
             {
@@ -269,20 +275,21 @@ namespace MegaBios
 
                     seatingText.Append($"{colorText}[]\x1b[0m");
                 }
-                if (i == 0) {
 
+                if (i == 0)
+                {
                     displayWidth = seatingText.Length;
                 }
 
                 seatingText.AppendLine("\x1b[0m");
             }
-            System.Console.WriteLine($"LeftBound = {_selectedSeatsLeftBound} RightBound = {_selectedSeatsRightBound}");
 
+            Console.WriteLine($"LeftBound = {_selectedSeatsLeftBound} RightBound = {_selectedSeatsRightBound}");
 
             string doekString = String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7)) + " Scherm " + String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7));
 
             Console.WriteLine(seatingText.ToString());   
-            System.Console.WriteLine(doekString);  
+            Console.WriteLine(doekString);  
             Console.WriteLine("\nGeselecteerde stoelen: ");
 
             _selectedSeats.ForEach(seat => Console.Write(seat.SeatNumber + " "));
@@ -451,9 +458,9 @@ namespace MegaBios
             StringBuilder legendText = new StringBuilder();
             legendText.Append($"Legenda:\n");
             legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro), \x1b[35m[]\x1b[0m = Loveseats (20.00 euro), [] = Normale Stoelen (10.00 euro), \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
-            System.Console.WriteLine(legendText);
 
             
+            Console.WriteLine(legendText);
         }
 
         public void UpdateSeatBounds(Seat seat)

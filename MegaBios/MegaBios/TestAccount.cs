@@ -224,15 +224,19 @@ namespace MegaBios
             }
         }
 
-        public bool IsAdmin() {
+        public bool IsAdmin()
+        {
             return Voornaam == "admin" && Achternaam == "admin" && Email == "admin@testmail.com" && Wachtwoord == "adminwachtwoord";
         }
 
-        public TestAccount ReloadAccount() {
+        public TestAccount ReloadAccount()
+        {
             Program.jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
-            for (int i = 0; i < Program.jsonData.Count; i++) {
-                if (Program.jsonData[i] == this) {
 
+            for (int i = 0; i < Program.jsonData.Count; i++)
+            {
+                if (Program.jsonData[i] == this)
+                {
                     return Program.jsonData[i];
                 }
             }

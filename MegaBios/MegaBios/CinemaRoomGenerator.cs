@@ -1,7 +1,9 @@
 namespace MegaBios
 {
-    public class CinemaRoomGenerator {
-        public void GenerationMenu() {
+    public class CinemaRoomGenerator
+    {
+        public void GenerationMenu()
+        {
             int userChoice;
 
             Console.Clear();
@@ -12,7 +14,8 @@ namespace MegaBios
 
             userChoice = MenuFunctions.Menu(menuOptions);
 
-            switch (userChoice) {
+            switch (userChoice)
+            {
                 case -1: 
                     return;
                 case 0:
@@ -30,15 +33,19 @@ namespace MegaBios
             }
         }
 
-        public void EditRoom() {
-            //
+        public void EditRoom()
+        {
+            ; //
         }
 
-        public void ResetAllSeatings() { 
-            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
+        public void ResetAllSeatings()
+        { 
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
+            {
                 List<RoomShowing> roomshowings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
-                for(int j = 0; j < roomshowings.Count; j++) {
 
+                for(int j = 0; j < roomshowings.Count; j++)
+                {
                     roomshowings[i].Seating = ResetSeating(roomshowings[i].Seating);
                 }
 
@@ -46,9 +53,12 @@ namespace MegaBios
             }
         }
 
-        public List<List<Seat>> ResetSeating(List<List<Seat>> seating) {
-            for (int i = 0; i < seating.Count; i++) {
-                for (int j = 0; j < seating[i].Count; j++) {
+        public List<List<Seat>> ResetSeating(List<List<Seat>> seating)
+        {
+            for (int i = 0; i < seating.Count; i++)
+            {
+                for (int j = 0; j < seating[i].Count; j++)
+                {
                     seating[i][j].SeatTaken = false;
                 }
             }
@@ -56,60 +66,75 @@ namespace MegaBios
             return seating;
         }
 
-        public void GenerateShowingData() {
-            int numberOfRooms = 0; 
-            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
+        public void GenerateShowingData()
+        {
+            int numberOfRooms = 0;
+
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
+            {
                 numberOfRooms = i;
             }
 
             int numberOfNewRooms = -1;
             List<RoomShowing> roomShowings;
-            while (true) {
-                try {
 
+            while (true)
+            {
                 Console.WriteLine("Voer het nummer in van de aantal zalen die u wilt genereren:");
 
+                try
+                {
                     numberOfNewRooms = Convert.ToInt32(Console.ReadLine());
                     break;
                 }
-                catch (Exception e) {
-                    System.Console.WriteLine(e);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
-                if (numberOfRooms > 0) {
+
+                if (numberOfRooms > 0)
+                {
                     break;
                 }
             }
-            for (int i = 1 + numberOfRooms; i < numberOfNewRooms + numberOfRooms + 1; i++) {
 
             // Haal de seating op
+            for (int i = 1 + numberOfRooms; i < numberOfNewRooms + numberOfRooms + 1; i++)
+            {
                 string roomName = $"Room {i}";
                 bool inMaintenance = false;
                 List<List<Seat>>? seating;
-                while(true) {
-                    try {
-                        System.Console.WriteLine("Hoe lang moet de zaal zijn? (Max 30)");
 
+                while (true)
+                {
+                    try
+                    {
+                        Console.WriteLine("Hoe lang moet de zaal zijn? (Max. 30)");
                         int roomHeight = Convert.ToInt32(Console.ReadLine());
-                        if (roomHeight > 30) {
-                            System.Console.WriteLine("Kamerlengte te groot, verzet naar 30");
 
+                        if (roomHeight > 30)
+                        {
+                            Console.WriteLine("Kamerlengte te groot, verzet naar 30");
                             roomHeight = 30;
                         }
-                        else if (roomHeight <= 0) {
-                            System.Console.WriteLine("Kamerlengte te klein, verzet naar 1");
+                        else if (roomHeight <= 0)
+                        {
+                            Console.WriteLine("Kamerlengte te klein, verzet naar 1");
                             roomHeight = 1;
                         }
-                        System.Console.WriteLine("Hoe breed moet de zaal zijn? Max 50");
 
+                        Console.WriteLine("Hoe breed moet de zaal zijn? Max 50");
 
                         int roomWidth = Convert.ToInt32(Console.ReadLine());
-                        if (roomWidth > 30) {
-                            System.Console.WriteLine("Kamerbreedte te groot, verzet naar 30");
 
+                        if (roomWidth > 30)
+                        {
+                            Console.WriteLine("Kamerbreedte te groot, verzet naar 30");
                             roomWidth = 30;
                         }
-                        else if (roomWidth <= 0) {
-                            System.Console.WriteLine("Kamerbreedte te klein, verzet naar 1");
+                        else if (roomWidth <= 0)
+                        {
+                            Console.WriteLine("Kamerbreedte te klein, verzet naar 1");
                             roomWidth = 1;
                         }
 
@@ -120,39 +145,45 @@ namespace MegaBios
 
                         break;
                     }
-                    catch (Exception e) {
-                        System.Console.WriteLine(e);
-                        System.Console.WriteLine("Voer alsjeblieft een nummer in");
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        Console.WriteLine("Voer a.u.b. een nummer in");
                     }
                 }
             }
         }
-        public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating) {
 
+        public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating)
+        {
             List<RoomShowing> roomShowings = new();
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
             DateTime generationStartTime;
-            while(true) {
 
+            while(true)
+            {
                 Console.Clear();
-                try {
                 Console.WriteLine("Voer de startdatum en -tijd in voor de eerste vertoning. De vertoningen duren tot een week later.\nFormat: YYYY-MM-DD hh-mm-ss");
 
+                try
+                {
                     generationStartTime = Convert.ToDateTime(Console.ReadLine());
                     break;
                 }
-                catch (Exception e) {
-                    System.Console.WriteLine(e);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
             }
-            System.Console.WriteLine("test");
 
+            Console.WriteLine("test");
 
             DateTime generationCurrentTime = generationStartTime;
             TimeSpan generationTs = generationCurrentTime - generationStartTime;
             Random rand = new Random();
-            while (generationTs.Days < 7) {
 
+            while (generationTs.Days < 7)
+            {
                 Movie currentMovie = movies[rand.Next(movies.Count)];
                 RoomShowing showingEntry = new RoomShowing(roomName, seating, currentMovie.Title, (DateTime)generationCurrentTime, inMaintenance);
 
