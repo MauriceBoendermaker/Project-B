@@ -147,7 +147,7 @@ namespace MegaBios
                             }
                             else
                             {
-                                System.Console.WriteLine("Invalide input!");
+                                Console.WriteLine("Ongeldige invoer!");
                             }
                         }
 

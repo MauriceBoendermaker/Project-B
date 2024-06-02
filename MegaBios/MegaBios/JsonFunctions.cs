@@ -50,12 +50,12 @@ namespace MegaBios
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"Failed to deserialize JSON to type 'CinemaData': {ex.Message}");
+                Console.WriteLine($"Kan JSON niet deserialiseren naar type 'CinemaData': {ex.Message}");
                 throw;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.WriteLine($"Er is een fout opgetreden: {ex.Message}");
                 throw;
             }
         }
@@ -77,12 +77,12 @@ namespace MegaBios
             }
             catch (JsonException ex)
             {
-                Console.WriteLine($"Failed to deserialize JSON to type 'CinemaData': {ex.Message}");
+                Console.WriteLine($"Kan JSON niet deserialiseren naar type 'CinemaData': {ex.Message}");
                 throw;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.WriteLine($"Er is een fout opgetreden: {ex.Message}");
                 throw;
             }
         }

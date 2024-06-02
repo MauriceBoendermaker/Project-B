@@ -41,15 +41,15 @@ namespace MegaBios
 
         private Seat GetCorrespondingLoveSeatRight(Seat loveSeat)
         {
-            // Get the row and seat number of the selected love seat
+            // Get de row en seat nummer van de selected love seat
             int rowIndex = int.Parse(loveSeat.SeatNumber.Split('-')[0]);
             // int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
             int seatIndex = int.Parse(loveSeat.SeatNumber.Split('-')[1]);
 
-            // Get the corresponding seat number
+            // Get het overeenkomende seat nummer
             string correspondingSeatNumber = $"{rowIndex}-{seatIndex + 1}";
 
-            // Find and return the corresponding seat
+            // Zoek en return de bijbehorende seat
             foreach (List<Seat> row in Seats)
             {
                 foreach (Seat seat in row)
@@ -61,21 +61,21 @@ namespace MegaBios
                 }
             }
 
-            // If no corresponding seat is found, return null
+            // Als er geen overeenkomstige seat is gevonden, return null
             return null;
         }
 
         private Seat GetCorrespondingLoveSeatLeft(Seat loveSeat)
         {
-            // Get the row and seat number of the selected love seat
+            // Get de row en seat nummer van de selected love seat
             int rowIndex = int.Parse(loveSeat.SeatNumber.Split('-')[0]);
             // int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
             int seatIndex = int.Parse(loveSeat.SeatNumber.Split('-')[1]);
 
-            // Get the corresponding seat number
+            // Get het overeenkomende seat nummer
             string correspondingSeatNumber = $"{rowIndex}-{seatIndex - 1}";
 
-            // Find and return the corresponding seat
+            // Zoek en return de bijbehorende seat
             foreach (List<Seat> row in Seats)
             {
                 foreach (Seat seat in row)
@@ -87,13 +87,13 @@ namespace MegaBios
                 }
             }
 
-            // If no corresponding seat is found, return null
+            // Als er geen overeenkomstige seat is gevonden, return null
             return null;
         }
 
         public static void MarkSeatsAsSelected(List<Seat> selectedSeats, DateTime showingTime, string roomNumber)
         {
-            // Get all the seat numbers from the selectedseats and add them into a list
+            // Get alle seat nummers van de selectedseats en voeg ze toe aan een list
             List<string> seatNumbers = new();
             foreach (Seat selectedSeat in selectedSeats)
             {
@@ -109,7 +109,7 @@ namespace MegaBios
                 }
             }
 
-            // Iterate over 2D List and mark each selected seat as selected in said 2D list.
+            // Iterate over de 2D List and markeer elke geselecteerde seat als selected in de 2D list
             for (int i = 0; i < updatedShowing.Seating.Count; i++)
             {
                 for (int j = 0; j < updatedShowing.Seating[i].Count; j++)
@@ -126,7 +126,7 @@ namespace MegaBios
 
         public static void MarkSeatsAsFree(List<Seat> selectedSeats, DateTime showingTime, string roomNumber)
         {
-            // Get all the seat numbers from the selectedseats and add them into a list
+            // Get alle seat nummers van de selectedseats en voeg ze toe aan een list
             List<string> seatNumbers = new();
 
             foreach (Seat selectedSeat in selectedSeats)
@@ -143,7 +143,7 @@ namespace MegaBios
                 }
             }
 
-            // Iterate over 2D List and mark each selected seat as selected in said 2D list.
+            // Iterate over de 2D List and markeer elke geselecteerde seat als selected in de 2D list
             for (int i = 0; i < updatedShowing.Seating.Count; i++)
             {
                 for (int j = 0; j < updatedShowing.Seating[i].Count; j++)
@@ -194,7 +194,7 @@ namespace MegaBios
             }
             Console.WriteLine(selectedSeatsString);
 
-            System.Console.WriteLine("Press any button to go back");
+            Console.WriteLine("Druk op een willekeurige knop om terug te gaan");
             // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
             for (int i = 0; i < _selectedSeats.Count; i++) {
@@ -216,8 +216,8 @@ namespace MegaBios
             double currentSeatPrice = 0.0;
             int displayWidth = 0;  
             
-            // Add the Seat numbers to the legend
 
+            // Voeg de stoelnummers toe aan de legenda
             seatingText.Append("   ");
             for (int i = 0; i < seating[0].Count; i++) {
 
@@ -236,7 +236,7 @@ namespace MegaBios
 
             for (int i = 0; i < seating.Count; i++)
             {
-                // Add the Row numbers to the legend
+                // Voeg de rijnummers toe aan de legenda
                 seatingText.Append(i.ToString().Length == 1 ? $" {i} " : $"{i} ");
 
                 for (int j = 0; j < seating[i].Count; j++)
@@ -422,7 +422,7 @@ namespace MegaBios
             return cursor;
         }
 
-        // Adjusts the cursor position to make sure it does not go out of the seating boundaries.
+        // Past de cursorpositie aan om ervoor te zorgen dat deze niet buiten de zitplaatsgrenzen komt
         public static List<int> CorrectCursorPos(List<int> cursor, int rows, int columns)
         {
             if (cursor[0] < 0)
@@ -472,7 +472,7 @@ namespace MegaBios
 
         public bool AdjacentSeatCheck(List<int> cursor)
         {
-            // If no seat has been selected prior
+            // Als er nog geen stoel is geselecteerd
             if (_selectedSeats.Count == 0)
             {
                 _selectedSeatsRow = cursor[1];
@@ -480,7 +480,7 @@ namespace MegaBios
                 _selectedSeatsRightBound = cursor[0];
                 return true;
             }
-            // Check if seat selected is on the right row and if the selected seat is adjacent to the currnet selected seats or not
+            // Controleer of de geselecteerde stoel zich op de rechterrij bevindt en of de geselecteerde stoel grenst aan de momenteel geselecteerde stoelen of niet
             else if (cursor[1] == _selectedSeatsRow)
             {
                 if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) > 1)

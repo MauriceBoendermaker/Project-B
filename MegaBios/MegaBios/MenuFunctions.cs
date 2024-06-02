@@ -3,8 +3,8 @@ using System.Text;
 namespace MegaBios
 {
     public static class MenuFunctions {
-        // Menu but with optional message
         public static int Menu<T>(List<T> menuOptions, StringBuilder optionalMessage, bool canGoBack = true) {
+        // Menu maar met optioneel bericht
             int cursorPos = 0;
             while(true) {
 

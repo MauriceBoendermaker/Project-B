@@ -7,8 +7,8 @@ namespace MegaBios
             Console.Clear();
 
             List<string> menuOptions = new() {"Genereer nieuwe zalen", "Werk bestaande zaal bij", "Reset alle seatings"};
-            System.Console.WriteLine("Do you want to generate rooms or edit a room?");
 
+            Console.WriteLine("Wilt u zalen genereren of een zaal bewerken?");
 
             userChoice = MenuFunctions.Menu(menuOptions);
 
@@ -25,7 +25,7 @@ namespace MegaBios
                     ResetAllSeatings();
                     break;
                 default:
-                    System.Console.WriteLine("Invalid input");
+                    Console.WriteLine("Ongeldige invoer");
                     break;
             }
         }
@@ -65,9 +65,9 @@ namespace MegaBios
             int numberOfNewRooms = -1;
             List<RoomShowing> roomShowings;
             while (true) {
-                System.Console.WriteLine("Enter the number of the amount of rooms you want to generate:");
                 try {
 
+                Console.WriteLine("Voer het nummer in van de aantal zalen die u wilt genereren:");
 
                     numberOfNewRooms = Convert.ToInt32(Console.ReadLine());
                     break;
@@ -79,9 +79,9 @@ namespace MegaBios
                     break;
                 }
             }
-            // Get the seating
             for (int i = 1 + numberOfRooms; i < numberOfNewRooms + numberOfRooms + 1; i++) {
 
+            // Haal de seating op
                 string roomName = $"Room {i}";
                 bool inMaintenance = false;
                 List<List<Seat>>? seating;
@@ -135,8 +135,8 @@ namespace MegaBios
             while(true) {
 
                 Console.Clear();
-                System.Console.WriteLine("Enter the start date and time for the first showing. The showings will generate until a week later.\nFormat: YYYY-MM-DD hh-mm-ss");
                 try {
+                Console.WriteLine("Voer de startdatum en -tijd in voor de eerste vertoning. De vertoningen duren tot een week later.\nFormat: YYYY-MM-DD hh-mm-ss");
 
                     generationStartTime = Convert.ToDateTime(Console.ReadLine());
                     break;

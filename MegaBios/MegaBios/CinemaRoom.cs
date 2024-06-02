@@ -33,7 +33,7 @@ namespace MegaBios
 
         public RoomShowing()
         {
-            // Default constructor required for deserialization
+            // Default constructor nodig voor deserialization
         }
         public RoomShowing(string roomNumber, List<List<Seat>> seating, string movie, DateTime showTime, bool inMaintenance) {
 

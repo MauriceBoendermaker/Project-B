@@ -135,11 +135,11 @@ namespace MegaBios
         {
             string stoelenString = "";
             double totalPrice = 0;
-            Seat seat; // Declare seat outside the loop
+            Seat seat; // Declare seat buiten de loop
 
             for (int i = 0; i < reservation.ReservedSeats.Count; i++)
             {
-                seat = reservation.ReservedSeats[i]; // Assign value inside the loop
+                seat = reservation.ReservedSeats[i]; // Assign value in de loop
                 stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
                 totalPrice += seat.Price;
             }
@@ -148,7 +148,7 @@ namespace MegaBios
                 $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
                 $"Film: {reservation.MovieTitle}\n" +
                 $"Gereserveerde stoelen:\n{stoelenString}" +
-                $"Totaalprijs: {totalPrice} Euro\n" + // Use stoelenString here
+                $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
                 $"Reserveringszaal: {reservation.ReservationRoom}\n" +
                 $"Reserveringsdatum: {reservation.ReservationDate}";
         }

@@ -197,8 +197,8 @@ namespace MegaBios
                 account = account.ReloadAccount();
                 List<string> menuOptions = new() { "Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Annuleer ticket(s)", "Bestellingen" };
                 if (account.IsAdmin()) {
-                    menuOptions.Add("Edit room size");
 
+                    menuOptions.Add("Pas zaal grootte aan");
                     menuOptions.Add("Misc admin methods");
                 }
 
@@ -373,7 +373,7 @@ namespace MegaBios
         {
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
 
-            // Creates list of movie titles from movies
+            // Maak list met movie titles van movies
             List<string> movieTitles = movies.Select(o => o.Title).ToList();
 
             int cursorPos = MenuFunctions.Menu(movieTitles);
@@ -522,7 +522,7 @@ namespace MegaBios
 
                 for (int j = 0; j < showings.Count; j++)
                 {
-                    // If the movie title is equal and the showing time is in between given timestamps
+                    // Als de filmtitel gelijk is en de weergavetijd tussen de opgegeven tijdstempels ligt
                     // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
                     if (showings[j].Movie == selectedMovie && date.Date == showings[j].ShowingTime.Date && !SeatSelect.IsFull(showings[i].Seating))
                     {
@@ -700,8 +700,8 @@ namespace MegaBios
                     .Where(x => x.ReservationNumber == reservationNumber)
                     .ToList()[0];
                 List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
-                // Ask user to select whether they want to cancel 1 seat or all seats
 
+                // Vraag de gebruiker om te selecteren of hij 1 stoel of alle stoelen wil annuleren
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Wat voor annulering wilt u uitvoeren?");
                 selectedOption = MenuFunctions.Menu(menuOptions, sb);
@@ -710,8 +710,8 @@ namespace MegaBios
                     return;
                 }
                 switch (selectedOption) {
-                    // Cancel 1 seat
 
+                    // Annuleer 1 seat
                     case 0: 
                         List<string> seatNumbers = selectedReservation.ReservedSeats
                             .Select(x => x.SeatNumber)
@@ -723,17 +723,17 @@ namespace MegaBios
 
                             return;
                         }
-                        // Get the correct seat from the seats list
 
+                        // Zoek de juiste stoel uit de stoel list
                         Seat selectedSeat = selectedReservation.ReservedSeats
                             .Where(x => x.SeatNumber == seatNumbers[selectedOption])
                             .ToList()[0];                                  
                         ReservationHistory changedReservation = CancelSeat(account, selectedReservation, selectedSeat);
-                        // Remove history from list if no seats are reserved anymore
                         if (changedReservation.ReservedSeats.Count <= 0) {
                             for (int i = 0; i < account.History.Count; i++) {
                                 if (account.History[i].ReservationNumber == changedReservation.ReservationNumber) {
 
+                        // Verwijder de history van de list als er geen seats meer gereserveerd zijn
                                     account.History.RemoveAt(i);
                                 }
                             }
@@ -752,7 +752,7 @@ namespace MegaBios
                         
                         TestAccount.UpdateAccount(account);
                         return;
-                    // Cancel whole reservation
+                    // Annuleer de hele reservering
                     case 1:
                         account = CancelReservation(account, selectedReservation, selectedReservation.ReservedSeats);
                         if (account == null) {
@@ -782,8 +782,8 @@ namespace MegaBios
                     .Where(x => x.ReservationNumber == reservationNumber)
                     .ToList()[0];
                 List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
-                // Ask user to select whether they want to cancel 1 seat or all seats
 
+                // Vraag de gebruiker om te selecteren of hij 1 stoel of alle stoelen wil annuleren
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Wat voor annulering wilt u uitvoeren?");
                 selectedOption = MenuFunctions.Menu(menuOptions, sb);
@@ -792,8 +792,8 @@ namespace MegaBios
                     return;
                 }
                 switch (selectedOption) {
-                    // Cancel 1 seat
 
+                    // Annuleer 1 seat
                     case 0: 
                         List<string> seatNumbers = selectedReservation.ReservedSeats
                             .Select(x => x.SeatNumber)
@@ -805,8 +805,8 @@ namespace MegaBios
 
                             return;
                         }
-                        // Get the correct seat from the seats list
 
+                        // Zoek de juiste stoel uit de seat list
                         Seat selectedSeat = selectedReservation.ReservedSeats
                             .Where(x => x.SeatNumber == seatNumbers[selectedOption])
                             .ToList()[0];                                  
@@ -832,7 +832,7 @@ namespace MegaBios
 
                         Guest.UpdateAccount(guest);
                         return;
-                    // Cancel whole reservation
+                    // Annuleer de hele reservering
                     case 1:
                         guest = CancelReservation(guest, selectedReservation, selectedReservation.ReservedSeats);
                         if (guest == null) {
