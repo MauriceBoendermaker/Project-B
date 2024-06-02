@@ -4,7 +4,6 @@ namespace MegaBios
 {
     public class SeatSelect
     {
-
         // public static List<string> rowLetters = new() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
         private List<Seat> _selectedSeats = new();
         private bool _confirmedSeats = false;
@@ -15,7 +14,6 @@ namespace MegaBios
         private string _extraMessage;
 
         public List<List<Seat>> Seats = new List<List<Seat>>();
-
 
         public List<RoomShowing> RoomShowings { get; set; }
         public RoomShowing Showing { get; set; }
@@ -218,7 +216,6 @@ namespace MegaBios
             StringBuilder seatingText = new StringBuilder();
 
             double currentSeatPrice = 0.0;
-            
             int displayWidth = 0;
 
             // Voeg de stoelnummers toe aan de legenda
@@ -236,7 +233,6 @@ namespace MegaBios
             {
                 seatingText.Append(i.ToString().Length == 1 ? $"{i} " : $"{i.ToString().ToCharArray()[1]} ");
             }
-
 
             seatingText.Append("\n");
 
@@ -458,7 +454,6 @@ namespace MegaBios
             StringBuilder legendText = new StringBuilder();
             legendText.Append($"Legenda:\n");
             legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro), \x1b[35m[]\x1b[0m = Loveseats (20.00 euro), [] = Normale Stoelen (10.00 euro), \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
-
             
             Console.WriteLine(legendText);
         }

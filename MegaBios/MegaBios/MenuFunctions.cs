@@ -100,7 +100,6 @@ namespace MegaBios
                             menuText.AppendLine($"{menuOptions[i].ToString("yyyy/MM/dd")}");
                         }
                     }
-                    
                 }
 
                 Console.WriteLine(menuText);

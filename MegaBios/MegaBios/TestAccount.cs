@@ -19,8 +19,6 @@ namespace MegaBios
         [JsonPropertyName("history")]
         public List<ReservationHistory> History { get; set; }
 
-
-
         [JsonConstructor]
         public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<ReservationHistory> history)
         {
@@ -133,7 +131,6 @@ namespace MegaBios
                 }
             }
         }
-
     }
 
     public class TestAccount

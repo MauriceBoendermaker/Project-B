@@ -22,7 +22,6 @@ namespace MegaBios
         // [JsonPropertyName("total_price")]
         // public double TotalPrice {get; set;}
 
-
         public ReservationHistory(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime reservationDate)
         {
             ReservationNumber = reservationNumber;
@@ -48,7 +47,6 @@ namespace MegaBios
                     break;
                 }
             }
-
         }
 
         public static void AddReservation(Guest guest, ReservationHistory reservationHistory)
@@ -97,7 +95,6 @@ namespace MegaBios
                     return reservationNumber.ToString();
                 }
             }
-
         }
 
         public static bool ConfirmPayment(ReservationHistory reservation)
@@ -184,7 +181,4 @@ namespace MegaBios
         //     return selectedSeats;
         // }
     }
-
-
-
 }
