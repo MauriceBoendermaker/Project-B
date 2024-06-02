@@ -39,11 +39,13 @@ namespace MegaBios
             try
             {
                 string jsonString = File.ReadAllText(filePath);
+
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 };
+
                 List<Guest> guests = JsonSerializer.Deserialize<List<Guest>>(jsonString, options);
                 return guests;
             }
@@ -58,16 +60,19 @@ namespace MegaBios
                 throw;
             }
         }
+
         public static List<CinemaRoom> LoadCinemaRooms(string filePath)
         {
             try
             {
                 string jsonString = File.ReadAllText(filePath);
+
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 };
+
                 CinemaData cinemaData = JsonSerializer.Deserialize<CinemaData>(jsonString, options);
                 return cinemaData?.CinemaRooms ?? new List<CinemaRoom>();
             }
@@ -109,14 +114,17 @@ namespace MegaBios
         public static List<List<Seat>> GenerateSeating(int height, int width)
         {
             List<List<Seat>> seating = new List<List<Seat>>(height);
+
             for (int i = 0; i < height; i++)
             {
                 seating.Add(new List<Seat>(height));
+
                 for (int j = 1; j <= width; j++)
                 {
                     Seat seat = new Seat();
                     seat.SeatNumber = $"{i}-{j}";
                     seat.SeatTaken = false;
+
                     if (i == 0 && (j == 1 || j == 2 || j == 3 || j == width || j == width - 1 || j == width - 2))
                     {
                         seat.SeatType = "handicap";
@@ -132,9 +140,11 @@ namespace MegaBios
                         seat.SeatType = "normal";
                         seat.Price = 10.00;
                     }
+
                     seating[i].Add(seat);
                 }
             }
+
             return seating;
         }
     }

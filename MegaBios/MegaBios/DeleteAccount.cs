@@ -12,6 +12,7 @@
                     break;
                 }
             }
+
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);
         }
     }

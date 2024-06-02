@@ -46,6 +46,7 @@ namespace MegaBios
             string achternaam = Console.ReadLine();
 
             string email;
+
             while (true)
             {
                 Console.Write("Voer email in: ");
@@ -60,8 +61,10 @@ namespace MegaBios
                     Console.WriteLine("Ongeldig emailadres. Probeer het opnieuw.");
                 }
             }
+
             Guest newGuest = new Guest(voornaam, tussenvoegsel, achternaam, email, new());
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
+
             if (!DoesGuestExist(guests, newGuest))
             {
                 guests.Add(newGuest);
@@ -71,6 +74,7 @@ namespace MegaBios
             {
                 return GetCorrespondingGuest(guests, newGuest);
             }
+
             return newGuest;
         }
 
@@ -83,6 +87,7 @@ namespace MegaBios
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -95,6 +100,7 @@ namespace MegaBios
                     return currentGuest;
                 }
             }
+
             return null;
         }
 
@@ -104,6 +110,7 @@ namespace MegaBios
             {
                 return (t1 is null && t2 is null);
             }
+
             return t1.Email.Equals(t2.Email) && t1.Voornaam.Equals(t2.Voornaam) && t1.Achternaam.Equals(t2.Achternaam);
         }
 
@@ -115,6 +122,7 @@ namespace MegaBios
         public static void UpdateAccount(Guest guest)
         {
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
+
             for (int i = 0; i < guests.Count; i++)
             {
                 if (guests[i] == guest)
@@ -144,6 +152,7 @@ namespace MegaBios
 
         [JsonPropertyName("adres")]
         public Dictionary<string, string> Adres { get; set; }
+
         [JsonPropertyName("email")]
         public string Email { get; set; }
 
@@ -203,6 +212,7 @@ namespace MegaBios
         public static void UpdateAccount(TestAccount account)
         {
             List<TestAccount> customers = JsonFunctions.LoadCustomers("../../../customers.json");
+
             for (int i = 0; i < customers.Count; i++)
             {
                 if (customers[i] == account)
@@ -222,9 +232,11 @@ namespace MegaBios
             Program.jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
             for (int i = 0; i < Program.jsonData.Count; i++) {
                 if (Program.jsonData[i] == this) {
+
                     return Program.jsonData[i];
                 }
             }
+
             return this;
         }
     }

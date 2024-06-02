@@ -26,6 +26,7 @@
             while (key.Key != ConsoleKey.Enter);
 
             Console.WriteLine();
+
             return password;
         }
     }

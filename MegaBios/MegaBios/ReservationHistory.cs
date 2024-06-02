@@ -38,6 +38,7 @@ namespace MegaBios
         public static void AddReservation(TestAccount account, ReservationHistory reservationHistory)
         {
             List<TestAccount> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
+
             for (int i = 0; i < accounts.Count; i++)
             {
                 if (accounts[i] == account)
@@ -53,6 +54,7 @@ namespace MegaBios
         public static void AddReservation(Guest guest, ReservationHistory reservationHistory)
         {
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
+
             for (int i = 0; i < guests.Count; i++)
             {
                 if (guests[i] == guest)
@@ -67,6 +69,7 @@ namespace MegaBios
         public static bool IsReservationIDTaken(string reservationID)
         {
             List<TestAccount> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
+
             foreach (TestAccount account in accounts)
             {
                 foreach (ReservationHistory reservation in account.History)
@@ -77,15 +80,18 @@ namespace MegaBios
                     }
                 }
             }
+
             return false;
         }
 
         public static string generateReservationNumber()
         {
             Random rand = new Random();
+
             while (true)
             {
                 int reservationNumber = rand.Next(0, 10000);
+
                 if (!IsReservationIDTaken(reservationNumber.ToString()))
                 {
                     return reservationNumber.ToString();
@@ -98,6 +104,7 @@ namespace MegaBios
         {
             List<string> menuOptions = new() { "Ja", "Nee" };
             int selectedOption = MenuFunctions.Menu(menuOptions, PrintReservation(reservation));
+
             return selectedOption == 0 ? true : false;
         }
 
@@ -106,18 +113,21 @@ namespace MegaBios
             StringBuilder reservationPrint = new StringBuilder();
             string stoelenString = "";
             double totalPrice = 0;
+
             for (int i = 0; i < reservation.ReservedSeats.Count; i++)
             {
                 Seat seat = reservation.ReservedSeats[i];
                 stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
                 totalPrice += seat.Price;
             }
+
             reservationPrint.AppendLine($"--------RESERVERING DATA-----------\n");
             reservationPrint.AppendLine($"Reservation Number: {reservation.ReservationNumber}");
             reservationPrint.AppendLine($"Film: {reservation.MovieTitle} \nRoom: {reservation.ReservationRoom}");
             reservationPrint.AppendLine($"Stoelen: \n{stoelenString}");
             reservationPrint.AppendLine($"Totaalprijs: {totalPrice:F2} Euro");
             reservationPrint.AppendLine("\nSelecteer \"ja\" om de bestelling te bevestigen\n");
+
             return reservationPrint;
         }
 
@@ -126,12 +136,14 @@ namespace MegaBios
             string stoelenString = "";
             double totalPrice = 0;
             Seat seat; // Declare seat outside the loop
+
             for (int i = 0; i < reservation.ReservedSeats.Count; i++)
             {
                 seat = reservation.ReservedSeats[i]; // Assign value inside the loop
                 stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
                 totalPrice += seat.Price;
             }
+
             return $"--------UW BESTELLINGEN-----------\n\n" +
                 $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
                 $"Film: {reservation.MovieTitle}\n" +
@@ -144,14 +156,17 @@ namespace MegaBios
         public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, TestAccount user)
         {
             double discount = 0;
+
             if (user.IsStudent)
             {
                 discount = 0.15;
             }
+
             for (int i = 0; i < selectedSeats.Count; i++)
             {
                 selectedSeats[i].Price *= 1 - discount;
             }
+
             return selectedSeats;
         }
 

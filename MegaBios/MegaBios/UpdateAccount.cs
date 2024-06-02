@@ -5,6 +5,7 @@ namespace MegaBios
         public static void UpdateField(TestAccount account)
         {
             int index = -1;
+
             for (int i = 0; i < Program.jsonData.Count; i++)
             {
                 if (Program.jsonData[i] == account)
@@ -24,6 +25,7 @@ namespace MegaBios
             Console.WriteLine("Voer je keuze in: ");
 
             bool loopBreak = false;
+
             while (true)
             {
                 switch (Console.ReadLine())
@@ -72,9 +74,12 @@ namespace MegaBios
                          break; */
                     case "1":
                         System.Console.WriteLine("Voer de nieuwe email in");
+
                         string newEmail = Console.ReadLine()!;
+
                         Program.jsonData[index].Email = newEmail;
                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
+
                         loopBreak = true;
                         break;
                     case "2":
@@ -88,6 +93,7 @@ namespace MegaBios
                             {
                                 Program.jsonData[index].Wachtwoord = newPassword;
                                 JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
+
                                 loopBreak = true;
                                 break;
                             }
@@ -144,7 +150,9 @@ namespace MegaBios
                                 System.Console.WriteLine("Invalide input!");
                             }
                         }
+
                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
+
                         loopBreak = true;
                         break;
                 }

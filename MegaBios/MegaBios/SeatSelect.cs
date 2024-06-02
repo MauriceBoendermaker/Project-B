@@ -28,6 +28,7 @@ namespace MegaBios
             RoomShowings = roomShowings;
             RoomNumber = roomNumber;
             ShowTime = showTime;
+
             foreach (RoomShowing showing in roomShowings)
             {
                 if (showing.ShowingTime == showTime)
@@ -63,6 +64,7 @@ namespace MegaBios
             // If no corresponding seat is found, return null
             return null;
         }
+
         private Seat GetCorrespondingLoveSeatLeft(Seat loveSeat)
         {
             // Get the row and seat number of the selected love seat
@@ -102,6 +104,7 @@ namespace MegaBios
             RoomShowing updatedShowing = null!;
             foreach (RoomShowing currentShowing in roomShowings) {
                 if (currentShowing.ShowingTime == showingTime) {
+
                     updatedShowing = currentShowing;
                 }
             }
@@ -117,6 +120,7 @@ namespace MegaBios
                     }
                 }
             }
+
             UpdateRoomSeating(roomShowings, updatedShowing, showingTime, roomNumber);
         }
 
@@ -124,6 +128,7 @@ namespace MegaBios
         {
             // Get all the seat numbers from the selectedseats and add them into a list
             List<string> seatNumbers = new();
+
             foreach (Seat selectedSeat in selectedSeats)
             {
                 seatNumbers.Add(selectedSeat.SeatNumber);
@@ -133,6 +138,7 @@ namespace MegaBios
             RoomShowing updatedShowing = null!;
             foreach (RoomShowing currentShowing in roomShowings) {
                 if (currentShowing.ShowingTime == showingTime) {
+
                     updatedShowing = currentShowing;
                 }
             }
@@ -148,6 +154,7 @@ namespace MegaBios
                     }
                 }
             }
+
             UpdateRoomSeating(roomShowings, updatedShowing, showingTime, roomNumber);
         }
 
@@ -161,6 +168,7 @@ namespace MegaBios
                     break;
                 }
             }
+
             JsonFunctions.WriteToJson($"../../../{roomNumber}.json", roomShowings);
         }
 
@@ -168,14 +176,18 @@ namespace MegaBios
         {
             List<int> cursorPos = new() { 1, 1 };
             DisplaySeats(cursorPos);
+
             while (!_confirmedSeats)
             {
                 Console.Clear();
+
                 DisplaySeats(cursorPos);
                 cursorPos = NavigateMenu(cursorPos);
             }
+
             Console.WriteLine($"Stoelen geselecteerd:");
             string selectedSeatsString = "";
+
             foreach (Seat seat in _selectedSeats)
             {
                 selectedSeatsString += seat.SeatNumber + " ";
@@ -184,9 +196,11 @@ namespace MegaBios
 
             System.Console.WriteLine("Press any button to go back");
             // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
             for (int i = 0; i < _selectedSeats.Count; i++) {
                 _selectedSeats[i].SeatTaken = true;
             }
+
             return _selectedSeats;
         }
 
@@ -203,13 +217,17 @@ namespace MegaBios
             int displayWidth = 0;  
             
             // Add the Seat numbers to the legend
+
             seatingText.Append("   ");
             for (int i = 0; i < seating[0].Count; i++) {
+
                 seatingText.Append(i.ToString().Length == 1 ? "0 " : $"{i.ToString().ToCharArray()[0]} ");
             }
+
             seatingText.Append("\n");
             seatingText.Append("   ");
             for (int i = 0; i < seating[0].Count; i++) {
+
                 seatingText.Append(i.ToString().Length == 1 ? $"{i} " : $"{i.ToString().ToCharArray()[1]} ");
             }
             seatingText.Append("\n");
@@ -224,6 +242,7 @@ namespace MegaBios
                 for (int j = 0; j < seating[i].Count; j++)
                 {
                     string colorText = ""; // ANSI kleurcode string
+
                     if (seating[i][j].SeatType == "handicap")
                     {
                         colorText = "\x1b[34m"; // Blauw
@@ -232,6 +251,7 @@ namespace MegaBios
                     {
                         colorText = "\x1b[35m"; // Magenta
                     }
+
                     if (seating[i][j].SeatTaken)
                     {
                         colorText += "\x1b[41m"; // Rode kleur voor bezette stoelen
@@ -246,19 +266,25 @@ namespace MegaBios
                     {
                         colorText += "\x1b[42m"; // Groene achtergrond voor al bezette stoelen
                     }
+
                     seatingText.Append($"{colorText}[]\x1b[0m");
                 }
                 if (i == 0) {
+
                     displayWidth = seatingText.Length;
                 }
+
                 seatingText.AppendLine("\x1b[0m");
             }
             System.Console.WriteLine($"LeftBound = {_selectedSeatsLeftBound} RightBound = {_selectedSeatsRightBound}");
+
+
             string doekString = String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7)) + " Scherm " + String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7));
 
             Console.WriteLine(seatingText.ToString());   
             System.Console.WriteLine(doekString);  
             Console.WriteLine("\nGeselecteerde stoelen: ");
+
             _selectedSeats.ForEach(seat => Console.Write(seat.SeatNumber + " "));
 
             double totalPrice = CalculateTotalPrice();
@@ -276,9 +302,11 @@ namespace MegaBios
         {
             bool moved = false;
             List<List<Seat>> seating = Seats;
+
             while (!moved)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
                 switch (keyInfo.Key)
                 {
                     // Cursor voor navigeren, enter is select huidige stoel.
@@ -305,6 +333,7 @@ namespace MegaBios
                     case ConsoleKey.Spacebar:
                         moved = true;
                         bool isAdjacent = AdjacentSeatCheck(cursor);
+
                         if (_selectedSeats.Contains(_selectedSeat))
                         {
                             _extraMessage = "\x1b[41mJe hebt deze stoel al geselecteerd!\x1b[0m";
@@ -317,6 +346,7 @@ namespace MegaBios
                         {
                             _selectedSeats.Add(_selectedSeat);
                             UpdateSeatBounds(_selectedSeat);
+
                             if (_selectedSeat.SeatType == "love seat")
                             {
                                 Seat rightCorrespondingSeat = GetCorrespondingLoveSeatRight(_selectedSeat);
@@ -327,12 +357,14 @@ namespace MegaBios
                                     _selectedSeats.Add(rightCorrespondingSeat);
                                     UpdateSeatBounds(rightCorrespondingSeat);
                                 }
+
                                 if (leftCorrespondingSeat != null && !_selectedSeats.Contains(leftCorrespondingSeat) && leftCorrespondingSeat.SeatType == "love seat")
                                 {
                                     _selectedSeats.Add(leftCorrespondingSeat);
                                     UpdateSeatBounds(leftCorrespondingSeat);
                                 }
                             }
+
                             _extraMessage = $"Stoel geselecteerd: {_selectedSeat.SeatNumber}";
                         }
                         else if (!isAdjacent)
@@ -342,6 +374,7 @@ namespace MegaBios
                         break;
                     case ConsoleKey.Enter:
                         moved = true;
+
                         if (_selectedSeats.Count == 0)
                         {
                             _extraMessage = "\x1b[41mJe hebt nog geen stoelen geselecteerd\x1b[0m";
@@ -350,6 +383,7 @@ namespace MegaBios
                         else if (_selectedSeats.Count > 0)
                         {
                             System.Console.WriteLine("Weet je zeker dat je deze stoelen wilt selecteren? Druk nogmaals op enter om je keuze te bevestigen of een andere knop om terug te gaan.");
+
                             if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                             {
                                 _confirmedSeats = true;
@@ -359,6 +393,7 @@ namespace MegaBios
                         break;
                     case ConsoleKey.Backspace:
                         moved = true;
+
                         if (_selectedSeats.Count == 0)
                         {
                             _extraMessage = "\x1b[41mJe hebt nog geen stoelen geselecteerd\x1b[0m";
@@ -367,6 +402,7 @@ namespace MegaBios
                         else if (_selectedSeats.Count > 0)
                         {
                             System.Console.WriteLine("Weet je zeker dat je je selectie wil wissen? Druk nogmaals op Backspace om je selectie te wissen.");
+
                             if (Console.ReadKey(true).Key == ConsoleKey.Backspace)
                             {
                                 _selectedSeats.Clear();
@@ -382,6 +418,7 @@ namespace MegaBios
                         break;
                 }
             }
+
             return cursor;
         }
 
@@ -405,6 +442,7 @@ namespace MegaBios
             {
                 cursor[1] = rows - 1;
             }
+
             return cursor;
         }
 
@@ -415,11 +453,13 @@ namespace MegaBios
             legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro), \x1b[35m[]\x1b[0m = Loveseats (20.00 euro), [] = Normale Stoelen (10.00 euro), \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
             System.Console.WriteLine(legendText);
 
+            
         }
 
         public void UpdateSeatBounds(Seat seat)
         {
             int seatIndex = int.Parse(seat.SeatNumber.Substring(2)) - 1;
+
             if (seatIndex < _selectedSeatsLeftBound)
             {
                 _selectedSeatsLeftBound = seatIndex;
@@ -451,6 +491,7 @@ namespace MegaBios
                 {
                     return true;
                 }
+
                 return false;
             }
             else
@@ -483,6 +524,7 @@ namespace MegaBios
                     }
                 }
             }
+
             return true;
         }
 
@@ -493,11 +535,13 @@ namespace MegaBios
             if (availableSeats != null && availableSeats.Count > 0)
             {
                 Console.WriteLine("De volgende plaatsen zijn beschikbaar voor uw groep:");
+
                 foreach (var seat in availableSeats)
                 {
                     Console.Write(seat.SeatNumber + " ");
                     _selectedSeats.Add(seat);
                 }
+
                 Console.WriteLine();
                 return _selectedSeats;
             }
@@ -516,11 +560,13 @@ namespace MegaBios
             foreach (var row in allSeats)
             {
                 List<Seat> currentRowSeats = new List<Seat>();
+
                 foreach (var seat in row)
                 {
                     if (!seat.SeatTaken && seat.SeatType == "normal")
                     {
                         currentRowSeats.Add(seat);
+
                         if (currentRowSeats.Count == groupAmount)
                         {
                             contiguousSeats.AddRange(currentRowSeats);
@@ -533,6 +579,7 @@ namespace MegaBios
                     }
                 }
             }
+
             return new List<Seat>();
         }
     }

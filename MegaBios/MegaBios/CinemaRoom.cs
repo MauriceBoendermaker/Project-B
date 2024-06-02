@@ -27,6 +27,7 @@ namespace MegaBios
 
         [JsonPropertyName("show_time")]
         public DateTime ShowingTime { get; set; }
+
         [JsonPropertyName("in_maintenance")]
         public bool InMaintenance { get; set; }
 
@@ -35,6 +36,7 @@ namespace MegaBios
             // Default constructor required for deserialization
         }
         public RoomShowing(string roomNumber, List<List<Seat>> seating, string movie, DateTime showTime, bool inMaintenance) {
+
             RoomNumber = roomNumber;
             Seating = seating;
             Movie = movie;
@@ -48,10 +50,13 @@ namespace MegaBios
     public class Seat {
         [JsonPropertyName("seat_number")]
         public string SeatNumber { get; set; } 
+
         [JsonPropertyName("is_taken")]
         public bool SeatTaken { get; set; }
+
         [JsonPropertyName("type")]
         public string SeatType { get; set; }
+
         [JsonPropertyName("price")]
         public double Price { get; set; }
 
