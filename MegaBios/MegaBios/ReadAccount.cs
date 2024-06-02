@@ -1,5 +1,3 @@
-using System;
-
 namespace MegaBios
 {
     public static class ReadAccount

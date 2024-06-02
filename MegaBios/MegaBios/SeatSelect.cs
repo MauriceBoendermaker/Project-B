@@ -1,5 +1,3 @@
-using System.Formats.Asn1;
-using System.Reflection.Metadata;
 using System.Text;
 
 namespace MegaBios
