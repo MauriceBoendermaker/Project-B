@@ -298,7 +298,7 @@ namespace MegaBios
 
             PrintLegend();
 
-            Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op Space om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op Backspace om stoelselectie te wissen");
+            Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op 'Space' om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op 'Backspace' om stoelselectie te wissen");
             Console.WriteLine(_extraMessage);
         }
 
@@ -313,7 +313,7 @@ namespace MegaBios
 
                 switch (keyInfo.Key)
                 {
-                    // Cursor voor navigeren, enter is select huidige stoel.
+                    // Cursor voor navigeren, enter is select huidige stoel
                     case ConsoleKey.UpArrow:
                         cursor[1]--;
                         cursor = CorrectCursorPos(cursor, seating.Count, seating[0].Count);
@@ -386,7 +386,7 @@ namespace MegaBios
                         }
                         else if (_selectedSeats.Count > 0)
                         {
-                            System.Console.WriteLine("Weet je zeker dat je deze stoelen wilt selecteren? Druk nogmaals op enter om je keuze te bevestigen of een andere knop om terug te gaan.");
+                            Console.WriteLine("Weet je zeker dat je deze stoelen wilt selecteren? Druk nogmaals op 'Enter' om je keuze te bevestigen of een andere knop om terug te gaan.");
 
                             if (Console.ReadKey(true).Key == ConsoleKey.Enter)
                             {
@@ -405,7 +405,7 @@ namespace MegaBios
                         }
                         else if (_selectedSeats.Count > 0)
                         {
-                            System.Console.WriteLine("Weet je zeker dat je je selectie wil wissen? Druk nogmaals op Backspace om je selectie te wissen.");
+                            Console.WriteLine("Weet je zeker dat je je selectie wil wissen? Druk nogmaals op 'Backspace' om je selectie te wissen.");
 
                             if (Console.ReadKey(true).Key == ConsoleKey.Backspace)
                             {
@@ -418,7 +418,7 @@ namespace MegaBios
                         }
                         break;
                     default:
-                        System.Console.WriteLine("Druk alstublieft op pijltoetsen, space, enter of backspace");
+                        Console.WriteLine("Druk alstublieft op pijltoetsen, 'Space', 'Enter' of 'Backspace'");
                         break;
                 }
             }

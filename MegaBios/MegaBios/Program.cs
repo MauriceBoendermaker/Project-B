@@ -152,7 +152,7 @@ namespace MegaBios
                         }
                         break;
                     default:
-                        Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
+                        Console.WriteLine("Ongeldige keuze. Probeer het alstublieft opnieuw.");
                         break;
                 }
             }
@@ -286,6 +286,7 @@ namespace MegaBios
                     case 8:
                         CinemaRoomGenerator cinemaRoomGenerator = new CinemaRoomGenerator();
                         cinemaRoomGenerator.GenerationMenu();
+
                         break;
                     default:
                         Console.WriteLine("Ongeldige keuze. Probeer het alstublieft opnieuw.");
@@ -407,7 +408,7 @@ namespace MegaBios
             while (true)
             {
                 Console.Clear();
-                System.Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op Enter om je selectie te bevestigen");
+                Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op 'Enter' om je selectie te bevestigen");
 
                 List<DateTime> menuOptions = GetShowDays();
 
@@ -593,7 +594,7 @@ namespace MegaBios
                     Console.ReadKey(true);
 
                     return reservation;
-                //Nee
+                // Nee
                 case 1:
                     return reservation;
             }
@@ -664,7 +665,7 @@ namespace MegaBios
                     Console.ReadKey(true);
 
                     return reservation;
-                //Nee
+                // Nee
                 case 1:
                     return reservation;
             }
