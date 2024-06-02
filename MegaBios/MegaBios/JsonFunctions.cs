@@ -33,7 +33,6 @@ namespace MegaBios
         //     return JsonSerializer.Deserialize<List<Guest>>(jsonString);
         // }
 
-        
         public static List<Guest> LoadGuests(string filePath)
         {
             try

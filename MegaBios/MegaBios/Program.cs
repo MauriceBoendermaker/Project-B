@@ -79,7 +79,6 @@ namespace MegaBios
         static void LoginAsGuest()
         {
             while(true) {
-
                 LoggedInAsGuest = true; // Setting LoggedInAsGuest to True
                 movies = JsonFunctions.LoadMovies("../../../Movies.json");
                 cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
@@ -178,7 +177,6 @@ namespace MegaBios
             {
                 if (account.Email == username && account.Wachtwoord == password)
                 {
-
                     Console.WriteLine("Succesvol ingelogd!");
 
                     movies = JsonFunctions.LoadMovies("../../../Movies.json");
@@ -261,7 +259,6 @@ namespace MegaBios
                         }
                         break;
 
-
                     case 5:
                         CancelMenu(account);
                         break;
@@ -280,7 +277,6 @@ namespace MegaBios
                     case 7:
                         EditRoomSize();
                         break;
-
                     case 8:
                         CinemaRoomGenerator cinemaRoomGenerator = new CinemaRoomGenerator();
                         cinemaRoomGenerator.GenerationMenu();
@@ -290,8 +286,6 @@ namespace MegaBios
                         break;
                 }
             }
-
-
         }
 
         public static void EditRoomSize()
@@ -357,7 +351,6 @@ namespace MegaBios
                     System.Console.WriteLine("Voer alsjeblieft een nummer in");
                 }
             } 
-            
 
             for (int i = 0; i < roomShowings.Count; i++)
             {
@@ -410,9 +403,7 @@ namespace MegaBios
                 }               
                 
                 selectedDate = menuOptions[selectedOption];
-
                 initialDate = selectedDate;
-
                 showingOptions = GetShowingOptions(selectedDate, selectedMovie);
 
                 if (showingOptions.Count == 0)
@@ -512,7 +503,6 @@ namespace MegaBios
                 return reservation;
             }
            
-
             // else
             // {
             //     Console.WriteLine("Ongeldige selectie. Probeer het opnieuw.");
@@ -520,7 +510,6 @@ namespace MegaBios
             //     return (null, null, DateTime.MinValue); // Ensure to return after restarting to avoid continuation of current flow
             // }
             */
-
         }
 
         public static Dictionary<string, DateTime> GetShowingOptions(DateTime date, string selectedMovie)
@@ -711,7 +700,6 @@ namespace MegaBios
                     .Where(x => x.ReservationNumber == reservationNumber)
                     .ToList()[0];
                 List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
-                
                 // Ask user to select whether they want to cancel 1 seat or all seats
 
                 StringBuilder sb = new StringBuilder();
@@ -775,9 +763,7 @@ namespace MegaBios
                         TestAccount.UpdateAccount(account);
                         return;    
                 }
-
             }
-            
         }
 
         public static void CancelMenu(Guest guest) {
@@ -796,7 +782,6 @@ namespace MegaBios
                     .Where(x => x.ReservationNumber == reservationNumber)
                     .ToList()[0];
                 List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
-                
                 // Ask user to select whether they want to cancel 1 seat or all seats
 
                 StringBuilder sb = new StringBuilder();
@@ -820,7 +805,6 @@ namespace MegaBios
 
                             return;
                         }
-                        
                         // Get the correct seat from the seats list
 
                         Seat selectedSeat = selectedReservation.ReservedSeats

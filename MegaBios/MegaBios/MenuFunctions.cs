@@ -3,7 +3,6 @@ using System.Text;
 namespace MegaBios
 {
     public static class MenuFunctions {
-        
         // Menu but with optional message
         public static int Menu<T>(List<T> menuOptions, StringBuilder optionalMessage, bool canGoBack = true) {
             int cursorPos = 0;
@@ -156,7 +155,6 @@ namespace MegaBios
                         return cursorPos;
                     }
                 }
-
                 else
                 {
                     cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);

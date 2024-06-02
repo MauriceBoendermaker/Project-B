@@ -28,8 +28,6 @@ namespace MegaBios
                     System.Console.WriteLine("Invalid input");
                     break;
             }
-            
-
         }
 
         public void EditRoom() {
@@ -128,9 +126,6 @@ namespace MegaBios
                     }
                 }
             }
-           
-
-
         }
         public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating) {
 

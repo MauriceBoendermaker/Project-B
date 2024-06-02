@@ -107,9 +107,5 @@ namespace MegaBios
 
             return Regex.IsMatch(email, pattern);
         }
-
     }
-
-
-
 }

@@ -45,8 +45,6 @@ namespace MegaBios
         }
     }
 
-    
-
     public class Seat {
         [JsonPropertyName("seat_number")]
         public string SeatNumber { get; set; } 
