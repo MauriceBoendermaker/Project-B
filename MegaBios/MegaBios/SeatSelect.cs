@@ -200,7 +200,8 @@ namespace MegaBios
             Console.WriteLine("Druk op een willekeurige knop om terug te gaan");
             // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
-            for (int i = 0; i < _selectedSeats.Count; i++) {
+            for (int i = 0; i < _selectedSeats.Count; i++)
+            {
                 _selectedSeats[i].SeatTaken = true;
             }
 
@@ -281,12 +282,10 @@ namespace MegaBios
                 seatingText.AppendLine("\x1b[0m");
             }
 
-            Console.WriteLine($"LeftBound = {_selectedSeatsLeftBound} RightBound = {_selectedSeatsRightBound}");
-
             string doekString = String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7)) + " Scherm " + String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7));
 
-            Console.WriteLine(seatingText.ToString());   
-            Console.WriteLine(doekString);  
+            Console.WriteLine(seatingText.ToString());
+            Console.WriteLine(doekString);
             Console.WriteLine("\nGeselecteerde stoelen: ");
 
             _selectedSeats.ForEach(seat => Console.Write(seat.SeatNumber + " "));
@@ -455,7 +454,7 @@ namespace MegaBios
             StringBuilder legendText = new StringBuilder();
             legendText.Append($"Legenda:\n");
             legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro), \x1b[35m[]\x1b[0m = Loveseats (20.00 euro), [] = Normale Stoelen (10.00 euro), \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
-            
+
             Console.WriteLine(legendText);
         }
 
