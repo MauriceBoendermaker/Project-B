@@ -46,8 +46,8 @@
       "woonplaats": "Utrecht",
       "postcode": "3511 LN"
     },
-    "email": "eva.degroot@example.com",
-    "wachtwoord": "P@ssw0rd!",
+    "email": "test2@gmail.com",
+    "wachtwoord": "2",
     "telefoonnummer": "\u002B31 30 55554444",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true,
@@ -64,7 +64,7 @@
       "woonplaats": "Berkel en Rodenrijs",
       "postcode": "2651 DE"
     },
-    "email": "1",
+    "email": "test1@gmail.com",
     "wachtwoord": "1",
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
