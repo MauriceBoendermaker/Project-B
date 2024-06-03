@@ -35,9 +35,15 @@ namespace MegaBios
                     case 2:
                         CreateAccount.CreateNewAccount(jsonData);
                         bool firstLogin = true;
-
+                        int attempts = 0;
                         while (true)
-                        {
+                        {                        
+                            if (attempts >= 3) {
+                                Console.Clear();
+                                System.Console.WriteLine("U heeft 3 foute inlogpogingen gedaan. Druk op een willekeurige toets om terug te keren naar het menu");
+                                Console.ReadKey(true);
+                                break;
+                            }
                             (bool, TestAccount) loginInfo = Login(firstLogin);
 
                             if (loginInfo.Item1 && loginInfo.Item2 != null)
@@ -48,14 +54,21 @@ namespace MegaBios
                             else
                             {
                                 firstLogin = false;
+                                attempts++;
                             }
                         }
                         break;
                     case 3:
                         firstLogin = true;
-
+                        attempts = 0;
                         while (true)
                         {
+                            if (attempts >= 3) {
+                                Console.Clear();
+                                System.Console.WriteLine("U heeft 3 foute inlogpogingen gedaan. Druk op een willekeurige toets om terug te keren naar het menu");
+                                Console.ReadKey(true);
+                                break;
+                            }
                             (bool, TestAccount) loginInfo = Login(firstLogin);
 
                             if (loginInfo.Item1 && loginInfo.Item2 != null)
@@ -66,6 +79,7 @@ namespace MegaBios
                             else
                             {
                                 firstLogin = false;
+                                attempts++;
                             }
                         }
                         break;
@@ -106,7 +120,6 @@ namespace MegaBios
 
                         if (reservation == null)
                         {
-                            Console.WriteLine("Te22st");
                             break;
                         }
 
@@ -160,7 +173,7 @@ namespace MegaBios
 
         // Return type is Tuple voor succesvolle login Bool, account info
         static (bool, TestAccount) Login(bool firstLogin)
-        {
+        {   
             Console.Clear();
 
             if (!firstLogin)
@@ -192,6 +205,7 @@ namespace MegaBios
 
             Console.WriteLine("Ongeldige gebruikersnaam of wachtwoord. Probeer het alstublieft opnieuw.");
             return (false, null);
+            
         }
 
         public static void LoggedInMenu(TestAccount account)
