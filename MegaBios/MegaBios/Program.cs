@@ -6,7 +6,6 @@ namespace MegaBios
     class Program
     {
         public static List<Movie> movies = new List<Movie>();
-        public static List<CinemaRoom> cinemaRooms = new List<CinemaRoom>();
         public static List<TestAccount> jsonData = new List<TestAccount>();
 
         public static string jsonFilePath = "../../../customers.json";
@@ -96,7 +95,6 @@ namespace MegaBios
             {
                 LoggedInAsGuest = true; // Zet LoggedInAsGuest naar True
                 movies = JsonFunctions.LoadMovies("../../../Movies.json");
-                cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
                 jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
 
                 int cursorPos = 0;
@@ -197,7 +195,6 @@ namespace MegaBios
                     Console.WriteLine("Succesvol ingelogd!");
 
                     movies = JsonFunctions.LoadMovies("../../../Movies.json");
-                    cinemaRooms = JsonFunctions.LoadCinemaRooms("../../../CinemaRooms.json");
 
                     return (true, account);
                 }
