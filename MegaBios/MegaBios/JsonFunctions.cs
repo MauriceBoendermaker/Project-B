@@ -60,33 +60,6 @@ namespace MegaBios
             }
         }
 
-        public static List<CinemaRoom> LoadCinemaRooms(string filePath)
-        {
-            try
-            {
-                string jsonString = File.ReadAllText(filePath);
-
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                };
-
-                CinemaData cinemaData = JsonSerializer.Deserialize<CinemaData>(jsonString, options);
-                return cinemaData?.CinemaRooms ?? new List<CinemaRoom>();
-            }
-            catch (JsonException ex)
-            {
-                Console.WriteLine($"Kan JSON niet deserialiseren naar type 'CinemaData': {ex.Message}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Er is een fout opgetreden: {ex.Message}");
-                throw;
-            }
-        }
-
         // public static List<List<Seat>> GenerateSeating(int width, int height) {
         //     List<List<Seat>> seating = new List<List<Seat>>(height);
         //     for (int i = 0; i < height; i++) {

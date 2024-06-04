@@ -2,17 +2,6 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-    public class CinemaRoom
-    {
-        [JsonPropertyName("room_number")]
-        public string RoomNumber { get; set; }
-
-        [JsonPropertyName("seating")]
-        public List<List<Seat>> Seating { get; set; }
-
-        [JsonPropertyName("schedule")]
-        public Dictionary<string, List<MovieSchedule>> Schedule { get; set; }
-    }
 
     public class RoomShowing
     {
