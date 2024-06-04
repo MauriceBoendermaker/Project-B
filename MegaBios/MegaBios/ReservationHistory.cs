@@ -153,11 +153,12 @@ namespace MegaBios
         public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, TestAccount user)
         {
             double discount = 0;
-
-            if (user.IsStudent)
+            int leeftijd = DateTime.Now.Year - Convert.ToDateTime(user.GeboorteDatum).Year;
+            if (user.IsStudent || leeftijd >= 65)
             {
                 discount = 0.15;
             }
+            
 
             for (int i = 0; i < selectedSeats.Count; i++)
             {

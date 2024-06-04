@@ -19,13 +19,15 @@ namespace MegaBios
         public RoomShowing Showing { get; set; }
         public string RoomNumber { get; set; }
         public DateTime ShowTime { get; set; }
+        public TestAccount ReservingAccount {get; set;}
         // public bool FinishedSelectingSeats = false;
 
-        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime)
+        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime, TestAccount reservingAccount = null)
         {
             RoomShowings = roomShowings;
             RoomNumber = roomNumber;
             ShowTime = showTime;
+            reservingAccount = reservingAccount;
 
             foreach (RoomShowing showing in roomShowings)
             {

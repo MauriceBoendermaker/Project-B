@@ -190,6 +190,7 @@ namespace MegaBios
             TelefoonNr = telefoonNr;
             Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
+            History = new();
         }
 
         public static bool operator ==(TestAccount t1, TestAccount t2)

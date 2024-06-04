@@ -106,5 +106,23 @@
     "voorkeur_betaalwijze": "hff",
     "is_student": true,
     "history": []
+  },
+  {
+    "voornaam": "test",
+    "tussenvoegsel": "",
+    "achternaam": "test",
+    "geboorte_datum": "1904-08-25",
+    "adres": {
+      "straat": "architectenlaan",
+      "huisnummer": "25",
+      "woonplaats": "amsterdam",
+      "postcode": "2564 ER"
+    },
+    "email": "laurens@mail.com",
+    "wachtwoord": "123",
+    "telefoonnummer": "1234",
+    "voorkeur_betaalwijze": "test",
+    "is_student": false,
+    "history": []
   }
 ]

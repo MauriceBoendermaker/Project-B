@@ -259,7 +259,7 @@ namespace MegaBios
 
                         break;
                     case 4:
-                        ReservationHistory reservation = TicketReservation();
+                        ReservationHistory reservation = TicketReservation(account);
 
                         if (reservation == null)
                         {
@@ -395,7 +395,7 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}.json", roomShowings);
         }
 
-        public static ReservationHistory? TicketReservation()
+        public static ReservationHistory? TicketReservation(TestAccount account = null)
         {
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
 
@@ -479,7 +479,7 @@ namespace MegaBios
 
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
 
-            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
+            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, account);
             List<Seat> selectedSeats;
             selectedSeats = seatSelect.SelectSeats();
             string reservationNumber = ReservationHistory.generateReservationNumber();
