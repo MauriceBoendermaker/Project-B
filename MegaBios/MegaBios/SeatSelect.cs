@@ -282,7 +282,7 @@ namespace MegaBios
                 seatingText.AppendLine("\x1b[0m");
             }
 
-            string doekString = String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7)) + " Scherm " + String.Concat(Enumerable.Repeat("-", (displayWidth - 6) / 7));
+            string doekString = String.Concat(Enumerable.Repeat(" -", (displayWidth - 6) / 30)) + " Scherm " + String.Concat(Enumerable.Repeat(" -", (displayWidth - 6) / 30));
 
             Console.WriteLine(seatingText.ToString());
             Console.WriteLine(doekString);
