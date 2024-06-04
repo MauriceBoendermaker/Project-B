@@ -368,7 +368,6 @@ namespace MegaBios
                                 }
                             }
 
-                            _extraMessage = $"Stoel geselecteerd: {_selectedSeat.SeatNumber}";
                         }
                         else if (!isAdjacent)
                         {
