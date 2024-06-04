@@ -2,7 +2,7 @@
 {
     public class DeleteAccount
     {
-        public static void RemoveAccount(List<TestAccount> jsonData, TestAccount account)
+        public static void RemoveAccount(List<Account> jsonData, Account account)
         {
             for (int i = 0; i < jsonData.Count; i++)
             {

@@ -2,7 +2,7 @@ namespace MegaBios
 {
     public class UpdateAccount
     {
-        public static void UpdateField(TestAccount account)
+        public static void UpdateField(Account account)
         {
             int index = -1;
 

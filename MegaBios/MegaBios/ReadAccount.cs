@@ -2,7 +2,7 @@ namespace MegaBios
 {
     public static class ReadAccount
     {
-        public static void DisplayUserInfo(TestAccount loggedInUser)
+        public static void DisplayUserInfo(Account loggedInUser)
         {
             Console.WriteLine("Gebruikersinformatie:");
             Console.WriteLine("-----------------");

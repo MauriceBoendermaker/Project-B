@@ -4,7 +4,7 @@ namespace MegaBios
 {
     public class CreateAccount
     {
-        public static void CreateNewAccount(List<TestAccount> jsonData)
+        public static void CreateNewAccount(List<Account> jsonData)
         {
             Console.WriteLine("\nCreëer nieuw account");
             Console.WriteLine("--------------------");
@@ -93,7 +93,7 @@ namespace MegaBios
                 }
             }
 
-            TestAccount newAccount = new TestAccount(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new());
+            Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new());
             jsonData.Add(newAccount);
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);

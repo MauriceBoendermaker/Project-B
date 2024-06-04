@@ -6,7 +6,7 @@ namespace MegaBios
     class Program
     {
         public static List<Movie> movies = new List<Movie>();
-        public static List<TestAccount> jsonData = new List<TestAccount>();
+        public static List<Account> jsonData = new List<Account>();
 
         public static string jsonFilePath = "../../../customers.json";
         public static bool LoggedInAsGuest = false;
@@ -43,7 +43,7 @@ namespace MegaBios
                                 Console.ReadKey(true);
                                 break;
                             }
-                            (bool, TestAccount) loginInfo = Login(firstLogin);
+                            (bool, Account) loginInfo = Login(firstLogin);
 
                             if (loginInfo.Item1 && loginInfo.Item2 != null)
                             {
@@ -68,7 +68,7 @@ namespace MegaBios
                                 Console.ReadKey(true);
                                 break;
                             }
-                            (bool, TestAccount) loginInfo = Login(firstLogin);
+                            (bool, Account) loginInfo = Login(firstLogin);
 
                             if (loginInfo.Item1 && loginInfo.Item2 != null)
                             {
@@ -170,7 +170,7 @@ namespace MegaBios
         }
 
         // Return type is Tuple voor succesvolle login Bool, account info
-        static (bool, TestAccount) Login(bool firstLogin)
+        static (bool, Account) Login(bool firstLogin)
         {   
             Console.Clear();
 
@@ -188,7 +188,7 @@ namespace MegaBios
             Console.Write("Voer wachtwoord in: ");
             string password = HelperFunctions.MaskPasswordInput();
 
-            foreach (TestAccount account in jsonData)
+            foreach (Account account in jsonData)
             {
                 if (account.Email == username && account.Wachtwoord == password)
                 {
@@ -205,7 +205,7 @@ namespace MegaBios
             
         }
 
-        public static void LoggedInMenu(TestAccount account)
+        public static void LoggedInMenu(Account account)
         {
             while (true)
             {
@@ -407,7 +407,7 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}.json", roomShowings);
         }
 
-        public static Reservation? TicketReservation(TestAccount account = null)
+        public static Reservation? TicketReservation(Account account = null)
         {
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
 
@@ -593,7 +593,7 @@ namespace MegaBios
             return showDays;
         }
 
-        public static Reservation CancelSeat(TestAccount account, Reservation reservation, Seat seat)
+        public static Reservation CancelSeat(Account account, Reservation reservation, Seat seat)
         {
             Console.Clear();
 
@@ -625,7 +625,7 @@ namespace MegaBios
             return reservation;
         }
 
-        public static TestAccount CancelReservation(TestAccount account, Reservation reservation, List<Seat> seats)
+        public static Account CancelReservation(Account account, Reservation reservation, List<Seat> seats)
         {
             Console.Clear();
 
@@ -733,7 +733,7 @@ namespace MegaBios
             }
         }
 
-        public static void CancelMenu(TestAccount account)
+        public static void CancelMenu(Account account)
         {
             while(true)
             {
@@ -820,7 +820,7 @@ namespace MegaBios
                             }   
                         }
                         
-                        TestAccount.UpdateAccount(account);
+                        Account.UpdateAccount(account);
                         return;
                     // Annuleer de hele reservering
                     case 1:
@@ -831,7 +831,7 @@ namespace MegaBios
                             break;
                         }
 
-                        TestAccount.UpdateAccount(account);
+                        Account.UpdateAccount(account);
                         return;    
                 }
             }

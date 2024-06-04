@@ -22,10 +22,10 @@ namespace MegaBios
             return JsonSerializer.Deserialize<List<RoomShowing>>(jsonString);
         }
 
-        public static List<TestAccount> LoadCustomers(string filePath)
+        public static List<Account> LoadCustomers(string filePath)
         {
             string jsonString = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<TestAccount>>(jsonString);
+            return JsonSerializer.Deserialize<List<Account>>(jsonString);
         }
 
         // public static List<Guest> LoadGuests (string filePath) {

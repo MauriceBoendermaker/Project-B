@@ -133,7 +133,7 @@ namespace MegaBios
         }
     }
 
-    public class TestAccount
+    public class Account
     {
         [JsonPropertyName("voornaam")]
         public string Voornaam { get; set; }
@@ -172,7 +172,7 @@ namespace MegaBios
         public List<Reservation> History { get; set; }
 
         [JsonConstructor]
-        public TestAccount(string voornaam,
+        public Account(string voornaam,
                             string tussenvoegsel,
                             string achternaam,
                             string geboorteDatum,
@@ -204,7 +204,7 @@ namespace MegaBios
             }
         }
 
-        public static bool operator ==(TestAccount t1, TestAccount t2)
+        public static bool operator ==(Account t1, Account t2)
         {
             if (t1 is null || t2 is null)
             {
@@ -213,14 +213,14 @@ namespace MegaBios
             return t1.Email.Equals(t2.Email) && t1.Wachtwoord.Equals(t2.Wachtwoord);
         }
 
-        public static bool operator !=(TestAccount t1, TestAccount t2)
+        public static bool operator !=(Account t1, Account t2)
         {
             return !(t1 == t2);
         }
 
-        public static void UpdateAccount(TestAccount account)
+        public static void UpdateAccount(Account account)
         {
-            List<TestAccount> customers = JsonFunctions.LoadCustomers("../../../customers.json");
+            List<Account> customers = JsonFunctions.LoadCustomers("../../../customers.json");
 
             for (int i = 0; i < customers.Count; i++)
             {
@@ -238,7 +238,7 @@ namespace MegaBios
             return Voornaam == "admin" && Achternaam == "admin" && Email == "admin@testmail.com" && Wachtwoord == "adminwachtwoord";
         }
 
-        public TestAccount ReloadAccount()
+        public Account ReloadAccount()
         {
             Program.jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
 
