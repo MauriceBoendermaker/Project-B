@@ -114,7 +114,7 @@ namespace MegaBios
                         return;
                     // Bestel ticket
                     case 1:
-                        ReservationHistory reservation = TicketReservation();
+                        Reservation reservation = TicketReservation();
 
                         if (reservation == null)
                         {
@@ -124,12 +124,12 @@ namespace MegaBios
                         Console.ReadKey(true);
                         Guest guest = Guest.CreateGuest();
 
-                        bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
+                        bool confirmedPayment = Reservation.ConfirmPayment(reservation);
 
                         if (confirmedPayment)
                         {
                             SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
-                            ReservationHistory.AddReservation(guest, reservation);
+                            Reservation.AddReservation(guest, reservation);
                         }
 
                         break;
@@ -137,7 +137,7 @@ namespace MegaBios
                     case 2:
                         guest = Guest.CreateGuest();
 
-                        if (guest.History.Count > 0)
+                        if (guest.Reservations.Count > 0)
                         {
                             CancelMenu(guest);
                         }
@@ -147,13 +147,13 @@ namespace MegaBios
                     case 3:
                         guest = Guest.CreateGuest();
 
-                        if (guest.History.Count > 0)
+                        if (guest.Reservations.Count > 0)
                         {
                             Console.Clear();
 
-                            foreach (var userReservation in guest.History)
+                            foreach (var userReservation in guest.Reservations)
                             {
-                                Console.WriteLine(ReservationHistory.PrintReservationUser(userReservation));
+                                Console.WriteLine(Reservation.PrintReservationUser(userReservation));
                             }
 
                             Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
@@ -210,7 +210,7 @@ namespace MegaBios
             while (true)
             {
                 account = account.ReloadAccount();
-                List<string> menuOptions = new() { "Toon Accountinformatie", "Verwijder Account", "Werk Accountinformatie Bij", "Bestel ticket", "Annuleer ticket(s)", "Bestellingen" };
+                List<string> menuOptions = new() { "Toon accountinformatie", "Verwijder account", "Werk accountinformatie bij", "Bestel ticket", "Annuleer ticket(s)", "Toon reserveringen", "Toon bestelgeschiedenis" };
 
                 if (account.IsAdmin())
                 {
@@ -259,20 +259,20 @@ namespace MegaBios
 
                         break;
                     case 4:
-                        ReservationHistory reservation = TicketReservation(account);
+                        Reservation reservation = TicketReservation(account);
 
                         if (reservation == null)
                         {
                             break;
                         }
 
-                        reservation.ReservedSeats = ReservationHistory.ApplyDiscount(reservation.ReservedSeats, account);
-                        bool confirmedPayment = ReservationHistory.ConfirmPayment(reservation);
+                        reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, account);
+                        bool confirmedPayment = Reservation.ConfirmPayment(reservation);
 
                         if (confirmedPayment)
                         {
                             SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
-                            ReservationHistory.AddReservation(account, reservation);
+                            Reservation.AddReservation(account, reservation);
                         }
 
                         break;
@@ -282,19 +282,31 @@ namespace MegaBios
                     case 6:
                         Console.Clear();
 
-                        foreach (var userReservation in account.History)
+                        foreach (var userReservation in account.Reservations)
                         {
-                            Console.WriteLine(ReservationHistory.PrintReservationUser(userReservation));
+                            Console.WriteLine(Reservation.PrintReservationUser(userReservation));
                         }
 
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
                         Console.ReadKey(true);
 
                         break;
-                    case 7:
-                        EditRoomSize();
+                    case 7: 
+                        Console.Clear();
+
+                        foreach (var userReservation in account.History)
+                        {
+                            Console.WriteLine(Reservation.PrintHistory(userReservation));
+                        }
+
+                        Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
+                        Console.ReadKey(true);
+
                         break;
                     case 8:
+                        EditRoomSize();
+                        break;
+                    case 9:
                         CinemaRoomGenerator cinemaRoomGenerator = new CinemaRoomGenerator();
                         cinemaRoomGenerator.GenerationMenu();
 
@@ -395,7 +407,7 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}.json", roomShowings);
         }
 
-        public static ReservationHistory? TicketReservation(TestAccount account = null)
+        public static Reservation? TicketReservation(TestAccount account = null)
         {
             List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
 
@@ -482,8 +494,8 @@ namespace MegaBios
             SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, account);
             List<Seat> selectedSeats;
             selectedSeats = seatSelect.SelectSeats();
-            string reservationNumber = ReservationHistory.generateReservationNumber();
-            ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
+            string reservationNumber = Reservation.generateReservationNumber();
+            Reservation reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
 
             return reservation;
 
@@ -581,7 +593,7 @@ namespace MegaBios
             return showDays;
         }
 
-        public static ReservationHistory CancelSeat(TestAccount account, ReservationHistory reservation, Seat seat)
+        public static Reservation CancelSeat(TestAccount account, Reservation reservation, Seat seat)
         {
             Console.Clear();
 
@@ -613,7 +625,7 @@ namespace MegaBios
             return reservation;
         }
 
-        public static TestAccount CancelReservation(TestAccount account, ReservationHistory reservation, List<Seat> seats)
+        public static TestAccount CancelReservation(TestAccount account, Reservation reservation, List<Seat> seats)
         {
             Console.Clear();
 
@@ -652,7 +664,7 @@ namespace MegaBios
             return account;
         }
 
-        public static ReservationHistory CancelSeat(Guest guest, ReservationHistory reservation, Seat seat)
+        public static Reservation CancelSeat(Guest guest, Reservation reservation, Seat seat)
         {
             Console.Clear();
 
@@ -684,7 +696,7 @@ namespace MegaBios
             return reservation;
         }
 
-        public static Guest CancelReservation(Guest guest, ReservationHistory reservation, List<Seat> seats)
+        public static Guest CancelReservation(Guest guest, Reservation reservation, List<Seat> seats)
         {
             Console.Clear();
 
@@ -701,7 +713,7 @@ namespace MegaBios
             {
                 // Ja
                 case 0:
-                    guest.History.Remove(reservation);
+                    guest.Reservations.Remove(reservation);
                     double totalPrice = 0;
 
                     foreach(Seat seat in seats)
@@ -744,7 +756,7 @@ namespace MegaBios
                 }
 
                 string reservationNumber = reservationNumbers[selectedOption];
-                ReservationHistory selectedReservation = account.History
+                Reservation selectedReservation = account.History
                     .Where(x => x.ReservationNumber == reservationNumber)
                     .ToList()[0];
                 List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
@@ -779,7 +791,7 @@ namespace MegaBios
                         Seat selectedSeat = selectedReservation.ReservedSeats
                             .Where(x => x.SeatNumber == seatNumbers[selectedOption])
                             .ToList()[0];                                  
-                        ReservationHistory changedReservation = CancelSeat(account, selectedReservation, selectedSeat);
+                        Reservation changedReservation = CancelSeat(account, selectedReservation, selectedSeat);
 
                         // Verwijder de history van de list als er geen seats meer gereserveerd zijn
                         if (changedReservation.ReservedSeats.Count <= 0)
@@ -829,7 +841,7 @@ namespace MegaBios
         {
             while(true)
             {
-                List<string> reservationNumbers = guest.History
+                List<string> reservationNumbers = guest.Reservations
                     .Select(x => x.ReservationNumber)
                     .ToList();
                 int selectedOption = MenuFunctions.Menu(reservationNumbers);
@@ -840,7 +852,7 @@ namespace MegaBios
                 }
 
                 string reservationNumber = reservationNumbers[selectedOption];
-                ReservationHistory selectedReservation = guest.History
+                Reservation selectedReservation = guest.Reservations
                     .Where(x => x.ReservationNumber == reservationNumber)
                     .ToList()[0];
                 List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
@@ -875,7 +887,7 @@ namespace MegaBios
                         Seat selectedSeat = selectedReservation.ReservedSeats
                             .Where(x => x.SeatNumber == seatNumbers[selectedOption])
                             .ToList()[0];                                  
-                        ReservationHistory changedReservation = CancelSeat(guest, selectedReservation, selectedSeat);
+                        Reservation changedReservation = CancelSeat(guest, selectedReservation, selectedSeat);
 
                         if (changedReservation == selectedReservation)
                         {
@@ -883,20 +895,20 @@ namespace MegaBios
                         }
                         else if (changedReservation.ReservedSeats.Count <= 0)
                         {
-                            for (int i = 0; i < guest.History.Count; i++)
+                            for (int i = 0; i < guest.Reservations.Count; i++)
                             {
-                                if (guest.History[i].ReservationNumber == changedReservation.ReservationNumber)
+                                if (guest.Reservations[i].ReservationNumber == changedReservation.ReservationNumber)
                                 {
-                                    guest.History.RemoveAt(i);
+                                    guest.Reservations.RemoveAt(i);
                                 }
                             }
                         }
 
-                        for (int i = 0; i < guest.History.Count; i++)
+                        for (int i = 0; i < guest.Reservations.Count; i++)
                         {
-                            if (guest.History[i].ReservationNumber == changedReservation.ReservationNumber)
+                            if (guest.Reservations[i].ReservationNumber == changedReservation.ReservationNumber)
                             {
-                                guest.History[i] = changedReservation;
+                                guest.Reservations[i] = changedReservation;
                                 break;
                             }
                         }

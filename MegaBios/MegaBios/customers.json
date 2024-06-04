@@ -15,6 +15,7 @@
     "telefoonnummer": "\u002B31 6 12345678",
     "voorkeur_betaalwijze": "iDeal",
     "is_student": true,
+    "reservations": [],
     "history": []
   },
   {
@@ -33,6 +34,7 @@
     "telefoonnummer": "\u002B31 10 98765432",
     "voorkeur_betaalwijze": "Creditcard",
     "is_student": false,
+    "reservations": [],
     "history": []
   },
   {
@@ -51,6 +53,7 @@
     "telefoonnummer": "\u002B31 30 55554444",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true,
+    "reservations": [],
     "history": []
   },
   {
@@ -69,7 +72,50 @@
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": true,
-    "history": []
+    "reservations": [
+      {
+        "reservation_number": "4735",
+        "movie_title": "Inception",
+        "reserved_seats": [
+          {
+            "seat_number": "25-11",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          },
+          {
+            "seat_number": "25-12",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          }
+        ],
+        "reservation_room": "Room3",
+        "reservation_date": "2024-08-27T17:37:00"
+      }
+    ],
+    "history": [
+      {
+        "reservation_number": "4735",
+        "movie_title": "Inception",
+        "reserved_seats": [
+          {
+            "seat_number": "25-11",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          },
+          {
+            "seat_number": "25-12",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          }
+        ],
+        "reservation_room": "Room3",
+        "reservation_date": "2024-08-27T17:37:00"
+      }
+    ]
   },
   {
     "voornaam": "mathilda",
@@ -87,6 +133,7 @@
     "telefoonnummer": "9878",
     "voorkeur_betaalwijze": "hff",
     "is_student": true,
+    "reservations": [],
     "history": []
   },
   {
@@ -105,6 +152,7 @@
     "telefoonnummer": "9878",
     "voorkeur_betaalwijze": "hff",
     "is_student": true,
+    "reservations": [],
     "history": []
   },
   {
@@ -123,6 +171,7 @@
     "telefoonnummer": "1234",
     "voorkeur_betaalwijze": "test",
     "is_student": false,
+    "reservations": [],
     "history": []
   }
 ]

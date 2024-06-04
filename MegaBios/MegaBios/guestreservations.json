@@ -4,13 +4,13 @@
     "tussenvoegsel": "test",
     "achternaam": "test",
     "email": "test@gmail.com",
-    "history": []
+    "reservations": []
   },
   {
     "voornaam": "test",
     "tussenvoegsel": "",
     "achternaam": "test",
     "email": "test@mail.com",
-    "history": []
+    "reservations": []
   }
 ]

@@ -16,17 +16,17 @@ namespace MegaBios
         [JsonPropertyName("email")]
         public string Email { get; set; }
 
-        [JsonPropertyName("history")]
-        public List<ReservationHistory> History { get; set; }
+        [JsonPropertyName("reservations")]
+        public List<Reservation> Reservations { get; set; }
 
         [JsonConstructor]
-        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<ReservationHistory> history)
+        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<Reservation> reservations)
         {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
             Achternaam = achternaam;
             Email = email;
-            History = history;
+            Reservations = reservations;
         }
 
         public static Guest CreateGuest()
@@ -165,8 +165,11 @@ namespace MegaBios
         [JsonPropertyName("is_student")]
         public bool IsStudent { get; set; }
 
+        [JsonPropertyName("reservations")]
+        public List<Reservation> Reservations { get; set; }
+
         [JsonPropertyName("history")]
-        public List<ReservationHistory> History { get; set; }
+        public List<Reservation> History { get; set; }
 
         [JsonConstructor]
         public TestAccount(string voornaam,
@@ -178,7 +181,9 @@ namespace MegaBios
                             string wachtwoord,
                             string telefoonNr,
                             string voorkeur_Betaalwijze,
-                            bool isStudent)
+                            bool isStudent,
+                            List<Reservation> reservations,
+                            List<Reservation> history = null)
         {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
@@ -190,7 +195,13 @@ namespace MegaBios
             TelefoonNr = telefoonNr;
             Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
-            History = new();
+            Reservations = reservations;
+            if (history != null) {
+                History = history;
+            }
+            else {
+                History = new();
+            }
         }
 
         public static bool operator ==(TestAccount t1, TestAccount t2)

@@ -93,7 +93,7 @@ namespace MegaBios
                 }
             }
 
-            TestAccount newAccount = new TestAccount(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student);
+            TestAccount newAccount = new TestAccount(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new());
             jsonData.Add(newAccount);
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-    public class ReservationHistory
+    public class Reservation
     {
         [JsonPropertyName("reservation_number")]
         public string ReservationNumber { get; set; }
@@ -22,7 +22,7 @@ namespace MegaBios
         // [JsonPropertyName("total_price")]
         // public double TotalPrice {get; set;}
 
-        public ReservationHistory(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime reservationDate)
+        public Reservation(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime reservationDate)
         {
             ReservationNumber = reservationNumber;
             MovieTitle = movieTitle;
@@ -34,7 +34,7 @@ namespace MegaBios
 
         // TODO: Add property that saves the reserved seat(s) so it can be iterated over to unoccupy seats in case of ticket cancellation
 
-        public static void AddReservation(TestAccount account, ReservationHistory reservationHistory)
+        public static void AddReservation(TestAccount account, Reservation reservation)
         {
             List<TestAccount> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
 
@@ -42,14 +42,15 @@ namespace MegaBios
             {
                 if (accounts[i] == account)
                 {
-                    accounts[i].History.Add(reservationHistory);
+                    accounts[i].Reservations.Add(reservation);
+                    accounts[i].History.Add(reservation);
                     JsonFunctions.WriteToJson("../../../customers.json", accounts);
                     break;
                 }
             }
         }
 
-        public static void AddReservation(Guest guest, ReservationHistory reservationHistory)
+        public static void AddReservation(Guest guest, Reservation reservationHistory)
         {
             List<Guest> guests = JsonFunctions.LoadGuests("../../../guestreservations.json");
 
@@ -57,7 +58,7 @@ namespace MegaBios
             {
                 if (guests[i] == guest)
                 {
-                    guests[i].History.Add(reservationHistory);
+                    guests[i].Reservations.Add(reservationHistory);
                     JsonFunctions.WriteToJson("../../../guestreservations.json", guests);
                     break;
                 }
@@ -70,7 +71,7 @@ namespace MegaBios
 
             foreach (TestAccount account in accounts)
             {
-                foreach (ReservationHistory reservation in account.History)
+                foreach (Reservation reservation in account.History)
                 {
                     if (reservation.ReservationNumber == reservationID)
                     {
@@ -97,7 +98,7 @@ namespace MegaBios
             }
         }
 
-        public static bool ConfirmPayment(ReservationHistory reservation)
+        public static bool ConfirmPayment(Reservation reservation)
         {
             List<string> menuOptions = new() { "Ja", "Nee" };
             int selectedOption = MenuFunctions.Menu(menuOptions, PrintReservation(reservation));
@@ -105,7 +106,7 @@ namespace MegaBios
             return selectedOption == 0 ? true : false;
         }
 
-        public static StringBuilder PrintReservation(ReservationHistory reservation)
+        public static StringBuilder PrintReservation(Reservation reservation)
         {
             StringBuilder reservationPrint = new StringBuilder();
             string stoelenString = "";
@@ -128,7 +129,7 @@ namespace MegaBios
             return reservationPrint;
         }
 
-        public static string PrintReservationUser(ReservationHistory reservation)
+        public static string PrintReservationUser(Reservation reservation)
         {
             string stoelenString = "";
             double totalPrice = 0;
@@ -142,6 +143,28 @@ namespace MegaBios
             }
 
             return $"--------UW BESTELLINGEN-----------\n\n" +
+                $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                $"Film: {reservation.MovieTitle}\n" +
+                $"Gereserveerde stoelen:\n{stoelenString}" +
+                $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
+                $"Reserveringszaal: {reservation.ReservationRoom}\n" +
+                $"Reserveringsdatum: {reservation.ReservationDate}";
+        }
+
+        public static string PrintHistory(Reservation reservation)
+        {
+            string stoelenString = "";
+            double totalPrice = 0;
+            Seat seat; // Declare seat buiten de loop
+
+            for (int i = 0; i < reservation.ReservedSeats.Count; i++)
+            {
+                seat = reservation.ReservedSeats[i]; // Assign value in de loop
+                stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
+                totalPrice += seat.Price;
+            }
+
+            return $"--------UW GESCHIEDENIS-----------\n\n" +
                 $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
                 $"Film: {reservation.MovieTitle}\n" +
                 $"Gereserveerde stoelen:\n{stoelenString}" +
