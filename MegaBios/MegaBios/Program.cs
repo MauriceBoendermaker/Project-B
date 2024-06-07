@@ -7,14 +7,12 @@ namespace MegaBios
     {
         public static List<Movie> movies = new List<Movie>();
         public static List<Account> jsonData = new List<Account>();
-
-        public static string jsonFilePath = "../../../customers.json";
         public static bool LoggedInAsGuest = false;
 
         static void Main(string[] args)
         {
             // JSON bestand ophalen
-            string jsonText = File.ReadAllText(jsonFilePath);
+            string jsonText = File.ReadAllText("../../../customers.json");
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
             JsonElement root = jsonDocument.RootElement;
             jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
@@ -498,60 +496,6 @@ namespace MegaBios
             Reservation reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
 
             return reservation;
-
-            /*
-            // Prompt user to choose between individual or group seat selection
-            Console.Clear();
-            List<string> selectionOptions = new List<string> { "Individueel", "Als groep" };
-            cursorPos = 0;
-            while (true)
-            {
-                Console.Clear();
-                for (int i = 0; i < selectionOptions.Count; i++)
-                {
-                    if (cursorPos == i)
-                    {
-                        Console.WriteLine($"\x1b[42m{selectionOptions[i]}\x1b[0m");
-                    }
-                    else
-                    {
-                        Console.WriteLine(selectionOptions[i]);
-                    }
-                }
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.Key == ConsoleKey.Enter)
-                {
-                    break;
-                }
-                cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, selectionOptions.Count);
-            }
-
-            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate);
-            List<Seat> selectedSeats;
-            if (cursorPos == 0)
-            {
-                selectedSeats = seatSelect.SelectSeats();
-                string reservationNumber = ReservationHistory.generateReservationNumber();
-                ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
-                return reservation;
-            }
-            else if (cursorPos == 1)
-            {
-                Console.WriteLine("Hoeveel personen zijn er in de groep?");
-                int groupSize = int.Parse(Console.ReadLine());
-                selectedSeats = seatSelect.SelectGroupSeats(groupSize);
-                string reservationNumber = ReservationHistory.generateReservationNumber();
-                ReservationHistory reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
-                return reservation;
-            }
-           
-            // else
-            // {
-            //     Console.WriteLine("Ongeldige selectie. Probeer het opnieuw.");
-            //     TicketReservation(); // Restart the reservation process if invalid option is selected
-            //     return (null, null, DateTime.MinValue); // Ensure to return after restarting to avoid continuation of current flow
-            // }
-            */
         }
 
         public static Dictionary<string, DateTime> GetShowingOptions(DateTime date, string selectedMovie)
