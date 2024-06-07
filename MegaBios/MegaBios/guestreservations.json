@@ -12,5 +12,12 @@
     "achternaam": "test",
     "email": "test@mail.com",
     "reservations": []
+  },
+  {
+    "voornaam": "buck",
+    "tussenvoegsel": "de",
+    "achternaam": "gier",
+    "email": "buckdegier@gmail.com",
+    "reservations": []
   }
 ]
