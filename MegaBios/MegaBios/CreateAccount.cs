@@ -1,8 +1,10 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MegaBios
 {
-    public class CreateAccount
+    public static class CreateAccount
     {
         public static void CreateNewAccount(List<Account> jsonData)
         {
@@ -10,29 +12,29 @@ namespace MegaBios
             Console.WriteLine("--------------------");
 
             Console.Write("Voer voornaam in: ");
-            string voornaam = Console.ReadLine();
+            string voornaam = Console.ReadLine()!;
 
             Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
-            string tussenvoegsel = Console.ReadLine();
+            string tussenvoegsel = Console.ReadLine()!;
 
             Console.Write("Voer achternaam in: ");
-            string achternaam = Console.ReadLine();
+            string achternaam = Console.ReadLine()!;
 
             Console.Write("Voer geboortedatum in (YYYY-MM-DD): ");
-            string geboorteDatum = Console.ReadLine();
+            string geboorteDatum = Console.ReadLine()!;
 
             Dictionary<string, string> adres = new Dictionary<string, string>();
             Console.Write("Voer straatnaam in: ");
-            adres["straat"] = Console.ReadLine();
+            adres["straat"] = Console.ReadLine()!;
 
             Console.Write("Voer huisnummer in: ");
-            adres["huisnummer"] = Console.ReadLine();
+            adres["huisnummer"] = Console.ReadLine()!;
 
             Console.Write("Voer woonplaats in: ");
-            adres["woonplaats"] = Console.ReadLine();
+            adres["woonplaats"] = Console.ReadLine()!;
 
             Console.Write("Voer postcode in: ");
-            adres["postcode"] = Console.ReadLine();
+            adres["postcode"] = Console.ReadLine()!;
 
             string email;
             while (true)
@@ -42,6 +44,7 @@ namespace MegaBios
 
                 if (IsValidEmail(email))
                 {
+                    Console.WriteLine("Email is geldig.");
                     break;
                 }
                 else
@@ -62,6 +65,7 @@ namespace MegaBios
                 if (inputWachtwoord == confirmWachtwoord)
                 {
                     wachtwoord = inputWachtwoord;
+                    Console.WriteLine("Wachtwoorden komen overeen.");
                     break;
                 }
                 else
@@ -85,6 +89,7 @@ namespace MegaBios
                 if (is_studentString == "true" || is_studentString == "false")
                 {
                     is_student = Convert.ToBoolean(is_studentString);
+                    Console.WriteLine("Geldige student status ingevoerd.");
                     break;
                 }
                 else
@@ -93,10 +98,12 @@ namespace MegaBios
                 }
             }
 
-            Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new());
+            Account newAccount = new Account(voornaam!, tussenvoegsel!, achternaam!, geboorteDatum!, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new List<Reservation>(), new List<Reservation>());
             jsonData.Add(newAccount);
+            Console.WriteLine("Nieuw account toegevoegd aan de lijst.");
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);
+            Console.WriteLine("Account opgeslagen in JSON bestand.");
 
             Console.WriteLine("Succesvol nieuw account gemaakt!");
         }
@@ -104,7 +111,6 @@ namespace MegaBios
         public static bool IsValidEmail(string email)
         {
             string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-
             return Regex.IsMatch(email, pattern);
         }
     }
