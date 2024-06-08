@@ -78,7 +78,7 @@ namespace MegaBios
                         string newEmail = Console.ReadLine()!;
 
                         Program.jsonData[index].Email = newEmail;
-                        JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
+                        JsonFunctions.WriteToJson("../../../customers.json", Program.jsonData);
 
                         loopBreak = true;
                         break;
@@ -92,7 +92,7 @@ namespace MegaBios
                             if (newPassword == Console.ReadLine())
                             {
                                 Program.jsonData[index].Wachtwoord = newPassword;
-                                JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
+                                JsonFunctions.WriteToJson("../../../customers.json", Program.jsonData);
 
                                 loopBreak = true;
                                 break;
@@ -151,7 +151,7 @@ namespace MegaBios
                             }
                         }
 
-                        JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
+                        JsonFunctions.WriteToJson("../../../customers.json", Program.jsonData);
 
                         loopBreak = true;
                         break;
