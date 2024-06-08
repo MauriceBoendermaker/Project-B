@@ -1,9 +1,17 @@
-﻿namespace MegaBios
+﻿using System;
+
+namespace MegaBios
 {
     internal class HelperFunctions
     {
         public static string MaskPasswordInput()
         {
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true")
+            {
+                // Simulated input for testing
+                return "password123";
+            }
+
             string password = "";
             ConsoleKeyInfo key;
 
