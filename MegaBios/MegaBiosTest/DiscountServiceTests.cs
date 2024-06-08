@@ -13,8 +13,8 @@ namespace MegaBiosTest.Services
             // Arrange
             var seats = new List<Seat>
             {
-                new Seat { Price = 100 },
-                new Seat { Price = 100 }
+                new Seat { Price = 10 },
+                new Seat { Price = 10 }
             };
             var user = new Account(
                 "John",
@@ -35,8 +35,8 @@ namespace MegaBiosTest.Services
             var result = Reservation.ApplyDiscount(seats, user);
 
             // Assert
-            Assert.AreEqual(85, result[0].Price);
-            Assert.AreEqual(85, result[1].Price);
+            Assert.AreEqual(8.50, result[0].Price);
+            Assert.AreEqual(8.50, result[1].Price);
         }
 
         [TestMethod]
@@ -45,8 +45,8 @@ namespace MegaBiosTest.Services
             // Arrange
             var seats = new List<Seat>
             {
-                new Seat { Price = 100 },
-                new Seat { Price = 100 }
+                new Seat { Price = 10 },
+                new Seat { Price = 10 }
             };
             var user = new Account(
                 "Jane",
@@ -67,8 +67,8 @@ namespace MegaBiosTest.Services
             var result = Reservation.ApplyDiscount(seats, user);
 
             // Assert
-            Assert.AreEqual(85, result[0].Price);
-            Assert.AreEqual(85, result[1].Price);
+            Assert.AreEqual(8.50, result[0].Price);
+            Assert.AreEqual(8.50, result[1].Price);
         }
 
         [TestMethod]
@@ -77,8 +77,8 @@ namespace MegaBiosTest.Services
             // Arrange
             var seats = new List<Seat>
             {
-                new Seat { Price = 100 },
-                new Seat { Price = 100 }
+                new Seat { Price = 10 },
+                new Seat { Price = 10 }
             };
             var user = new Account(
                 "Jack",
@@ -99,8 +99,8 @@ namespace MegaBiosTest.Services
             var result = Reservation.ApplyDiscount(seats, user);
 
             // Assert
-            Assert.AreEqual(100, result[0].Price);
-            Assert.AreEqual(100, result[1].Price);
+            Assert.AreEqual(10, result[0].Price);
+            Assert.AreEqual(10, result[1].Price);
         }
     }
 }
