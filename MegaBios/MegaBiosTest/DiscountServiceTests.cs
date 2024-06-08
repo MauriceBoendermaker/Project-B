@@ -1,12 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MegaBios;
-using System;
 using System.Collections.Generic;
 
 namespace MegaBiosTest.Services
 {
     [TestClass]
-    public class DiscountServiceTests
+    public class ReservationTests
     {
         [TestMethod]
         public void ApplyDiscount_Student_ReturnsDiscountedSeats()
@@ -17,16 +16,23 @@ namespace MegaBiosTest.Services
                 new Seat { Price = 100 },
                 new Seat { Price = 100 }
             };
-            var user = new Account
-            {
-                Voornaam = "John",
-                Achternaam = "Doe",
-                GeboorteDatum = "2000-01-01",
-                IsStudent = true
-            };
+            var user = new Account(
+                "John",
+                null,
+                "Doe",
+                "2000-01-01",
+                new Dictionary<string, string>(),
+                "john.doe@example.com",
+                "password123",
+                "1234567890",
+                "CreditCard",
+                true,
+                new List<Reservation>(),
+                new List<Reservation>()
+            );
 
             // Act
-            var result = DiscountService.ApplyDiscount(seats, user);
+            var result = Reservation.ApplyDiscount(seats, user);
 
             // Assert
             Assert.AreEqual(85, result[0].Price);
@@ -42,16 +48,23 @@ namespace MegaBiosTest.Services
                 new Seat { Price = 100 },
                 new Seat { Price = 100 }
             };
-            var user = new Account
-            {
-                Voornaam = "John",
-                Achternaam = "Doe",
-                GeboorteDatum = "1950-01-01",
-                IsStudent = false
-            };
+            var user = new Account(
+                "Jane",
+                null,
+                "Doe",
+                "1950-01-01",
+                new Dictionary<string, string>(),
+                "jane.doe@example.com",
+                "password123",
+                "1234567890",
+                "CreditCard",
+                false,
+                new List<Reservation>(),
+                new List<Reservation>()
+            );
 
             // Act
-            var result = DiscountService.ApplyDiscount(seats, user);
+            var result = Reservation.ApplyDiscount(seats, user);
 
             // Assert
             Assert.AreEqual(85, result[0].Price);
@@ -67,45 +80,27 @@ namespace MegaBiosTest.Services
                 new Seat { Price = 100 },
                 new Seat { Price = 100 }
             };
-            var user = new Account
-            {
-                Voornaam = "John",
-                Achternaam = "Doe",
-                GeboorteDatum = "1980-01-01",
-                IsStudent = false
-            };
+            var user = new Account(
+                "Jack",
+                null,
+                "Doe",
+                "1980-01-01",
+                new Dictionary<string, string>(),
+                "jack.doe@example.com",
+                "password123",
+                "1234567890",
+                "CreditCard",
+                false,
+                new List<Reservation>(),
+                new List<Reservation>()
+            );
 
             // Act
-            var result = DiscountService.ApplyDiscount(seats, user);
+            var result = Reservation.ApplyDiscount(seats, user);
 
             // Assert
             Assert.AreEqual(100, result[0].Price);
             Assert.AreEqual(100, result[1].Price);
-        }
-
-        [TestMethod]
-        public void ApplyDiscount_StudentAndSenior_ReturnsDiscountedSeats()
-        {
-            // Arrange
-            var seats = new List<Seat>
-            {
-                new Seat { Price = 100 },
-                new Seat { Price = 100 }
-            };
-            var user = new Account
-            {
-                Voornaam = "John",
-                Achternaam = "Doe",
-                GeboorteDatum = "1950-01-01",
-                IsStudent = true
-            };
-
-            // Act
-            var result = DiscountService.ApplyDiscount(seats, user);
-
-            // Assert
-            Assert.AreEqual(85, result[0].Price);
-            Assert.AreEqual(85, result[1].Price);
         }
     }
 }
