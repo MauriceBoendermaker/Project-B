@@ -11,17 +11,65 @@ namespace MegaBios
             Console.WriteLine("\nCreëer nieuw account");
             Console.WriteLine("--------------------");
 
-            Console.Write("Voer voornaam in: ");
-            string voornaam = Console.ReadLine()!;
+            string voornaam;
+            while (true)
+            {
+                Console.Write("Voer voornaam in: ");
+                voornaam = Console.ReadLine()!;
+                if (Regex.IsMatch(voornaam, @"^[a-zA-Z]+$"))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer alleen letters in.");
+                }
+            }
 
-            Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
-            string tussenvoegsel = Console.ReadLine()!;
+            string tussenvoegsel;
+            while (true)
+            {
+                Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
+                tussenvoegsel = Console.ReadLine()!;
+                if (string.IsNullOrEmpty(tussenvoegsel) || Regex.IsMatch(tussenvoegsel, @"^[a-zA-Z]+$"))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer alleen letters in.");
+                }
+            }
 
-            Console.Write("Voer achternaam in: ");
-            string achternaam = Console.ReadLine()!;
+            string achternaam;
+            while (true)
+            {
+                Console.Write("Voer achternaam in: ");
+                achternaam = Console.ReadLine()!;
+                if (Regex.IsMatch(achternaam, @"^[a-zA-Z]+$"))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer alleen letters in.");
+                }
+            }
 
-            Console.Write("Voer geboortedatum in (YYYY-MM-DD): ");
-            string geboorteDatum = Console.ReadLine()!;
+            string geboorteDatum;
+            while (true)
+            {
+                Console.Write("Voer geboortedatum in (YYYY-MM-DD): ");
+                geboorteDatum = Console.ReadLine()!;
+                if (DateTime.TryParseExact(geboorteDatum, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out _))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer een geldige datum in het formaat YYYY-MM-DD in.");
+                }
+            }
 
             Dictionary<string, string> adres = new Dictionary<string, string>();
             Console.Write("Voer straatnaam in: ");
@@ -98,7 +146,7 @@ namespace MegaBios
                 }
             }
 
-            Account newAccount = new Account(voornaam!, tussenvoegsel!, achternaam!, geboorteDatum!, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new List<Reservation>(), new List<Reservation>());
+            Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new List<Reservation>(), new List<Reservation>());
             jsonData.Add(newAccount);
             Console.WriteLine("Nieuw account toegevoegd aan de lijst.");
 
