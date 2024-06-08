@@ -2,7 +2,7 @@
 
 namespace MegaBios
 {
-    internal class JsonFunctions
+    public static class JsonFunctions
     {
         public static void WriteToJson<T>(string filePath, T data)
         {
