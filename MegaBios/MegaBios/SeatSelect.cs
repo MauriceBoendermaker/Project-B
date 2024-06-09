@@ -585,5 +585,20 @@ namespace MegaBios
 
             return new List<Seat>();
         }
+        public bool HasHandicapSeats()
+        {
+            foreach (List<Seat> row in Seats)
+            {
+                foreach (Seat seat in row)
+                {
+                    if (seat.SeatType == "handicap")
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
     }
 }
