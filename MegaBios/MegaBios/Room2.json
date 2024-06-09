@@ -191,13 +191,13 @@
       [
         {
           "seat_number": "3-1",
-          "is_taken": false,
+          "is_taken": true,
           "type": "love seat",
           "price": 20
         },
         {
           "seat_number": "3-2",
-          "is_taken": false,
+          "is_taken": true,
           "type": "love seat",
           "price": 20
         },
@@ -315,13 +315,13 @@
       [
         {
           "seat_number": "5-1",
-          "is_taken": false,
+          "is_taken": true,
           "type": "love seat",
           "price": 20
         },
         {
           "seat_number": "5-2",
-          "is_taken": false,
+          "is_taken": true,
           "type": "love seat",
           "price": 20
         },

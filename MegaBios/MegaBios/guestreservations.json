@@ -19,5 +19,61 @@
     "achternaam": "gier",
     "email": "buckdegier@gmail.com",
     "reservations": []
+  },
+  {
+    "voornaam": "john",
+    "tussenvoegsel": "",
+    "achternaam": "doe",
+    "email": "johndoe@outlook.com",
+    "reservations": [
+      {
+        "reservation_number": "5821",
+        "movie_title": "The Shawshank Redemption",
+        "reserved_seats": [
+          {
+            "seat_number": "3-1",
+            "is_taken": true,
+            "type": "love seat",
+            "price": 20
+          },
+          {
+            "seat_number": "3-2",
+            "is_taken": true,
+            "type": "love seat",
+            "price": 20
+          }
+        ],
+        "reservation_room": "Room2",
+        "reservation_date": "2024-08-25T09:00:00"
+      }
+    ]
+  },
+  {
+    "voornaam": "john",
+    "tussenvoegsel": "",
+    "achternaam": "stallone",
+    "email": "stallone@gmail.com",
+    "reservations": [
+      {
+        "reservation_number": "3205",
+        "movie_title": "The Shawshank Redemption",
+        "reserved_seats": [
+          {
+            "seat_number": "5-1",
+            "is_taken": true,
+            "type": "love seat",
+            "price": 20
+          },
+          {
+            "seat_number": "5-2",
+            "is_taken": true,
+            "type": "love seat",
+            "price": 20
+          }
+        ],
+        "reservation_room": "Room2",
+        "reservation_date": "2024-08-25T09:00:00"
+      }
+    ]
   }
 ]
