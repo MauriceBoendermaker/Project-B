@@ -38,7 +38,7 @@ namespace MegaBios
     public class Seat
     {
         [JsonPropertyName("seat_number")]
-        public string SeatNumber { get; set; } 
+        public string SeatNumber { get; set; }
 
         [JsonPropertyName("is_taken")]
         public bool SeatTaken { get; set; }

@@ -196,10 +196,12 @@ namespace MegaBios
             Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
             Reservations = reservations;
-            if (history != null) {
+            if (history != null)
+            {
                 History = history;
             }
-            else {
+            else
+            {
                 History = new();
             }
         }
