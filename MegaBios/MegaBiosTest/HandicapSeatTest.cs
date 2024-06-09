@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MegaBiosTest
 {
     [TestClass]
-    public class HandicapSeatSelectTests
+    public class HandicapSeatTest
     {
         [TestMethod]
         public void CheckForHandicapSeats()
