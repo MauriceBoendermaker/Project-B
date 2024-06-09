@@ -209,25 +209,25 @@
         },
         {
           "seat_number": "3-4",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "3-5",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "3-6",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },
         {
           "seat_number": "3-7",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },
@@ -377,7 +377,7 @@
       [
         {
           "seat_number": "6-1",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },

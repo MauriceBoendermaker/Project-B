@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace MegaBios
 {
-    class Program
+    public class Program
     {
         public static List<Movie> movies = new List<Movie>();
         public static List<Account> jsonData = new List<Account>();
