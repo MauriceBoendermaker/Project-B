@@ -600,5 +600,19 @@ namespace MegaBios
             return false;
         }
 
+        public bool HasLoveSeats()
+        {
+            foreach (List<Seat> row in Seats)
+            {
+                foreach (Seat seat in row)
+                {
+                    if (seat.SeatType == "love seat")
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
