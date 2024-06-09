@@ -8,7 +8,7 @@ namespace MegaBios
 
             Console.Clear();
 
-            List<string> menuOptions = new() {"Genereer nieuwe zalen", "Werk bestaande zaal bij", "Reset alle seatings"};
+            List<string> menuOptions = new() { "Genereer nieuwe zalen", "Werk bestaande zaal bij", "Reset alle seatings" };
 
             Console.WriteLine("Wilt u zalen genereren of een zaal bewerken?");
 
@@ -16,12 +16,12 @@ namespace MegaBios
 
             switch (userChoice)
             {
-                case -1: 
+                case -1:
                     return;
                 case 0:
                     GenerateShowingData();
                     break;
-                case 1: 
+                case 1:
                     EditRoom();
                     break;
                 case 2:
@@ -39,12 +39,12 @@ namespace MegaBios
         }
 
         public void ResetAllSeatings()
-        { 
+        {
             for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
             {
                 List<RoomShowing> roomshowings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
 
-                for(int j = 0; j < roomshowings.Count; j++)
+                for (int j = 0; j < roomshowings.Count; j++)
                 {
                     roomshowings[i].Seating = ResetSeating(roomshowings[i].Seating);
                 }
@@ -70,14 +70,15 @@ namespace MegaBios
         {
             int numberOfRooms = 0;
 
+            // Bereken het aantal bestaande zalen
             for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
             {
                 numberOfRooms = i;
             }
 
             int numberOfNewRooms = -1;
-            List<RoomShowing> roomShowings;
 
+            // Vraag de gebruiker om het aantal nieuwe zalen in te voeren
             while (true)
             {
                 Console.WriteLine("Voer het nummer in van de aantal zalen die u wilt genereren:");
@@ -89,21 +90,16 @@ namespace MegaBios
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
-                }
-
-                if (numberOfRooms > 0)
-                {
-                    break;
+                    Console.WriteLine("Ongeldige invoer. Probeer het opnieuw.");
                 }
             }
 
-            // Haal de seating op
+            // Genereer de nieuwe zalen
             for (int i = 1 + numberOfRooms; i < numberOfNewRooms + numberOfRooms + 1; i++)
             {
                 string roomName = $"Room {i}";
                 bool inMaintenance = false;
-                List<List<Seat>>? seating;
+                List<List<Seat>> seating = null;
 
                 while (true)
                 {
@@ -111,6 +107,7 @@ namespace MegaBios
                     {
                         Console.WriteLine("Hoe lang moet de zaal zijn? (Max. 30)");
                         int roomHeight = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine($"Kamerhoogte: {roomHeight}");  // Debug-uitvoer
 
                         if (roomHeight > 30)
                         {
@@ -124,13 +121,13 @@ namespace MegaBios
                         }
 
                         Console.WriteLine("Hoe breed moet de zaal zijn? Max 50");
-
                         int roomWidth = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine($"Kamerbreedte: {roomWidth}");  // Debug-uitvoer
 
-                        if (roomWidth > 30)
+                        if (roomWidth > 50)
                         {
-                            Console.WriteLine("Kamerbreedte te groot, verzet naar 30");
-                            roomWidth = 30;
+                            Console.WriteLine("Kamerbreedte te groot, verzet naar 50");
+                            roomWidth = 50;
                         }
                         else if (roomWidth <= 0)
                         {
@@ -139,30 +136,36 @@ namespace MegaBios
                         }
 
                         seating = JsonFunctions.GenerateSeating(roomHeight, roomWidth);
-                        roomShowings = GenerateRoomShowings(roomName, inMaintenance, seating);
-
-                        JsonFunctions.WriteToJson($"../../../Room{i}.json", roomShowings);
-
                         break;
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
-                        Console.WriteLine("Voer a.u.b. een nummer in");
+                        Console.WriteLine("Ongeldige invoer. Probeer het opnieuw.");
                     }
                 }
+
+                var roomShowings = GenerateRoomShowings(roomName, inMaintenance, seating);
+                Console.WriteLine($"Room{i}.json wordt aangemaakt");  // Debug-uitvoer
+                JsonFunctions.WriteToJson($"../../../Room{i}.json", roomShowings);
+                Console.WriteLine($"Room{i}.json is aangemaakt");  // Debug-uitvoer
             }
         }
+
 
         public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating)
         {
             List<RoomShowing> roomShowings = new();
-            List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
+            string moviesFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\MegaBios\Movies.json");
+            List<Movie> movies = JsonFunctions.LoadMovies(moviesFilePath);
             DateTime generationStartTime;
 
-            while(true)
+            while (true)
             {
-                Console.Clear();
+                if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+                {
+                    Console.Clear();
+                }
+
                 Console.WriteLine("Voer de startdatum en -tijd in voor de eerste vertoning. De vertoningen duren tot een week later.\nFormat: YYYY-MM-DD hh-mm-ss");
 
                 try
@@ -195,5 +198,7 @@ namespace MegaBios
 
             return roomShowings;
         }
+
+
     }
 }
