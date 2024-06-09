@@ -65,7 +65,7 @@ namespace MegaBiosTest.Services
             }
 
             // Simuleer gebruikersinvoer
-            var input = new StringReader("John\n\nDoe\n2000-01-01\nMain Street\n123\nCity\n12345\njohn.doe@example.com\npassword123\npassword123\n1234567890\nCreditCard\ntrue\n");
+            var input = new StringReader("Bob\n\nVos\n2000-01-01\nstraat\n123\nDen Haag\n1234VV\njohn.doe@example.com\npassword123\npassword123\n1234567890\nCreditCard\ntrue\n");
             Console.SetIn(input);
 
             // Act
@@ -80,9 +80,45 @@ namespace MegaBiosTest.Services
 
             var createdAccount = updatedJsonData.Find(account => account.Email == "john.doe@example.com");
             Assert.IsNotNull(createdAccount, "Account should not be null.");
-            Assert.AreEqual("John", createdAccount.Voornaam, "First name mismatch.");
-            Assert.AreEqual("Doe", createdAccount.Achternaam, "Last name mismatch.");
+            Assert.AreEqual("Bob", createdAccount.Voornaam, "First name mismatch.");
+            Assert.AreEqual("Vos", createdAccount.Achternaam, "Last name mismatch.");
             Assert.AreEqual("john.doe@example.com", createdAccount.Email, "Email mismatch.");
+        }
+        [TestMethod]
+        public void DeleteAccount_AccountRemovedFromJsonFile()
+        {
+            // Arrange
+            var jsonData = new List<Account>();
+            if (File.Exists(filePath))
+            {
+                var json = File.ReadAllText(filePath);
+                jsonData = JsonSerializer.Deserialize<List<Account>>(json);
+            }
+
+            // Voeg een testaccount toe
+            var testAccount = new Account("Alper", "", "Sonmez", "2003-04-10", new Dictionary<string, string>
+            {
+                { "straat", "Overijselsestraat" },
+                { "huisnummer", "122b" },
+                { "woonplaats", "Rotterdam" },
+                { "postcode", "3074VJ" }
+            }, "aziaatyt@gmail.com", "alper123", "0640518191", "IDeal", true, new List<Reservation>(), new List<Reservation>());
+
+            jsonData.Add(testAccount);
+            JsonFunctions.WriteToJson(filePath, jsonData);
+
+            // Act
+            SuppressConsoleOutput(() => {
+                DeleteAccount.RemoveAccount(jsonData, testAccount);
+                JsonFunctions.WriteToJson(filePath, jsonData);
+            });
+
+            // Assert
+            var updatedJson = File.ReadAllText(filePath);
+            var updatedJsonData = JsonSerializer.Deserialize<List<Account>>(updatedJson);
+
+            var deletedAccount = updatedJsonData.Find(account => account.Email == "aziaatyt@gmail.com");
+            Assert.IsNull(deletedAccount, "Account should be null.");
         }
     }
 }
