@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MegaBiosTest
 {
     [TestClass]
-    public class SeatCancellationTests
+    public class SeatAvailableAfterCancellation
     {
         [TestMethod]
         public void CancelSeat_SeatBecomesAvailable()
