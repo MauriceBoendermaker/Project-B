@@ -11,7 +11,6 @@ namespace MegaBiosTest.Services
         [TestMethod]
         public void LoveSeatPricing_LoveSeatsHaveDifferentPrice()
         {
-            // Arrange
             var seatingPlan = new List<List<Seat>>
             {
                 new List<Seat>
@@ -22,11 +21,8 @@ namespace MegaBiosTest.Services
                 }
             };
 
-            // Act
-            // No action required, as pricing is predefined in the seating plan
 
             // Assert
-            // Ensure love seats have a different price than normal seats
             Assert.AreEqual(10.00, seatingPlan[0][0].Price); // Normal seat
             Assert.AreEqual(20.00, seatingPlan[0][1].Price); // Love seat 1
             Assert.AreEqual(20.00, seatingPlan[0][2].Price); // Love seat 2
@@ -35,12 +31,12 @@ namespace MegaBiosTest.Services
         public void CheckForLoveSeats()
         {
             // Arrange
-            var roomShowings = new List<RoomShowing>(); // Provide valid room showings
-            string roomNumber = "Room 1"; // Provide a valid room number
-            DateTime showTime = DateTime.Now; // Provide a valid show time
+            var roomShowings = new List<RoomShowing>(); // valid room showings
+            string roomNumber = "Room 1";
+            DateTime showTime = DateTime.Now;
             Account reservingAccount = new Account(
                 "Daan",
-                "", // Tussenvoegsel (middle name) seems to be empty in your example
+                "", // Tussenvoegsel
                 "Bakker",
                 "1975-04-20",
                 new Dictionary<string, string>
@@ -59,7 +55,6 @@ namespace MegaBiosTest.Services
                 new List<Reservation>()
             );
 
-            // Mock or provide a valid account instance
             List<List<Seat>> seating = new List<List<Seat>>
             {
                 new List<Seat>
@@ -79,7 +74,6 @@ namespace MegaBiosTest.Services
             SeatSelect seatSelect = new SeatSelect(roomShowings, roomNumber, showTime, reservingAccount);
             seatSelect.Seats = seating;
 
-            // Act
             bool hasLoveSeats = seatSelect.HasLoveSeats();
 
             // Assert
