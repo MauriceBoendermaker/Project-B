@@ -14,12 +14,12 @@ namespace MegaBiosTest
         public void CheckForHandicapSeats()
         {
             // Arrange
-            var roomShowings = new List<RoomShowing>(); // Provide valid room showings
-            string roomNumber = "Room 1"; // Provide a valid room number
-            DateTime showTime = DateTime.Now; // Provide a valid show time
+            var roomShowings = new List<RoomShowing>(); // valid room showings
+            string roomNumber = "Room 1";
+            DateTime showTime = DateTime.Now;
             Account reservingAccount = new Account(
                 "Daan",
-                "", // Tussenvoegsel (middle name) seems to be empty in your example
+                "", // Tussenvoegsel
                 "Bakker",
                 "1975-04-20",
                 new Dictionary<string, string>
@@ -40,7 +40,6 @@ namespace MegaBiosTest
 
 
 
-            // Mock or provide a valid account instance
             List<List<Seat>> seating = new List<List<Seat>>
     {
         new List<Seat>
