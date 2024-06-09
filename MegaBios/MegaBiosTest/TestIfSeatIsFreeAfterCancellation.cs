@@ -13,7 +13,6 @@ namespace MegaBiosTest
         [TestMethod]
         public void CancelSeat_SeatBecomesAvailable()
         {
-            // Arrange
             Account reservingAccount = new Account(
                 "Daan",
                 "", // Tussenvoegsel
@@ -35,24 +34,19 @@ namespace MegaBiosTest
                 new List<Reservation>()
             );
 
-            // Create a reserved seat
             Seat reservedSeat = new Seat
             {
                 SeatNumber = "6-1",
-                SeatTaken = true // Assume the seat is already reserved
+                SeatTaken = true 
             };
-            // Create a list containing the reserved seat
             List<Seat> reservedSeatsList = new List<Seat> { reservedSeat };
 
-            // Create a reservation with the reserved seat list
             Reservation reservation = new Reservation("12345", "Test Movie", reservedSeatsList, "Room 1", DateTime.Now);
 
 
 
-            // Act
             Reservation updatedReservation = Program.CancelSeat(reservingAccount, reservation, reservedSeat);
 
-            // Assert
             Assert.IsNotNull(updatedReservation);
             Assert.IsFalse(updatedReservation.ReservedSeats.Contains(reservedSeat)); // Check if the reserved seat is removed
             Assert.IsFalse(reservedSeat.SeatTaken); // Check if the seat becomes available again
