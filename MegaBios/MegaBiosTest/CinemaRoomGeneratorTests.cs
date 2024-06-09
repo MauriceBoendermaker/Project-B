@@ -9,7 +9,8 @@ namespace MegaBiosTest.Services
     [TestClass]
     public class CinemaRoomGeneratorTests
     {
-        private string filePath = "../../../Room1.json";
+        private string basePath = "../../../";
+        private string filePattern = "Room*.json";
 
         [TestInitialize]
         public void TestInitialize()
@@ -17,10 +18,11 @@ namespace MegaBiosTest.Services
             // Stel de omgevingsvariabele in voor de testomgeving
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
 
-            // Zorg ervoor dat het testbestand niet bestaat voor de test
-            if (File.Exists(filePath))
+            // Verwijder alle bestaande testbestanden
+            var existingFiles = Directory.GetFiles(basePath, filePattern);
+            foreach (var file in existingFiles)
             {
-                File.Delete(filePath);
+                File.Delete(file);
             }
         }
 
@@ -30,10 +32,11 @@ namespace MegaBiosTest.Services
             // Verwijder de omgevingsvariabele na de test
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", null);
 
-            // Verwijder het testbestand na de test
-            if (File.Exists(filePath))
+            // Verwijder alle testbestanden
+            var existingFiles = Directory.GetFiles(basePath, filePattern);
+            foreach (var file in existingFiles)
             {
-                File.Delete(filePath);
+                File.Delete(file);
             }
         }
 
@@ -58,11 +61,21 @@ namespace MegaBiosTest.Services
             }
         }
 
+        private int GetCurrentRoomCount()
+        {
+            var existingFiles = Directory.GetFiles(basePath, filePattern);
+            return existingFiles.Length;
+        }
+
         [TestMethod]
-        public void GenerateShowingData_ShouldCreateNewRoom()
+        public void GenerateShowingData_ShouldCreateNextRoom()
         {
             // Arrange
             var generator = new CinemaRoomGenerator();
+            var initialRoomCount = GetCurrentRoomCount();
+            var nextRoomNumber = initialRoomCount + 1;
+            var nextRoomFilePath = Path.Combine(basePath, $"Room{nextRoomNumber}.json");
+
             var input = new StringReader("1\n10\n10\n2024-01-01 10:00:00\n");
             Console.SetIn(input);
 
@@ -74,8 +87,30 @@ namespace MegaBiosTest.Services
 
             // Assert
             Thread.Sleep(500); // Kleine vertraging om bestandssysteem te laten verwerken
-            var fileExists = File.Exists(filePath);
-            Assert.IsTrue(fileExists, "Room1.json is niet aangemaakt.");
+            var fileExists = File.Exists(nextRoomFilePath);
+            Assert.IsTrue(fileExists, $"Room{nextRoomNumber}.json is niet aangemaakt.");
+        }
+
+        [TestMethod]
+        public void GenerateShowingData_ShouldIncreaseRoomCountByOne()
+        {
+            // Arrange
+            var generator = new CinemaRoomGenerator();
+            var initialRoomCount = GetCurrentRoomCount();
+
+            var input = new StringReader("1\n10\n10\n2024-01-01 10:00:00\n");
+            Console.SetIn(input);
+
+            // Act
+            SuppressConsoleOutput(() =>
+            {
+                generator.GenerateShowingData();
+            });
+
+            // Assert
+            Thread.Sleep(500); // Kleine vertraging om bestandssysteem te laten verwerken
+            var newRoomCount = GetCurrentRoomCount();
+            Assert.AreEqual(initialRoomCount + 1, newRoomCount, "Het aantal zalen is niet met 1 toegenomen.");
         }
     }
 }

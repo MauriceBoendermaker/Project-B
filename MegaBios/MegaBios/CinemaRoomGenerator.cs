@@ -107,7 +107,6 @@ namespace MegaBios
                     {
                         Console.WriteLine("Hoe lang moet de zaal zijn? (Max. 30)");
                         int roomHeight = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine($"Kamerhoogte: {roomHeight}");  // Debug-uitvoer
 
                         if (roomHeight > 30)
                         {
@@ -122,7 +121,6 @@ namespace MegaBios
 
                         Console.WriteLine("Hoe breed moet de zaal zijn? Max 50");
                         int roomWidth = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine($"Kamerbreedte: {roomWidth}");  // Debug-uitvoer
 
                         if (roomWidth > 50)
                         {
@@ -145,9 +143,8 @@ namespace MegaBios
                 }
 
                 var roomShowings = GenerateRoomShowings(roomName, inMaintenance, seating);
-                Console.WriteLine($"Room{i}.json wordt aangemaakt");  // Debug-uitvoer
                 JsonFunctions.WriteToJson($"../../../Room{i}.json", roomShowings);
-                Console.WriteLine($"Room{i}.json is aangemaakt");  // Debug-uitvoer
+                Console.WriteLine($"Room{i}.json is aangemaakt");
             }
         }
 
