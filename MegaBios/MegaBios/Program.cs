@@ -323,7 +323,11 @@ namespace MegaBios
             // Krijg zaal nummer
             while (true)
             {
-                Console.Clear();
+                if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+                {
+                    Console.Clear();
+                }
+
                 Console.WriteLine($"Welke zaal wil je updaten? Voer het nummer van de zaal in. Voer -1 in om terug te gaan");
 
                 roomToEdit = Convert.ToInt32(Console.ReadLine());
@@ -343,7 +347,7 @@ namespace MegaBios
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room{roomToEdit}.json");
             List<List<Seat>> seating;
 
-            while(true)
+            while (true)
             {
                 try
                 {
@@ -366,10 +370,10 @@ namespace MegaBios
 
                     int roomWidth = Convert.ToInt32(Console.ReadLine());
 
-                    if (roomWidth > 30)
+                    if (roomWidth > 50)
                     {
-                        Console.WriteLine("Kamerbreedte te groot, verzet naar 30");
-                        roomWidth = 30;
+                        Console.WriteLine("Kamerbreedte te groot, verzet naar 50");
+                        roomWidth = 50;
                     }
                     else if (roomWidth <= 0)
                     {
@@ -404,6 +408,7 @@ namespace MegaBios
 
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}.json", roomShowings);
         }
+
 
         public static Reservation? TicketReservation(Account account = null)
         {
