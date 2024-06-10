@@ -21,7 +21,6 @@ namespace MegaBiosTest
         [TestMethod]
         public void CancelSeat_SeatBecomesAvailable()
         {
-            // Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
             Account reservingAccount = new Account(
                 "Daan",
                 "", // Tussenvoegsel

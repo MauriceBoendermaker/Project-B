@@ -30,48 +30,6 @@ namespace MegaBios
             {
                 switch (Console.ReadLine())
                 {
-                    /* case "1":
-                         System.Console.WriteLine("Please enter your first name");
-                         string newVoornaam = Console.ReadLine()!;
-                         Program.jsonData[index].Voornaam = newVoornaam;
-                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
-                         loopBreak = true;
-                         break;
-                     case "2":
-                         System.Console.WriteLine("Please enter your middle name");
-                         string newTussenvoegsel = Console.ReadLine()!;
-                         Program.jsonData[index].Tussenvoegsel = newTussenvoegsel;
-                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
-                         loopBreak = true;
-                         break;
-                     case "3":
-                         System.Console.WriteLine("Please enter your last name");
-                         string newAchternaam = Console.ReadLine()!;
-                         Program.jsonData[index].Achternaam = newAchternaam;
-                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
-                         loopBreak = true;
-                         break;
-                     case "4":
-                         System.Console.WriteLine("Please enter your birthdate (yyyy-MM-dd)");
-                         string newGeboorteDatum = Console.ReadLine()!;
-                         Program.jsonData[index].GeboorteDatum = newGeboorteDatum;
-                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
-                         loopBreak = true;
-                         break;
-                     case "5":
-                         System.Console.WriteLine("Please enter your street's name");
-                         string newStraatnaam = Console.ReadLine()!;
-                         System.Console.WriteLine("Please enter your house number");
-                         string newHouseNumber = Console.ReadLine()!;
-                         System.Console.WriteLine("Please enter your city/village of residence");
-                         string newWoonPlaats = Console.ReadLine()!;
-                         System.Console.WriteLine("Please enter your zip-code");
-                         string newPostCode = Console.ReadLine()!;
-                         Dictionary<string, string> newAdres = new() { { "straat", newStraatnaam }, { "huisnummer", newHouseNumber }, { "woonplaats", newWoonPlaats }, { "postcode", newPostCode } };
-                         Program.jsonData[index].Adres = newAdres;
-                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
-                         loopBreak = true;
-                         break; */
                     case "1":
                         Console.WriteLine("Voer de nieuwe email in");
 
@@ -103,31 +61,6 @@ namespace MegaBios
                             }
                         }
                         break;
-                    /* case "8":
-                         System.Console.WriteLine("enter your phone number please (Format +XX XX XXXXXXXX)");
-                         string newPhonenumber = Console.ReadLine()!;
-                         Program.jsonData[index].TelefoonNr = newPhonenumber;
-                         JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
-                         loopBreak = true;
-                         break;
-                     case "9":
-                         System.Console.WriteLine("Please enter your preferred method of payment (Creditcard, iDeal, PayPal)");
-                         while (true)
-                         {
-                             string newPaymentMethod = Console.ReadLine()!;
-                             if (new ArrayList { "Creditcard", "iDeal", "PayPal" }.Contains(newPaymentMethod))
-                             {
-                                 Program.jsonData[index].Voorkeur_Betaalwijze = newPaymentMethod;
-                                 JsonFunctions.WriteToJson(Program.jsonFilePath, Program.jsonData);
-                                 loopBreak = true;
-                                 break;
-                             }
-                             else
-                             {
-                                 System.Console.WriteLine("Not a valid payment method!");
-                             }
-                         }
-                         break; */
                     case "3":
                         Console.WriteLine("Bent u student? (ja/nee)");
 

@@ -108,7 +108,6 @@ namespace MegaBios
                 sb.Append("Welkom bij MegaBios!");
                 userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
 
-                // Console.WriteLine(userChoice);
                 switch (userChoice)
                 {
                     case 0:
@@ -410,7 +409,6 @@ namespace MegaBios
                 {
                     Console.WriteLine("Voer alstublieft een valide nummer in");
                     Console.WriteLine(e);
-                    // while(true) {}
                 }
             }
 
@@ -522,7 +520,6 @@ namespace MegaBios
                 for (int j = 0; j < showings.Count; j++)
                 {
                     // Als de filmtitel gelijk is en de weergavetijd tussen de opgegeven tijdstempels ligt
-                    // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
                     if (showings[j].Movie == selectedMovie && date.Date == showings[j].ShowingTime.Date && !SeatSelect.IsFull(showings[i].Seating))
                     {
                         showingOptions.Add($"Room {i} - {showings[j].ShowingTime}", showings[j].ShowingTime);

@@ -19,8 +19,6 @@ namespace MegaBios
 
         [JsonPropertyName("reservation_date")]
         public DateTime ReservationDate { get; set; }
-        // [JsonPropertyName("total_price")]
-        // public double TotalPrice {get; set;}
 
         public Reservation(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime reservationDate)
         {
@@ -29,10 +27,8 @@ namespace MegaBios
             ReservedSeats = reservedSeats;
             ReservationRoom = reservationRoom;
             ReservationDate = reservationDate;
-            // TotalPrice = totalPrice;
         }
 
-        // TODO: Add property that saves the reserved seat(s) so it can be iterated over to unoccupy seats in case of ticket cancellation
         public static void AddReservation(Account account, Reservation reservation)
         {
             List<Account> accounts = JsonFunctions.LoadCustomers("../../../customers.json");

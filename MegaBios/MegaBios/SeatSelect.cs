@@ -4,7 +4,6 @@ namespace MegaBios
 {
     public class SeatSelect
     {
-        // public static List<string> rowLetters = new() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
         private List<Seat> _selectedSeats = new();
         private bool _confirmedSeats = false;
         private Seat _selectedSeat;
@@ -20,7 +19,6 @@ namespace MegaBios
         public string RoomNumber { get; set; }
         public DateTime ShowTime { get; set; }
         public Account ReservingAccount {get; set;}
-        // public bool FinishedSelectingSeats = false;
 
         public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime, Account reservingAccount = null!)
         {
@@ -43,7 +41,6 @@ namespace MegaBios
         {
             // Get de row en seat nummer van de selected love seat
             int rowIndex = int.Parse(loveSeat.SeatNumber.Split('-')[0]);
-            // int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
             int seatIndex = int.Parse(loveSeat.SeatNumber.Split('-')[1]);
 
             // Get het overeenkomende seat nummer
@@ -69,7 +66,6 @@ namespace MegaBios
         {
             // Get de row en seat nummer van de selected love seat
             int rowIndex = int.Parse(loveSeat.SeatNumber.Split('-')[0]);
-            // int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
             int seatIndex = int.Parse(loveSeat.SeatNumber.Split('-')[1]);
 
             // Get het overeenkomende seat nummer
@@ -200,7 +196,6 @@ namespace MegaBios
 
             Console.WriteLine(selectedSeatsString);
             Console.WriteLine("Druk op een willekeurige knop om terug te gaan");
-            // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
             for (int i = 0; i < _selectedSeats.Count; i++)
             {
@@ -215,7 +210,6 @@ namespace MegaBios
             List<List<Seat>> seating = Seats;
 
             Console.Clear();
-            // Console.WriteLine("\n\x1b[0m");
 
             StringBuilder seatingText = new StringBuilder();
 
