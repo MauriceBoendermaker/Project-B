@@ -1,4 +1,9 @@
-﻿using MegaBios;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
+using System.Threading;
+using MegaBios;
+using System.Linq.Expressions;
 
 namespace MegaBiosTest.Services
 {
@@ -15,13 +20,12 @@ namespace MegaBiosTest.Services
             // Stel de omgevingsvariabele in voor de testomgeving
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
 
-            // Verwijder alle bestaande testbestanden
-            var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
-
-            foreach (var file in existingFiles)
-            {
-                File.Delete(file);
-            }
+            // // Verwijder alle bestaande testbestanden
+            // var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
+            // foreach (var file in existingFiles)
+            // {
+            //     File.Delete(file);
+            // }
         }
 
         [TestCleanup]
@@ -32,7 +36,6 @@ namespace MegaBiosTest.Services
 
             // Verwijder alle testbestanden
             var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
-
             foreach (var file in existingFiles)
             {
                 File.Delete(file);
