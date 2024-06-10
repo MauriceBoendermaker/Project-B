@@ -17,9 +17,9 @@ namespace MegaBios
             JsonElement root = jsonDocument.RootElement;
             jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
 
-            while(true)
+            while (true)
             {
-                List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login"};
+                List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login" };
                 int userChoice = MenuFunctions.Menu(menuOptions, false) + 1;
 
                 Console.Clear();
@@ -34,8 +34,9 @@ namespace MegaBios
                         bool firstLogin = true;
                         int attempts = 0;
                         while (true)
-                        {                        
-                            if (attempts >= 3) {
+                        {
+                            if (attempts >= 3)
+                            {
                                 Console.Clear();
                                 System.Console.WriteLine("U heeft 3 foute inlogpogingen gedaan. Druk op een willekeurige toets om terug te keren naar het menu");
                                 Console.ReadKey(true);
@@ -60,7 +61,8 @@ namespace MegaBios
                         attempts = 0;
                         while (true)
                         {
-                            if (attempts >= 3) {
+                            if (attempts >= 3)
+                            {
                                 Console.Clear();
                                 System.Console.WriteLine("U heeft 3 foute inlogpogingen gedaan. Druk op een willekeurige toets om terug te keren naar het menu");
                                 Console.ReadKey(true);
@@ -89,7 +91,7 @@ namespace MegaBios
 
         static void LoginAsGuest()
         {
-            while(true)
+            while (true)
             {
                 LoggedInAsGuest = true; // Zet LoggedInAsGuest naar True
                 movies = JsonFunctions.LoadMovies("../../../Movies.json");
@@ -97,7 +99,7 @@ namespace MegaBios
 
                 int userChoice = -1;
 
-                List<string> menuOptions = new() { "Bestel ticket", "Annuleer reserveringen"};
+                List<string> menuOptions = new() { "Bestel ticket", "Annuleer reserveringen" };
                 StringBuilder sb = new StringBuilder();
 
                 sb.Append("Welkom bij MegaBios!");
@@ -168,7 +170,7 @@ namespace MegaBios
 
         // Return type is Tuple voor succesvolle login Bool, account info
         static (bool, Account) Login(bool firstLogin)
-        {   
+        {
             Console.Clear();
 
             if (!firstLogin)
@@ -199,7 +201,7 @@ namespace MegaBios
 
             Console.WriteLine("Ongeldige gebruikersnaam of wachtwoord. Probeer het alstublieft opnieuw.");
             return (false, null);
-            
+
         }
 
         public static void LoggedInMenu(Account account)
@@ -219,7 +221,7 @@ namespace MegaBios
 
                 switch (userChoice)
                 {
-                    case 0: 
+                    case 0:
                         return;
                     case 1:
                         Console.Clear();
@@ -288,7 +290,7 @@ namespace MegaBios
                         Console.ReadKey(true);
 
                         break;
-                    case 7: 
+                    case 7:
                         Console.Clear();
 
                         foreach (var userReservation in account.History)
@@ -439,11 +441,11 @@ namespace MegaBios
 
                 int selectedOption = MenuFunctions.Menu(menuOptions, false, true);
 
-                if (selectedOption   == -1)
+                if (selectedOption == -1)
                 {
                     return null;
-                }            
-                
+                }
+
                 selectedDate = menuOptions[selectedOption];
                 initialDate = selectedDate;
                 showingOptions = GetShowingOptions(selectedDate, selectedMovie);
@@ -543,15 +545,18 @@ namespace MegaBios
 
         public static Reservation CancelSeat(Account account, Reservation reservation, Seat seat)
         {
-            Console.Clear();
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+            {
+                Console.Clear();
+            }
 
             StringBuilder sb = new();
             sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
-            int selectedOption = MenuFunctions.Menu(new List<string> {"Ja", "Nee"}, sb);
+            int selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
 
             if (selectedOption == -1)
             {
-                return null;
+                return reservation; // Returning the original reservation in case of invalid option selection
             }
 
             switch (selectedOption)
@@ -559,18 +564,21 @@ namespace MegaBios
                 // Ja
                 case 0:
                     reservation.ReservedSeats.Remove(seat);
-                    SeatSelect.MarkSeatsAsFree(new List<Seat> {seat}, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ReservationDate, reservation.ReservationRoom);
 
-                    Console.WriteLine($"U heeft {seat.Price} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
-                    Console.ReadKey(true);
+                    if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+                    {
+                        Console.WriteLine($"U heeft {seat.Price} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
+                        Console.ReadKey(true);
+                    }
 
                     return reservation;
                 // Nee
                 case 1:
                     return reservation;
+                default:
+                    return reservation; // Default case to handle any unexpected values
             }
-
-            return reservation;
         }
 
         public static Account CancelReservation(Account account, Reservation reservation, List<Seat> seats)
@@ -579,7 +587,7 @@ namespace MegaBios
 
             StringBuilder sb = new();
             sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
-            int selectedOption = MenuFunctions.Menu(new List<string> {"Ja", "Nee"}, sb);
+            int selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
 
             if (selectedOption == -1)
             {
@@ -593,7 +601,7 @@ namespace MegaBios
                     account.History.Remove(reservation);
                     double totalPrice = 0;
 
-                    foreach(Seat seat in seats)
+                    foreach (Seat seat in seats)
                     {
                         totalPrice += seat.Price;
                     }
@@ -618,7 +626,7 @@ namespace MegaBios
 
             StringBuilder sb = new();
             sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
-            int selectedOption = MenuFunctions.Menu(new List<string> {"Ja", "Nee"}, sb);
+            int selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
 
             if (selectedOption == -1)
             {
@@ -630,7 +638,7 @@ namespace MegaBios
                 // Ja
                 case 0:
                     reservation.ReservedSeats.Remove(seat);
-                    SeatSelect.MarkSeatsAsFree(new List<Seat> {seat}, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ReservationDate, reservation.ReservationRoom);
 
                     Console.WriteLine($"U heeft {seat.Price} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
                     Console.ReadKey(true);
@@ -650,7 +658,7 @@ namespace MegaBios
 
             StringBuilder sb = new();
             sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
-            int selectedOption = MenuFunctions.Menu(new List<string> {"Ja", "Nee"}, sb);
+            int selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
 
             if (selectedOption == -1)
             {
@@ -664,7 +672,7 @@ namespace MegaBios
                     guest.Reservations.Remove(reservation);
                     double totalPrice = 0;
 
-                    foreach(Seat seat in seats)
+                    foreach (Seat seat in seats)
                     {
                         totalPrice += seat.Price;
                     }
@@ -683,7 +691,7 @@ namespace MegaBios
 
         public static void CancelMenu(Account account)
         {
-            while(true)
+            while (true)
             {
                 List<string> reservationNumbers = account.History
                     .Select(x => x.ReservationNumber)
@@ -707,7 +715,7 @@ namespace MegaBios
                 Reservation selectedReservation = account.History
                     .Where(x => x.ReservationNumber == reservationNumber)
                     .ToList()[0];
-                List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
+                List<string> menuOptions = new List<string>() { "Annuleer 1 stoel", "Annuleer hele reservering" };
 
                 // Vraag de gebruiker om te selecteren of hij 1 stoel of alle stoelen wil annuleren
                 StringBuilder sb = new StringBuilder();
@@ -722,7 +730,7 @@ namespace MegaBios
                 switch (selectedOption)
                 {
                     // Annuleer 1 seat
-                    case 0: 
+                    case 0:
                         List<string> seatNumbers = selectedReservation.ReservedSeats
                             .Select(x => x.SeatNumber)
                             .ToList();
@@ -738,7 +746,7 @@ namespace MegaBios
                         // Zoek de juiste stoel uit de stoel list
                         Seat selectedSeat = selectedReservation.ReservedSeats
                             .Where(x => x.SeatNumber == seatNumbers[selectedOption])
-                            .ToList()[0];                                  
+                            .ToList()[0];
                         Reservation changedReservation = CancelSeat(account, selectedReservation, selectedSeat);
 
                         // Verwijder de history van de list als er geen seats meer gereserveerd zijn
@@ -765,9 +773,9 @@ namespace MegaBios
                                     account.History[i] = changedReservation;
                                     break;
                                 }
-                            }   
+                            }
                         }
-                        
+
                         Account.UpdateAccount(account);
                         return;
                     // Annuleer de hele reservering
@@ -780,14 +788,14 @@ namespace MegaBios
                         }
 
                         Account.UpdateAccount(account);
-                        return;    
+                        return;
                 }
             }
         }
 
         public static void CancelMenu(Guest guest)
         {
-            while(true)
+            while (true)
             {
                 List<string> reservationNumbers = guest.Reservations
                     .Select(x => x.ReservationNumber)
@@ -803,7 +811,7 @@ namespace MegaBios
                 Reservation selectedReservation = guest.Reservations
                     .Where(x => x.ReservationNumber == reservationNumber)
                     .ToList()[0];
-                List<string> menuOptions = new List<string>() {"Annuleer 1 stoel", "Annuleer hele reservering"};
+                List<string> menuOptions = new List<string>() { "Annuleer 1 stoel", "Annuleer hele reservering" };
 
                 // Vraag de gebruiker om te selecteren of hij 1 stoel of alle stoelen wil annuleren
                 StringBuilder sb = new StringBuilder();
@@ -818,7 +826,7 @@ namespace MegaBios
                 switch (selectedOption)
                 {
                     // Annuleer 1 seat
-                    case 0: 
+                    case 0:
                         List<string> seatNumbers = selectedReservation.ReservedSeats
                             .Select(x => x.SeatNumber)
                             .ToList();
@@ -834,7 +842,7 @@ namespace MegaBios
                         // Zoek de juiste stoel uit de seat list
                         Seat selectedSeat = selectedReservation.ReservedSeats
                             .Where(x => x.SeatNumber == seatNumbers[selectedOption])
-                            .ToList()[0];                                  
+                            .ToList()[0];
                         Reservation changedReservation = CancelSeat(guest, selectedReservation, selectedSeat);
 
                         if (changedReservation == selectedReservation)
@@ -869,7 +877,7 @@ namespace MegaBios
 
                         if (guest == null)
                         {
-                            break;;
+                            break; ;
                         }
 
                         Guest.UpdateAccount(guest);
