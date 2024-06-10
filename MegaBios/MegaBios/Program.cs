@@ -128,7 +128,7 @@ namespace MegaBios
 
                         if (confirmedPayment)
                         {
-                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
+                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ShowingDate, reservation.ReservationRoom);
                             Reservation.AddReservation(guest, reservation);
                         }
 
@@ -180,6 +180,7 @@ namespace MegaBios
             }
 
             Console.WriteLine("Login Formulier");
+            System.Console.WriteLine("Druk enter om je input te bevestigen");
             Console.WriteLine("-----------");
 
             Console.Write("Voer email in: ");
@@ -271,7 +272,7 @@ namespace MegaBios
 
                         if (confirmedPayment)
                         {
-                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
+                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ShowingDate, reservation.ReservationRoom);
                             Reservation.AddReservation(account, reservation);
                         }
 
@@ -572,7 +573,7 @@ namespace MegaBios
                 // Ja
                 case 0:
                     reservation.ReservedSeats.Remove(seat);
-                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ShowingDate, reservation.ReservationRoom);
 
                     if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
                     {
@@ -614,7 +615,7 @@ namespace MegaBios
                         totalPrice += seat.Price;
                     }
 
-                    SeatSelect.MarkSeatsAsFree(seats, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(seats, reservation.ShowingDate, reservation.ReservationRoom);
 
                     Console.WriteLine($"U heeft {totalPrice} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
                     Console.ReadKey(true);
@@ -646,7 +647,7 @@ namespace MegaBios
                 // Ja
                 case 0:
                     reservation.ReservedSeats.Remove(seat);
-                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ShowingDate, reservation.ReservationRoom);
 
                     Console.WriteLine($"U heeft {seat.Price} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
                     Console.ReadKey(true);
@@ -685,7 +686,7 @@ namespace MegaBios
                         totalPrice += seat.Price;
                     }
 
-                    SeatSelect.MarkSeatsAsFree(seats, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(seats, reservation.ShowingDate, reservation.ReservationRoom);
 
                     Console.WriteLine($"U heeft {totalPrice} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
                     Console.ReadKey(true);

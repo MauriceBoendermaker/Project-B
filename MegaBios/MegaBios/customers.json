@@ -74,46 +74,48 @@
     "is_student": true,
     "reservations": [
       {
-        "reservation_number": "4735",
-        "movie_title": "Inception",
+        "reservation_number": "5141",
+        "movie_title": "testfilm",
         "reserved_seats": [
           {
-            "seat_number": "25-11",
+            "seat_number": "12-11",
             "is_taken": true,
             "type": "normal",
             "price": 8.5
           },
           {
-            "seat_number": "25-12",
+            "seat_number": "12-12",
             "is_taken": true,
             "type": "normal",
             "price": 8.5
           }
         ],
         "reservation_room": "Room3",
-        "reservation_date": "2024-08-27T17:37:00"
+        "showing_date": "2024-08-27T11:50:00",
+        "date_of_reservation": "2024-06-11T00:43:06.8506402+02:00"
       }
     ],
     "history": [
       {
-        "reservation_number": "4735",
-        "movie_title": "Inception",
+        "reservation_number": "5141",
+        "movie_title": "testfilm",
         "reserved_seats": [
           {
-            "seat_number": "25-11",
+            "seat_number": "12-11",
             "is_taken": true,
             "type": "normal",
             "price": 8.5
           },
           {
-            "seat_number": "25-12",
+            "seat_number": "12-12",
             "is_taken": true,
             "type": "normal",
             "price": 8.5
           }
         ],
         "reservation_room": "Room3",
-        "reservation_date": "2024-08-27T17:37:00"
+        "showing_date": "2024-08-27T11:50:00",
+        "date_of_reservation": "2024-06-11T00:43:06.8506402+02:00"
       }
     ]
   },
