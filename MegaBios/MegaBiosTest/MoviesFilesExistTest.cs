@@ -1,8 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-
-namespace MegaBiosTest.Services
+﻿namespace MegaBiosTest.Services
 {
     [TestClass]
     public class MoviesFilesExistTest

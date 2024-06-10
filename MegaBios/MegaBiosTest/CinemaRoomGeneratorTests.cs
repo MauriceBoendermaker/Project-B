@@ -1,9 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.IO;
-using System.Threading;
-using MegaBios;
-using System.Linq.Expressions;
+﻿using MegaBios;
 
 namespace MegaBiosTest.Services
 {

@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MegaBios;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using MegaBios;
 
 namespace MegaBiosTest.Services
 {
