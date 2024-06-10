@@ -65,7 +65,7 @@ namespace MegaBiosTest.Services
         {
             // Arrange
             var jsonData = new List<Account>();
-            if (File.Exists(filePath))
+            if (File.Exists(testRedirecionPath + filePath))
             {
                 var json = File.ReadAllText(filePath);
                 jsonData = JsonSerializer.Deserialize<List<Account>>(json);

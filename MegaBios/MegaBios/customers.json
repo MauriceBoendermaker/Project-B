@@ -1,20 +1,157 @@
 [
   {
+    "voornaam": "Lotte",
+    "tussenvoegsel": "van",
+    "achternaam": "Dijk",
+    "geboorte_datum": "1988-07-15",
+    "adres": {
+      "straat": "Kerkstraat",
+      "huisnummer": "23",
+      "woonplaats": "Amsterdam",
+      "postcode": "1011 CX"
+    },
+    "email": "lotte.vandijk@example.com",
+    "wachtwoord": "W4chtwo0rd!",
+    "telefoonnummer": "\u002B31 6 12345678",
+    "voorkeur_betaalwijze": "iDeal",
+    "is_student": true,
+    "reservations": [],
+    "history": []
+  },
+  {
+    "voornaam": "Daan",
+    "tussenvoegsel": "",
+    "achternaam": "Bakker",
+    "geboorte_datum": "1975-04-20",
+    "adres": {
+      "straat": "Voorstraat",
+      "huisnummer": "45",
+      "woonplaats": "Rotterdam",
+      "postcode": "3011 HN"
+    },
+    "email": "daan.bakker@example.com",
+    "wachtwoord": "G3heim!",
+    "telefoonnummer": "\u002B31 10 98765432",
+    "voorkeur_betaalwijze": "Creditcard",
+    "is_student": false,
+    "reservations": [],
+    "history": []
+  },
+  {
+    "voornaam": "Eva",
+    "tussenvoegsel": "de",
+    "achternaam": "Groot",
+    "geboorte_datum": "1993-11-03",
+    "adres": {
+      "straat": "Schoolstraat",
+      "huisnummer": "7",
+      "woonplaats": "Utrecht",
+      "postcode": "3511 LN"
+    },
+    "email": "test2@gmail.com",
+    "wachtwoord": "2",
+    "telefoonnummer": "\u002B31 30 55554444",
+    "voorkeur_betaalwijze": "PayPal",
+    "is_student": true,
+    "reservations": [],
+    "history": []
+  },
+  {
     "voornaam": "Bob",
     "tussenvoegsel": "",
-    "achternaam": "Vos",
-    "geboorte_datum": "2000-01-01",
+    "achternaam": "Bos",
+    "geboorte_datum": "2003-09-01",
     "adres": {
-      "straat": "straat",
-      "huisnummer": "123",
-      "woonplaats": "Den Haag",
-      "postcode": "1234VV"
+      "straat": "Van der Hoevenlaan",
+      "huisnummer": "23",
+      "woonplaats": "Berkel en Rodenrijs",
+      "postcode": "2651 DE"
     },
-    "email": "john.doe@example.com",
-    "wachtwoord": "password123",
-    "telefoonnummer": "password123",
-    "voorkeur_betaalwijze": "password123",
+    "email": "test1@gmail.com",
+    "wachtwoord": "1",
+    "telefoonnummer": "06 1234567890",
+    "voorkeur_betaalwijze": "PayPal",
     "is_student": true,
+    "reservations": [
+      {
+        "reservation_number": "4735",
+        "movie_title": "Inception",
+        "reserved_seats": [
+          {
+            "seat_number": "25-11",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          },
+          {
+            "seat_number": "25-12",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          }
+        ],
+        "reservation_room": "Room3",
+        "reservation_date": "2024-08-27T17:37:00"
+      }
+    ],
+    "history": [
+      {
+        "reservation_number": "4735",
+        "movie_title": "Inception",
+        "reserved_seats": [
+          {
+            "seat_number": "25-11",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          },
+          {
+            "seat_number": "25-12",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          }
+        ],
+        "reservation_room": "Room3",
+        "reservation_date": "2024-08-27T17:37:00"
+      }
+    ]
+  },
+  {
+    "voornaam": "admin",
+    "tussenvoegsel": "n",
+    "achternaam": "admin",
+    "geboorte_datum": "12-12-12",
+    "adres": {
+      "straat": "",
+      "huisnummer": "38",
+      "woonplaats": "asd",
+      "postcode": "asd"
+    },
+    "email": "admin@testmail.com",
+    "wachtwoord": "adminwachtwoord",
+    "telefoonnummer": "9878",
+    "voorkeur_betaalwijze": "hff",
+    "is_student": true,
+    "reservations": [],
+    "history": []
+  },
+  {
+    "voornaam": "test",
+    "tussenvoegsel": "",
+    "achternaam": "test",
+    "geboorte_datum": "1904-08-25",
+    "adres": {
+      "straat": "architectenlaan",
+      "huisnummer": "25",
+      "woonplaats": "amsterdam",
+      "postcode": "2564 ER"
+    },
+    "email": "laurens@mail.com",
+    "wachtwoord": "123",
+    "telefoonnummer": "1234",
+    "voorkeur_betaalwijze": "test",
+    "is_student": false,
     "reservations": [],
     "history": []
   }
