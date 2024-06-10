@@ -551,12 +551,13 @@ namespace MegaBios
                 Console.Clear();
                 selectedOption = 0;
             }
-            else {
+            else
+            {
                 StringBuilder sb = new();
                 sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
                 selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
             }
-            
+
 
             if (selectedOption == -1)
             {
