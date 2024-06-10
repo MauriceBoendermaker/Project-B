@@ -8,7 +8,7 @@ namespace MegaBios
 
             Console.Clear();
 
-            List<string> menuOptions = new() { "Genereer nieuwe zalen", "Werk bestaande zaal bij", "Reset alle seatings" };
+            List<string> menuOptions = new() { "Genereer nieuwe zalen", "Reset alle seatings" };
 
             Console.WriteLine("Wilt u zalen genereren of een zaal bewerken?");
 
@@ -22,20 +22,12 @@ namespace MegaBios
                     GenerateShowingData();
                     break;
                 case 1:
-                    EditRoom();
-                    break;
-                case 2:
                     ResetAllSeatings();
                     break;
                 default:
                     Console.WriteLine("Ongeldige invoer");
                     break;
             }
-        }
-
-        public void EditRoom()
-        {
-            ; //
         }
 
         public void ResetAllSeatings()
@@ -88,7 +80,7 @@ namespace MegaBios
                     numberOfNewRooms = Convert.ToInt32(Console.ReadLine());
                     break;
                 }
-                catch (Exception e)
+                catch 
                 {
                     Console.WriteLine("Ongeldige invoer. Probeer het opnieuw.");
                 }
@@ -136,7 +128,7 @@ namespace MegaBios
                         seating = JsonFunctions.GenerateSeating(roomHeight, roomWidth);
                         break;
                     }
-                    catch (Exception e)
+                    catch
                     {
                         Console.WriteLine("Ongeldige invoer. Probeer het opnieuw.");
                     }

@@ -95,7 +95,6 @@ namespace MegaBios
                 movies = JsonFunctions.LoadMovies("../../../Movies.json");
                 jsonData = JsonFunctions.LoadCustomers("../../../customers.json");
 
-                int cursorPos = 0;
                 int userChoice = -1;
 
                 List<string> menuOptions = new() { "Bestel ticket", "Annuleer reserveringen"};

@@ -35,13 +35,13 @@ namespace MegaBios
             Console.WriteLine("--------------------");
 
             Console.Write("Voer voornaam in: ");
-            string voornaam = Console.ReadLine();
+            string voornaam = Console.ReadLine()!;
 
             Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
-            string tussenvoegsel = Console.ReadLine();
+            string tussenvoegsel = Console.ReadLine()!;
 
             Console.Write("Voer achternaam in: ");
-            string achternaam = Console.ReadLine();
+            string achternaam = Console.ReadLine()!;
 
             string email;
 
@@ -99,7 +99,7 @@ namespace MegaBios
                 }
             }
 
-            return null;
+            return null!;
         }
 
         public static bool operator ==(Guest t1, Guest t2)
