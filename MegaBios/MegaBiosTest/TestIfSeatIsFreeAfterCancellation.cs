@@ -49,7 +49,7 @@ namespace MegaBiosTest
             };
             List<Seat> reservedSeatsList = new List<Seat> { reservedSeat };
 
-            Reservation reservation = new Reservation("12345", "Test Movie", reservedSeatsList, "Room 1", DateTime.Now);
+            Reservation reservation = new Reservation("12345", "Test Movie", reservedSeatsList, "Room1", DateTime.Now);
 
 
 
