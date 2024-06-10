@@ -9,9 +9,12 @@ namespace MegaBios
         {
             int cursorPos = 0;
 
-            while(true)
+            while (true)
             {
-                Console.Clear();
+                if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+                {
+                    Console.Clear();
+                }
                 Console.WriteLine(optionalMessage);
                 Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op 'Enter' om je keuze te bevestigen.");
 
@@ -63,7 +66,7 @@ namespace MegaBios
         {
             int cursorPos = 0;
 
-            while(true)
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op 'Enter' om je keuze te bevestigen");
@@ -96,7 +99,7 @@ namespace MegaBios
                             menuText.AppendLine($"\x1b[42m{menuOptions[i].ToString("yyyy/MM/dd")}\x1b[0m");
                         }
                         else
-                        {   
+                        {
                             menuText.AppendLine($"{menuOptions[i].ToString("yyyy/MM/dd")}");
                         }
                     }
@@ -130,7 +133,7 @@ namespace MegaBios
         {
             int cursorPos = 0;
 
-            while(true)
+            while (true)
             {
                 Console.Clear();
                 Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op 'Enter' om je keuze te bevestigen");
@@ -199,7 +202,7 @@ namespace MegaBios
                     currentPos = 0;
                 }
                 else
-                { 
+                {
                     currentPos++;
                 }
             }
