@@ -153,8 +153,8 @@ namespace MegaBios
             Console.WriteLine("Nieuw account toegevoegd aan de lijst.");
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);
-            Console.WriteLine("Account opgeslagen in JSON bestand.");
 
+            Console.WriteLine("Account opgeslagen in JSON bestand.");
             Console.WriteLine("Succesvol nieuw account gemaakt!");
         }
 

@@ -34,8 +34,7 @@ namespace MegaBiosTest
                 new List<Reservation>()
             );
 
-            List<List<Seat>> seating = new List<List<Seat>>
-    {
+            List<List<Seat>> seating = new List<List<Seat>> {
         new List<Seat>
         {
             new Seat { SeatType = "normal", SeatTaken = false },
