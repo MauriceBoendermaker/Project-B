@@ -9,7 +9,7 @@ namespace MegaBios
             Console.WriteLine($"Naam: {loggedInUser.Voornaam} {loggedInUser.Tussenvoegsel} {loggedInUser.Achternaam}");
             Console.WriteLine($"Geboortedatum : {loggedInUser.GeboorteDatum}");
             Console.WriteLine("Adres:");
-            Console.WriteLine($"Adres: {loggedInUser.Adres["straat"]} {loggedInUser.Adres["huisnummer"]}");
+            Console.WriteLine($"Straat: {loggedInUser.Adres["straat"]} {loggedInUser.Adres["huisnummer"]}");
             Console.WriteLine($"{loggedInUser.Adres["postcode"]} {loggedInUser.Adres["woonplaats"]}");
             Console.WriteLine($"Email: {loggedInUser.Email}");
             Console.WriteLine($"Telefoonnummer: {loggedInUser.TelefoonNr}");
