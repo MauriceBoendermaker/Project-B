@@ -102,7 +102,7 @@ namespace MegaBios
             }
 
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../{roomNumber}.json");
-            RoomShowing updatedShowing = null!;
+            RoomShowing updatedShowing = null;
 
             foreach (RoomShowing currentShowing in roomShowings)
             {
@@ -138,7 +138,7 @@ namespace MegaBios
             }
 
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../{roomNumber}.json");
-            RoomShowing updatedShowing = null!;
+            RoomShowing updatedShowing = null;
 
             foreach (RoomShowing currentShowing in roomShowings)
             {

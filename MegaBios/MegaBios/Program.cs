@@ -549,12 +549,12 @@ namespace MegaBios
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
             {
                 Console.Clear();
-                selectedOption = 0;
-            }
-            else {
                 StringBuilder sb = new();
                 sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
                 selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
+            }
+            else {
+                selectedOption = 0;
             }
             
 

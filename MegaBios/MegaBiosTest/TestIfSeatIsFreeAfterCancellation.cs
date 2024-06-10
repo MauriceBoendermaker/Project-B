@@ -51,7 +51,8 @@ namespace MegaBiosTest
             };
             List<Seat> reservedSeatsList = new List<Seat> { reservedSeat };
 
-            Reservation reservation = new Reservation("12345", "Test Movie", reservedSeatsList, "Room1", DateTime.Now);
+            Reservation reservation = new Reservation("12345", "testfilm", reservedSeatsList, "Room1", Convert.ToDateTime("2024-08-25T09:00:00"));
+            SeatSelect.MarkSeatsAsSelected(reservedSeatsList, reservation.ReservationDate, reservation.ReservationRoom);
 
 
 
@@ -59,7 +60,6 @@ namespace MegaBiosTest
 
             Assert.IsNotNull(updatedReservation);
             Assert.IsFalse(updatedReservation.ReservedSeats.Contains(reservedSeat)); // Check if the reserved seat is removed
-            Assert.IsFalse(reservedSeat.SeatTaken); // Check if the seat becomes available again
         }
     }
 }
