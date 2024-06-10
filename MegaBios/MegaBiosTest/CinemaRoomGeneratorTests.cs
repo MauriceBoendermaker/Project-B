@@ -20,12 +20,7 @@ namespace MegaBiosTest.Services
             // Stel de omgevingsvariabele in voor de testomgeving
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
 
-            // // Verwijder alle bestaande testbestanden
-            // var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
-            // foreach (var file in existingFiles)
-            // {
-            //     File.Delete(file);
-            // }
+
         }
 
         [TestCleanup]
@@ -35,11 +30,11 @@ namespace MegaBiosTest.Services
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", null);
 
             // Verwijder alle testbestanden
-            var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
-            foreach (var file in existingFiles)
-            {
-                File.Delete(file);
-            }
+            // var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
+            // foreach (var file in existingFiles)
+            // {
+            //     File.Delete(file);
+            // }
         }
 
         private void SuppressConsoleOutput(Action action)
