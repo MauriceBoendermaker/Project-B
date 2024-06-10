@@ -45,7 +45,9 @@ namespace MegaBiosTest
             Seat reservedSeat = new Seat
             {
                 SeatNumber = "6-1",
-                SeatTaken = true
+                SeatTaken = true,
+                Price = 10,
+                SeatType = "normal"
             };
             List<Seat> reservedSeatsList = new List<Seat> { reservedSeat };
 

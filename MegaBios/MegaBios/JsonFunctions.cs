@@ -6,7 +6,7 @@ namespace MegaBios
     {
         public static void WriteToJson<T>(string filePath, T data)
         {   
-            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true")
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
@@ -16,7 +16,7 @@ namespace MegaBios
 
         public static List<Movie> LoadMovies(string filePath)
         {
-            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true")
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }            
@@ -26,7 +26,7 @@ namespace MegaBios
 
         public static List<RoomShowing> LoadRoomShowings(string filePath)
         {
-            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true")
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
@@ -36,7 +36,7 @@ namespace MegaBios
 
         public static List<Account> LoadCustomers(string filePath)
         {
-            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true")
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
@@ -51,7 +51,7 @@ namespace MegaBios
 
         public static List<Guest> LoadGuests(string filePath)
         {
-            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true")
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }

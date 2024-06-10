@@ -11,8 +11,6 @@ namespace MegaBios
 
         static void Main(string[] args)
         {
-            System.Console.WriteLine(Directory.GetCurrentDirectory());
-            while(true) {}
             // JSON bestand ophalen
             string jsonText = File.ReadAllText("../../../customers.json");
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
@@ -547,14 +545,18 @@ namespace MegaBios
 
         public static Reservation CancelSeat(Account account, Reservation reservation, Seat seat)
         {
+            int selectedOption = -1;
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
             {
                 Console.Clear();
+                selectedOption = 0;
             }
-
-            StringBuilder sb = new();
-            sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
-            int selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
+            else {
+                StringBuilder sb = new();
+                sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
+                selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
+            }
+            
 
             if (selectedOption == -1)
             {
