@@ -11,6 +11,12 @@ namespace MegaBios
 
         static void Main(string[] args)
         {
+            // System.Console.WriteLine(File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "../../../")));
+            // System.Console.WriteLine(File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "../../../")));
+            System.Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+            while (true) {
+
+            }
             // JSON bestand ophalen
             string jsonText = File.ReadAllText("../../../customers.json");
             JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
