@@ -9,11 +9,10 @@ namespace MegaBios
             Console.WriteLine($"Naam: {loggedInUser.Voornaam} {loggedInUser.Tussenvoegsel} {loggedInUser.Achternaam}");
             Console.WriteLine($"Geboortedatum : {loggedInUser.GeboorteDatum}");
             Console.WriteLine("Adres:");
-            Console.WriteLine($"{loggedInUser.Adres}");
-            // Console.WriteLine($"  {loggedInUser.Adres.straat});
-            // Console.WriteLine($"  {loggedInUser.Adres.Postcode} {loggedInUser.Adres.Woonplaats}");
+            Console.WriteLine($"Adres: {loggedInUser.Adres["straat"]} {loggedInUser.Adres["huisnummer"]}");
+            Console.WriteLine($"{loggedInUser.Adres["postcode"]} {loggedInUser.Adres["woonplaats"]}");
             Console.WriteLine($"Email: {loggedInUser.Email}");
-            Console.WriteLine($"Telefoonnumber: {loggedInUser.TelefoonNr}");
+            Console.WriteLine($"Telefoonnummer: {loggedInUser.TelefoonNr}");
             Console.WriteLine($"Voorkeur betaalwijze: {loggedInUser.Voorkeur_Betaalwijze}");
             Console.WriteLine($"Student: {(loggedInUser.IsStudent ? true : false)}");
         }

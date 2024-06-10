@@ -131,18 +131,19 @@ namespace MegaBios
             bool is_student;
             while (true)
             {
-                Console.Write("Bent u student? (true/false): ");
-                string is_studentString = Console.ReadLine()!;
+                Console.Write("Bent u student? (Ja/Nee): ");
+                string is_studentString = Console.ReadLine()?.ToLower(); // Convert input to lowercase
 
-                if (is_studentString == "true" || is_studentString == "false")
+                if (is_studentString == "ja" || is_studentString == "nee")
                 {
-                    is_student = Convert.ToBoolean(is_studentString);
+                    // Convert "Ja" to true, "Nee" to false
+                    is_student = (is_studentString == "ja");
                     Console.WriteLine("Geldige student status ingevoerd.");
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("Ongeldige invoer. Voer 'true' of 'false' in.");
+                    Console.WriteLine("Ongeldige invoer. Voer 'Ja' of 'Nee' in.");
                 }
             }
 
