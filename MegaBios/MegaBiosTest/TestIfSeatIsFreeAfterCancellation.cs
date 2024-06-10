@@ -10,12 +10,6 @@ namespace MegaBiosTest
     [TestClass]
     public class SeatAvailableAfterCancellation
     {
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            // Stel de omgevingsvariabele in voor de testomgeving
-            Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
-        }
         [TestMethod]
         public void CancelSeat_SeatBecomesAvailable()
         {
@@ -43,7 +37,7 @@ namespace MegaBiosTest
             Seat reservedSeat = new Seat
             {
                 SeatNumber = "6-1",
-                SeatTaken = true
+                SeatTaken = true 
             };
             List<Seat> reservedSeatsList = new List<Seat> { reservedSeat };
 
