@@ -91,11 +91,13 @@ namespace MegaBiosTest.Services
             Assert.AreEqual("Vos", createdAccount.Achternaam, "Last name mismatch.");
             Assert.AreEqual("john.doe@example.com", createdAccount.Email, "Email mismatch.");
         }
+
         [TestMethod]
         public void DeleteAccount_AccountRemovedFromJsonFile()
         {
             // Arrange
             var jsonData = new List<Account>();
+
             if (File.Exists(filePath))
             {
                 var json = File.ReadAllText(testRedirecionPath + filePath);
@@ -123,7 +125,6 @@ namespace MegaBiosTest.Services
             // Assert
             var updatedJson = File.ReadAllText(filePath);
             var updatedJsonData = JsonSerializer.Deserialize<List<Account>>(updatedJson);
-
             var deletedAccount = updatedJsonData.Find(account => account.Email == "aziaatyt@gmail.com");
             Assert.IsNull(deletedAccount, "Account should be null.");
         }

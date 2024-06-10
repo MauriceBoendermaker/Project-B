@@ -17,6 +17,7 @@ namespace MegaBiosTest
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
 
         }
+
         [TestMethod]
         public void CancelSeat_SeatBecomesAvailable()
         {

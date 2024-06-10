@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace MegaBios
 {
     internal class HelperFunctions

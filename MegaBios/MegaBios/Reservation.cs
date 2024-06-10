@@ -33,7 +33,6 @@ namespace MegaBios
         }
 
         // TODO: Add property that saves the reserved seat(s) so it can be iterated over to unoccupy seats in case of ticket cancellation
-
         public static void AddReservation(Account account, Reservation reservation)
         {
             List<Account> accounts = JsonFunctions.LoadCustomers("../../../customers.json");
@@ -44,7 +43,9 @@ namespace MegaBios
                 {
                     accounts[i].Reservations.Add(reservation);
                     accounts[i].History.Add(reservation);
+
                     JsonFunctions.WriteToJson("../../../customers.json", accounts);
+
                     break;
                 }
             }
@@ -177,6 +178,7 @@ namespace MegaBios
         {
             double discount = 0;
             int leeftijd = DateTime.Now.Year - Convert.ToDateTime(user.GeboorteDatum).Year;
+
             if (user.IsStudent || leeftijd >= 65)
             {
                 discount = 0.15;

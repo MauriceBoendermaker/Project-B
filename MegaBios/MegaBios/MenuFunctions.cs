@@ -15,6 +15,7 @@ namespace MegaBios
                 {
                     Console.Clear();
                 }
+
                 Console.WriteLine(optionalMessage);
                 Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op 'Enter' om je keuze te bevestigen.");
 

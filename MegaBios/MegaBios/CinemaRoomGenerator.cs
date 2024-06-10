@@ -194,7 +194,5 @@ namespace MegaBios
 
             return roomShowings;
         }
-
-
     }
 }

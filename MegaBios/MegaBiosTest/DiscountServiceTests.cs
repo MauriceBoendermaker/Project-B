@@ -16,6 +16,7 @@ namespace MegaBiosTest.Services
                 new Seat { Price = 10 },
                 new Seat { Price = 10 }
             };
+
             var user = new Account(
                 "John",
                 null,
@@ -48,6 +49,7 @@ namespace MegaBiosTest.Services
                 new Seat { Price = 10 },
                 new Seat { Price = 10 }
             };
+
             var user = new Account(
                 "Jane",
                 null,
@@ -80,6 +82,7 @@ namespace MegaBiosTest.Services
                 new Seat { Price = 10 },
                 new Seat { Price = 10 }
             };
+
             var user = new Account(
                 "Jack",
                 null,

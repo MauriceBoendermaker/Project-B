@@ -22,6 +22,7 @@ namespace MegaBiosTest.Services
 
             // Verwijder alle bestaande testbestanden
             var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
+
             foreach (var file in existingFiles)
             {
                 File.Delete(file);
@@ -36,6 +37,7 @@ namespace MegaBiosTest.Services
 
             // Verwijder alle testbestanden
             var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
+
             foreach (var file in existingFiles)
             {
                 File.Delete(file);

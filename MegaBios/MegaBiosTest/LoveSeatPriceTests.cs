@@ -21,12 +21,12 @@ namespace MegaBiosTest.Services
                 }
             };
 
-
             // Assert
             Assert.AreEqual(10.00, seatingPlan[0][0].Price); // Normal seat
             Assert.AreEqual(20.00, seatingPlan[0][1].Price); // Love seat 1
             Assert.AreEqual(20.00, seatingPlan[0][2].Price); // Love seat 2
         }
+
         [TestMethod]
         public void CheckForLoveSeats()
         {

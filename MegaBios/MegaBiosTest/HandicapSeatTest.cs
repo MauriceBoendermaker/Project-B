@@ -17,6 +17,7 @@ namespace MegaBiosTest
             var roomShowings = new List<RoomShowing>(); // valid room showings
             string roomNumber = "Room 1";
             DateTime showTime = DateTime.Now;
+
             Account reservingAccount = new Account(
                 "Daan",
                 "", // Tussenvoegsel
@@ -37,8 +38,6 @@ namespace MegaBiosTest
                 new List<Reservation>(),
                 new List<Reservation>()
             );
-
-
 
             List<List<Seat>> seating = new List<List<Seat>>
     {
@@ -65,6 +64,5 @@ namespace MegaBiosTest
             // Assert
             Assert.IsTrue(hasHandicapSeats);
         }
-
     }
 }

@@ -138,7 +138,9 @@ namespace MegaBios
                 {
                     // Convert "Ja" to true, "Nee" to false
                     is_student = (is_studentString == "ja");
+
                     Console.WriteLine("Geldige student status ingevoerd.");
+
                     break;
                 }
                 else
@@ -149,6 +151,7 @@ namespace MegaBios
 
             Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new List<Reservation>(), new List<Reservation>());
             jsonData.Add(newAccount);
+
             Console.WriteLine("Nieuw account toegevoegd aan de lijst.");
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);

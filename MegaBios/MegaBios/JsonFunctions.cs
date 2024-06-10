@@ -10,6 +10,7 @@ namespace MegaBios
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
+
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, jsonString);
         }
@@ -20,6 +21,7 @@ namespace MegaBios
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }            
+
             string jsonString = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<List<Movie>>(jsonString);
         }
@@ -30,6 +32,7 @@ namespace MegaBios
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
+
             string jsonString = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<List<RoomShowing>>(jsonString);
         }
@@ -40,6 +43,7 @@ namespace MegaBios
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
+
             string jsonString = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<List<Account>>(jsonString);
         }
@@ -48,13 +52,13 @@ namespace MegaBios
         //     string jsonString = File.ReadAllText(filePath);
         //     return JsonSerializer.Deserialize<List<Guest>>(jsonString);
         // }
-
         public static List<Guest> LoadGuests(string filePath)
         {
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true")
             {
                 filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
+
             try
             {
                 string jsonString = File.ReadAllText(filePath);
@@ -102,7 +106,6 @@ namespace MegaBios
         //     }
         //     return seating;
         // }
-
         public static List<List<Seat>> GenerateSeating(int height, int width)
         {
             List<List<Seat>> seating = new List<List<Seat>>(height);

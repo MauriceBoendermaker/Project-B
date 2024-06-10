@@ -33,6 +33,7 @@ namespace MegaBios
                         CreateAccount.CreateNewAccount(jsonData);
                         bool firstLogin = true;
                         int attempts = 0;
+
                         while (true)
                         {
                             if (attempts >= 3)
@@ -59,6 +60,7 @@ namespace MegaBios
                     case 3:
                         firstLogin = true;
                         attempts = 0;
+
                         while (true)
                         {
                             if (attempts >= 3)
@@ -84,6 +86,7 @@ namespace MegaBios
                         break;
                     default:
                         Console.WriteLine("Ongeldige keuze. Probeer het alstublieft opnieuw.");
+
                         break;
                 }
             }
@@ -106,7 +109,6 @@ namespace MegaBios
                 userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
 
                 // Console.WriteLine(userChoice);
-
                 switch (userChoice)
                 {
                     case 0:
