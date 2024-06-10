@@ -7,25 +7,25 @@ namespace MegaBios
         public static void WriteToJson<T>(string filePath, T data)
         {
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + filePath, jsonString);
+            File.WriteAllText(filePath, jsonString);
         }
 
         public static List<Movie> LoadMovies(string filePath)
         {
-            string jsonString = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + filePath);
-            return JsonSerializer.Deserialize<List<Movie>>(jsonString)!;
+            string jsonString = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<List<Movie>>(jsonString);
         }
 
         public static List<RoomShowing> LoadRoomShowings(string filePath)
         {
-            string jsonString = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + filePath);
-            return JsonSerializer.Deserialize<List<RoomShowing>>(jsonString)!;
+            string jsonString = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<List<RoomShowing>>(jsonString);
         }
 
         public static List<Account> LoadCustomers(string filePath)
         {
-            string jsonString = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + filePath);
-            return JsonSerializer.Deserialize<List<Account>>(jsonString)!;
+            string jsonString = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<List<Account>>(jsonString);
         }
 
         // public static List<Guest> LoadGuests (string filePath) {
@@ -37,7 +37,7 @@ namespace MegaBios
         {
             try
             {
-                string jsonString = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + filePath);
+                string jsonString = File.ReadAllText(filePath);
 
                 var options = new JsonSerializerOptions
                 {
