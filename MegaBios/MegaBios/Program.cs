@@ -323,7 +323,7 @@ namespace MegaBios
         {
             int roomToEdit = -1;
 
-            // Krijg zaal nummer
+            // Get zaalnummer
             while (true)
             {
                 if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
@@ -567,7 +567,7 @@ namespace MegaBios
 
             if (selectedOption == -1)
             {
-                return reservation; // Returning the original reservation in case of invalid option selection
+                return reservation; // Return de orginele reservering in het geval dat er een ongeldige optie wordt geselecteerd
             }
 
             switch (selectedOption)
@@ -588,7 +588,7 @@ namespace MegaBios
                 case 1:
                     return reservation;
                 default:
-                    return reservation; // Default case to handle any unexpected values
+                    return reservation; // Standaardcase voor het verwerken van onverwachte waarden
             }
         }
 

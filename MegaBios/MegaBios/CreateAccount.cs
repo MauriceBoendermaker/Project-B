@@ -130,7 +130,7 @@ namespace MegaBios
             while (true)
             {
                 Console.Write("Bent u student? (Ja/Nee): ");
-                string is_studentString = Console.ReadLine()?.ToLower(); // Convert input to lowercase
+                string is_studentString = Console.ReadLine()?.ToLower(); // Convert input naar lowercase
 
                 if (is_studentString == "ja" || is_studentString == "nee")
                 {

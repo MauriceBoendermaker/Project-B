@@ -60,7 +60,7 @@ namespace MegaBiosTest
             Reservation updatedReservation = Program.CancelSeat(reservingAccount, reservation, reservedSeat);
 
             Assert.IsNotNull(updatedReservation);
-            Assert.IsFalse(updatedReservation.ReservedSeats.Contains(reservedSeat)); // Check if the reserved seat is removed
+            Assert.IsFalse(updatedReservation.ReservedSeats.Contains(reservedSeat)); // Controleer of de gereserveerde seat is verwijderd
         }
     }
 }

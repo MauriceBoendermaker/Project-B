@@ -14,7 +14,7 @@ namespace MegaBiosTest
                 new List<Seat>
                 {
                     new Seat { SeatType = "normal", SeatTaken = false },
-                    new Seat { SeatType = "normal", SeatTaken = true }, // Seat is taken should be red
+                    new Seat { SeatType = "normal", SeatTaken = true }, // De stoel is bezet en moet rood zijn
                     new Seat { SeatType = "normal", SeatTaken = false }
                 }
             };
@@ -25,7 +25,7 @@ namespace MegaBiosTest
                 {
                     if (seat.SeatTaken)
                     {
-                        // Check if the seat is taken
+                        // Controleer of de stoel bezet is
                         Assert.IsTrue(seat.SeatTaken);
                     }
                 }

@@ -9,7 +9,7 @@
         [TestMethod]
         public void CheckIfMoviesJsonOrCsvExists()
         {
-            // Print the absolute paths for debugging
+            // Print de absolute paths voor debugging
             string absoluteJsonPath = Path.GetFullPath(jsonFilePath);
             string absoluteCsvPath = Path.GetFullPath(csvFilePath);
 
@@ -26,21 +26,21 @@
         [TestMethod]
         public void CheckIfMoviesJsonOrCsvExistsAndIsNotEmpty()
         {
-            // Print the absolute paths for debugging
+            // Print de absolute paths voor debugging
             string absoluteJsonPath = Path.GetFullPath(jsonFilePath);
             string absoluteCsvPath = Path.GetFullPath(csvFilePath);
 
             Console.WriteLine($"Checking JSON Path: {absoluteJsonPath}");
             Console.WriteLine($"Checking CSV Path: {absoluteCsvPath}");
 
-            // Check if either file exists
+            // Controleer of een van beide bestanden bestaat
             bool jsonExists = File.Exists(jsonFilePath);
             bool csvExists = File.Exists(csvFilePath);
 
-            // Assert that one of the files exists
+            // Bevestig dat een van de bestanden bestaat
             Assert.IsTrue(jsonExists || csvExists, "Movies.json of Movies.csv bestaat niet in de map MegaBios.");
 
-            // Check that the file is not empty
+            // Controleer of het bestand niet leeg is
             if (jsonExists)
             {
                 Assert.IsTrue(new FileInfo(jsonFilePath).Length > 0, "Movies.json bestaat maar is leeg.");
