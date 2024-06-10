@@ -102,14 +102,21 @@ namespace MegaBios
             return null!;
         }
 
-        public static bool operator ==(Guest t1, Guest t2)
+        public static bool Equals(Guest g1, Guest g2) {
+            if (g1 == null! || g2 == null!) {
+                return g1! == g2!;
+            }
+            return g1 == g2;
+        }
+
+        public static bool operator ==(Guest g1, Guest g2)
         {
-            if (t1 is null || t2 is null)
+            if (g1 is null || g2 is null)
             {
-                return (t1 is null && t2 is null);
+                return g1 is null && g2 is null;
             }
 
-            return t1.Email.Equals(t2.Email) && t1.Voornaam.Equals(t2.Voornaam) && t1.Achternaam.Equals(t2.Achternaam);
+            return g1.Email.Equals(g2.Email) && g1.Voornaam.Equals(g2.Voornaam) && g1.Achternaam.Equals(g2.Achternaam);
         }
 
         public static bool operator !=(Guest t1, Guest t2)
@@ -206,13 +213,20 @@ namespace MegaBios
             }
         }
 
-        public static bool operator ==(Account t1, Account t2)
-        {
-            if (t1 is null || t2 is null)
-            {
-                return (t1 is null && t2 is null);
+        public static bool Equals(Account a1, Account a2) {
+            if (a1 == null! || a2 == null!) {
+                return a1! == a2!;
             }
-            return t1.Email.Equals(t2.Email) && t1.Wachtwoord.Equals(t2.Wachtwoord);
+            return a1 == a2;
+        }
+
+        public static bool operator ==(Account a1, Account a2)
+        {
+            if (a1 is null || a2 is null)
+            {
+                return a1 is null && a2 is null;
+            }
+            return a1.Email.Equals(a2.Email) && a1.Wachtwoord.Equals(a2.Wachtwoord);
         }
 
         public static bool operator !=(Account t1, Account t2)
