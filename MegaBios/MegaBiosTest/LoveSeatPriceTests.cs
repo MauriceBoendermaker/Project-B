@@ -28,7 +28,7 @@ namespace MegaBiosTest.Services
         public void CheckForLoveSeats()
         {
             // Arrange
-            var roomShowings = new List<RoomShowing>(); // valid room showings
+            var roomShowings = new List<RoomShowing>(); // Valid room showings
             string roomNumber = "Room 1";
             DateTime showTime = DateTime.Now;
             Account reservingAccount = new Account(
