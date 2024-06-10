@@ -78,7 +78,7 @@ namespace MegaBiosTest.Services
             // Assert
             Thread.Sleep(500); // Kleine vertraging om bestandssysteem te laten verwerken
             var fileExists = File.Exists(nextRoomFilePath);
-            Assert.IsTrue(fileExists, $"Room{nextRoomNumber}.json is niet aangemaakt. in {nextRoomFilePath}");
+            Assert.IsTrue(fileExists, $"Room{nextRoomNumber}.json is niet aangemaakt. in {Path.GetFullPath(nextRoomFilePath)}");
         }
 
         [TestMethod]
@@ -98,9 +98,9 @@ namespace MegaBiosTest.Services
             });
 
             // Assert
-            Thread.Sleep(500); // Kleine vertraging om bestandssysteem te laten verwerken
+            Thread.Sleep(1000); // Kleine vertraging om bestandssysteem te laten verwerken
             var newRoomCount = GetCurrentRoomCount();
-            Assert.AreEqual(initialRoomCount + 1, newRoomCount, "Het aantal zalen is niet met 1 toegenomen.");
+            Assert.AreEqual(initialRoomCount + 1, newRoomCount, $"Het aantal zalen is niet met 1 toegenomen. {initialRoomCount} {newRoomCount}");
         }
     }
 }
