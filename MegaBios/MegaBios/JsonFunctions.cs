@@ -8,7 +8,7 @@ namespace MegaBios
         {   
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
             {
-                filePath = "../MegaBios/obj/Debug/net8.0/" + filePath;
+                filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
             string jsonString = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(filePath, jsonString);
@@ -18,7 +18,7 @@ namespace MegaBios
         {
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
             {
-                filePath = "../MegaBios/obj/Debug/net8.0/" + filePath;
+                filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }            
             string jsonString = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<List<Movie>>(jsonString);
@@ -28,7 +28,7 @@ namespace MegaBios
         {
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
             {
-                filePath = "../MegaBios/obj/Debug/net8.0/" + filePath;
+                filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
             string jsonString = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<List<RoomShowing>>(jsonString);
@@ -38,7 +38,7 @@ namespace MegaBios
         {
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
             {
-                filePath = "../MegaBios/obj/Debug/net8.0/" + filePath;
+                filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
             string jsonString = File.ReadAllText(filePath);
             return JsonSerializer.Deserialize<List<Account>>(jsonString);
@@ -53,7 +53,7 @@ namespace MegaBios
         {
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
             {
-                filePath = "../MegaBios/obj/Debug/net8.0/" + filePath;
+                filePath = "../../../../MegaBios/obj/Debug/net8.0/" + filePath;
             }
             try
             {
