@@ -15,10 +15,12 @@ namespace MegaBiosTest
         {
             // Stel de omgevingsvariabele in voor de testomgeving
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
+
         }
         [TestMethod]
         public void CancelSeat_SeatBecomesAvailable()
         {
+            // Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
             Account reservingAccount = new Account(
                 "Daan",
                 "", // Tussenvoegsel

@@ -217,7 +217,7 @@ namespace MegaBios
             if (a1 == null! || a2 == null!) {
                 return a1! == a2!;
             }
-            return a1 == a2;
+            return a1.Email.Equals(a2.Email) && a1.Wachtwoord.Equals(a2.Wachtwoord);
         }
 
         public static bool operator ==(Account a1, Account a2)
