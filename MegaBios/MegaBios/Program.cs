@@ -337,8 +337,13 @@ namespace MegaBios
                 {
                     return;
                 }
-
-                if (File.Exists($"../../../Room{roomToEdit}.json"))
+                if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true" )
+                {
+                    if (File.Exists($"../../../../MegaBios/obj/Debug/net8.0/../../../Room{roomToEdit}.json")) {
+                        break;
+                    }
+                } 
+                else if (File.Exists($"../../../Room{roomToEdit}.json"))
                 {
                     break;
                 }

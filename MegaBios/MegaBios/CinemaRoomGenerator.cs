@@ -63,6 +63,13 @@ namespace MegaBios
             int numberOfRooms = 0;
 
             // Bereken het aantal bestaande zalen
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+                {
+                    for (int i = 1; File.Exists($"../../../../MegaBios/obj/Debug/net8.0/../../../Room{i}.json"); i++)
+                    {
+                        numberOfRooms = i;
+                    }
+                }
             for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
             {
                 numberOfRooms = i;
@@ -144,7 +151,7 @@ namespace MegaBios
         public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating)
         {
             List<RoomShowing> roomShowings = new();
-            string moviesFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\MegaBios\Movies.json");
+            string moviesFilePath = Path.Combine("../../../Movies.json");
             List<Movie> movies = JsonFunctions.LoadMovies(moviesFilePath);
             DateTime generationStartTime;
 
