@@ -237,7 +237,7 @@ namespace MegaBios
             for (int i = 0; i < seating.Count; i++)
             {
                 // Voeg de rijnummers toe aan de legenda
-                seatingText.Append((i+1).ToString().Length == 1 ? $" {i+1} " : $"{i+1} ");
+                seatingText.Append((i + 1).ToString().Length == 1 ? $" {i + 1} " : $"{i + 1} ");
 
                 for (int j = 0; j < seating[i].Count; j++)
                 {
@@ -448,7 +448,7 @@ namespace MegaBios
         {
             StringBuilder legendText = new StringBuilder();
             legendText.Append($"Legenda:\n");
-            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro)\n\x1b[35m[]\x1b[0m = Loveseats (20.00 euro)\n[] = Normale Stoelen (10.00 euro)\n\x1b[41m[]\x1b[0m = Bezette Stoelen\n\x1b[42m[]\x1b[0m = Gekozen Stoelen]\n\x1b[43m[]\x1b[0m = Huidige Stoel");
+            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro)\n\x1b[35m[]\x1b[0m = Loveseats (20.00 euro)\n[] = Normale Stoelen (10.00 euro)\n\x1b[41m[]\x1b[0m = Bezette Stoelen\n\x1b[42m[]\x1b[0m = Gekozen Stoelen\n\x1b[43m[]\x1b[0m = Huidige Stoel");
 
             Console.WriteLine(legendText);
         }
