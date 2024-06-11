@@ -68,13 +68,6 @@ namespace MegaBios
             int numberOfRooms = 0;
 
             // Bereken het aantal bestaande zalen
-            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true")
-                {
-                    for (int i = 1; File.Exists($"../../../../MegaBios/obj/Debug/net8.0/../../../Room{i}.json"); i++)
-                    {
-                        numberOfRooms = i;
-                    }
-                }
             for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
             {
                 numberOfRooms = i;

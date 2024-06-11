@@ -7,7 +7,6 @@ namespace MegaBiosTest.Services
     public class CreateAccountIntegrationTests
     {
         private string filePath = "../../../customers.json";
-        private string testRedirecionPath = "../../../../MegaBios/obj/Debug/net8.0/";
 
         [TestInitialize]
         public void TestInitialize()
@@ -61,7 +60,7 @@ namespace MegaBiosTest.Services
         {
             // Arrange
             var jsonData = new List<Account>();
-            if (File.Exists(testRedirecionPath + filePath))
+            if (File.Exists(filePath))
             {
                 var json = File.ReadAllText(filePath);
                 jsonData = JsonSerializer.Deserialize<List<Account>>(json);
@@ -74,11 +73,11 @@ namespace MegaBiosTest.Services
             // Act
             SuppressConsoleOutput(() => {
                 CreateAccount.CreateNewAccount(jsonData);
-                JsonFunctions.WriteToJson(testRedirecionPath + filePath, jsonData);
+                JsonFunctions.WriteToJson(filePath, jsonData);
             });
 
             // Assert
-            var updatedJson = File.ReadAllText(testRedirecionPath + filePath);
+            var updatedJson = File.ReadAllText(filePath);
             var updatedJsonData = JsonSerializer.Deserialize<List<Account>>(updatedJson);
 
             var createdAccount = updatedJsonData.Find(account => account.Email == "john.doe@example.com");
@@ -96,7 +95,7 @@ namespace MegaBiosTest.Services
 
             if (File.Exists(filePath))
             {
-                var json = File.ReadAllText(testRedirecionPath + filePath);
+                var json = File.ReadAllText(filePath);
                 jsonData = JsonSerializer.Deserialize<List<Account>>(json);
             }
 
@@ -110,12 +109,12 @@ namespace MegaBiosTest.Services
             }, "aziaatyt@gmail.com", "alper123", "0640518191", "IDeal", true, new List<Reservation>(), new List<Reservation>());
 
             jsonData.Add(testAccount);
-            JsonFunctions.WriteToJson(testRedirecionPath + filePath, jsonData);
+            JsonFunctions.WriteToJson(filePath, jsonData);
 
             // Act
             SuppressConsoleOutput(() => {
                 DeleteAccount.RemoveAccount(jsonData, testAccount);
-                JsonFunctions.WriteToJson(testRedirecionPath + filePath, jsonData);
+                JsonFunctions.WriteToJson(filePath, jsonData);
             });
 
             // Assert

@@ -12,7 +12,7 @@ namespace MegaBiosTest.Services
     {
         private string basePath = "../../../";
         private string filePattern = "Room*.json";
-        private string testRedirecionPath = "../../../../MegaBios/obj/Debug/net8.0/";
+
 
         [TestInitialize]
         public void TestInitialize()
@@ -53,7 +53,7 @@ namespace MegaBiosTest.Services
 
         private int GetCurrentRoomCount()
         {
-            var existingFiles = Directory.GetFiles(testRedirecionPath + basePath, filePattern);
+            var existingFiles = Directory.GetFiles(basePath, filePattern);
             return existingFiles.Length;
         }
 
@@ -64,7 +64,7 @@ namespace MegaBiosTest.Services
             var generator = new CinemaRoomGenerator();
             var initialRoomCount = GetCurrentRoomCount();
             var nextRoomNumber = initialRoomCount + 1;
-            var nextRoomFilePath = Path.Combine(testRedirecionPath + basePath, $"Room{nextRoomNumber}.json");
+            var nextRoomFilePath = Path.Combine(basePath, $"Room{nextRoomNumber}.json");
 
             var input = new StringReader("1\n10\n10\n2024-01-01 10:00:00\n");
             Console.SetIn(input);
