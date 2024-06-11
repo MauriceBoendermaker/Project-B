@@ -256,7 +256,7 @@ namespace MegaBios
 
         public bool IsAdmin()
         {
-            return Voornaam == "admin" && Achternaam == "admin" && Email == "admin@testmail.com" && Wachtwoord == "adminwachtwoord";
+            return Voornaam == "admin" && Achternaam == "admin" && Email == "admin" && Wachtwoord == "admin";
         }
 
         public Account ReloadAccount()
