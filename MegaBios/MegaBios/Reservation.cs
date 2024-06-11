@@ -150,8 +150,8 @@ namespace MegaBios
                 $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
                 $"Reserveringszaal: {roomString}\n" +
                 $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
-                $"Bestellingsdatum: {reservation.ReservationDate}\n" +
-                $"-----------------------------------------------------";
+                $"Bestellingsdatum: {reservation.ReservationDate}\n";
+                
         }
 
         public static string PrintHistory(Reservation reservation)
@@ -172,8 +172,7 @@ namespace MegaBios
                 $"Gereserveerde stoelen:\n{stoelenString}" +
                 $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
                 $"Reserveringszaal: {roomString}\n" +
-                $"Reserveringsdatum: {reservation.ShowingDate}\n" +
-                $"-----------------------------------------------------";
+                $"Reserveringsdatum: {reservation.ShowingDate}\n";
         }
 
         public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Account user)

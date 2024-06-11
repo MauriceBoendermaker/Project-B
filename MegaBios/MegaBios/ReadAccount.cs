@@ -13,7 +13,7 @@ namespace MegaBios
             Console.WriteLine($"Email: {loggedInUser.Email}");
             Console.WriteLine($"Telefoonnummer: {loggedInUser.TelefoonNr}");
             Console.WriteLine($"Voorkeur betaalwijze: {loggedInUser.Voorkeur_Betaalwijze}");
-            Console.WriteLine($"Student: {(loggedInUser.IsStudent ? true : false)}");
+            Console.WriteLine($"Student: {(loggedInUser.IsStudent ? "ja" : "nee")}");
         }
     }
 }

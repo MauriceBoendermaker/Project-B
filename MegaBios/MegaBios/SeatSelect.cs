@@ -291,8 +291,7 @@ namespace MegaBios
             Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice:0.00} euro\n"); // Totaalprijs
 
             PrintLegend();
-
-            Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op de spatiebalk om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op 'Backspace' om stoelselectie te wissen");
+            System.Console.WriteLine("\nPijltoetsen => Navigatie\nEnter => Bevestiging\nBackspace => Wis Stoelselectie");
             Console.WriteLine(_extraMessage);
         }
 

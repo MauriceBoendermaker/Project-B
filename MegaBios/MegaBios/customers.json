@@ -72,7 +72,35 @@
     "telefoonnummer": "06 1234567890",
     "voorkeur_betaalwijze": "PayPal",
     "is_student": false,
-    "reservations": [],
+    "reservations": [
+      {
+        "reservation_number": "9770",
+        "movie_title": "The Shawshank Redemption",
+        "reserved_seats": [
+          {
+            "seat_number": "2-2",
+            "is_taken": true,
+            "type": "normal",
+            "price": 10
+          },
+          {
+            "seat_number": "2-3",
+            "is_taken": true,
+            "type": "normal",
+            "price": 10
+          },
+          {
+            "seat_number": "2-4",
+            "is_taken": true,
+            "type": "normal",
+            "price": 10
+          }
+        ],
+        "reservation_room": "Room1",
+        "showing_date": "2024-08-25T09:00:00",
+        "date_of_reservation": "2024-06-11T20:41:45.8952743+02:00"
+      }
+    ],
     "history": [
       {
         "reservation_number": "1703",
@@ -139,6 +167,33 @@
         "reservation_room": "Room3",
         "showing_date": "2024-08-25T17:57:00",
         "date_of_reservation": "2024-06-11T18:25:48.2776195+02:00"
+      },
+      {
+        "reservation_number": "9770",
+        "movie_title": "The Shawshank Redemption",
+        "reserved_seats": [
+          {
+            "seat_number": "2-2",
+            "is_taken": true,
+            "type": "normal",
+            "price": 10
+          },
+          {
+            "seat_number": "2-3",
+            "is_taken": true,
+            "type": "normal",
+            "price": 10
+          },
+          {
+            "seat_number": "2-4",
+            "is_taken": true,
+            "type": "normal",
+            "price": 10
+          }
+        ],
+        "reservation_room": "Room1",
+        "showing_date": "2024-08-25T09:00:00",
+        "date_of_reservation": "2024-06-11T20:41:45.8952743+02:00"
       }
     ]
   },
