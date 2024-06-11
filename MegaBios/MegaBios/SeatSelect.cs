@@ -143,7 +143,6 @@ namespace MegaBios
                     updatedShowing = currentShowing;
                 }
             }
-
             // Iterate over de 2D List and markeer elke geselecteerde seat als selected in de 2D list
             for (int i = 0; i < updatedShowing.Seating.Count; i++)
             {
@@ -233,7 +232,7 @@ namespace MegaBios
             }
 
             seatingText.Append("\n");
-
+            
             for (int i = 0; i < seating.Count; i++)
             {
                 // Voeg de rijnummers toe aan de legenda
@@ -345,7 +344,7 @@ namespace MegaBios
                         {
                             _selectedSeats.Add(_selectedSeat);
                             UpdateSeatBounds(_selectedSeat);
-
+                            _extraMessage = "";
                             if (_selectedSeat.SeatType == "love seat")
                             {
                                 Seat rightCorrespondingSeat = GetCorrespondingLoveSeatRight(_selectedSeat);
@@ -455,7 +454,7 @@ namespace MegaBios
 
         public void UpdateSeatBounds(Seat seat)
         {
-            int seatIndex = int.Parse(seat.SeatNumber.Substring(2)) - 1;
+            int seatIndex = int.Parse(seat.SeatNumber.Split('-')[1]) - 1;
 
             if (seatIndex < _selectedSeatsLeftBound)
             {
@@ -480,14 +479,15 @@ namespace MegaBios
             // Controleer of de geselecteerde stoel zich op de rechterrij bevindt en of de geselecteerde stoel grenst aan de momenteel geselecteerde stoelen of niet
             else if (cursor[1] == _selectedSeatsRow)
             {
-                if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) < -1)
-                {
-                    return false;
-                }
-                else if (Math.Abs(cursor[0] - _selectedSeatsRightBound) == 1 || Math.Abs(cursor[0] - _selectedSeatsLeftBound) == 1)
+                if (Math.Abs(cursor[0] - _selectedSeatsRightBound) == 1 || Math.Abs(cursor[0] - _selectedSeatsLeftBound) == 1)
                 {
                     return true;
                 }
+                else if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) < -1)
+                {
+                    return false;
+                }
+                
 
                 return false;
             }
@@ -525,11 +525,9 @@ namespace MegaBios
             return true;
         }
 
-
         // Selecteer de beschikbare plaatsen voor een groep werd uiteindelijk toch niet gebruikt vanwege onduidelijkheden van de PO
         // De onderste twee methoden zijn echter nodig voor het testen en worden niet gebruikt in onze applicatie
         // Kunnen eigenlijk beter in comments
-        // Express de methodes niet verwijderd en in comments gezet voor PO om te zien dat we aan deze twee methodes wel hebben gewerkt maar later verwijderd
 
 
         // public List<Seat> SelectGroupSeats(int groupAmount)

@@ -119,7 +119,7 @@ namespace MegaBios
                 stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
                 totalPrice += seat.Price;
             }
-            string roomString = reservation.ReservationRoom.Substring(0, 3) + " " + reservation.ReservationRoom.Substring(3);
+            string roomString = reservation.ReservationRoom.Substring(0, 4) + " " + reservation.ReservationRoom.Substring(4);
             reservationPrint.AppendLine($"--------RESERVERING DATA-----------\n");
             reservationPrint.AppendLine($"Reservation Number: {reservation.ReservationNumber}");
             reservationPrint.AppendLine($"Film: {reservation.MovieTitle} \nRoom: {roomString}");
@@ -143,15 +143,15 @@ namespace MegaBios
                 stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
                 totalPrice += seat.Price;
             }
-            string roomString = reservation.ReservationRoom.Substring(0, 3) + " " + reservation.ReservationRoom.Substring(3);
-            return $"--------UW BESTELLINGEN-----------\n\n" +
-                $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+            string roomString = reservation.ReservationRoom.Substring(0, 4) + " " + reservation.ReservationRoom.Substring(4);
+            return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
                 $"Film: {reservation.MovieTitle}\n" +
                 $"Gereserveerde stoelen:\n{stoelenString}" +
                 $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
                 $"Reserveringszaal: {roomString}\n" +
                 $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
-                $"Bestellingsdatum: {reservation.ReservationDate}";
+                $"Bestellingsdatum: {reservation.ReservationDate}\n" +
+                $"-----------------------------------------------------";
         }
 
         public static string PrintHistory(Reservation reservation)
@@ -159,7 +159,7 @@ namespace MegaBios
             string stoelenString = "";
             double totalPrice = 0;
             Seat seat; // Declare seat buiten de loop
-
+            string roomString = reservation.ReservationRoom.Substring(0, 4) + " " + reservation.ReservationRoom.Substring(4);
             for (int i = 0; i < reservation.ReservedSeats.Count; i++)
             {
                 seat = reservation.ReservedSeats[i]; // Assign value in de loop
@@ -167,13 +167,13 @@ namespace MegaBios
                 totalPrice += seat.Price;
             }
 
-            return $"--------UW GESCHIEDENIS-----------\n\n" +
-                $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+            return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
                 $"Film: {reservation.MovieTitle}\n" +
                 $"Gereserveerde stoelen:\n{stoelenString}" +
                 $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
-                $"Reserveringszaal: {reservation.ReservationRoom}\n" +
-                $"Reserveringsdatum: {reservation.ShowingDate}";
+                $"Reserveringszaal: {roomString}\n" +
+                $"Reserveringsdatum: {reservation.ShowingDate}\n" +
+                $"-----------------------------------------------------";
         }
 
         public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Account user)

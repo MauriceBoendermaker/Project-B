@@ -286,7 +286,7 @@ namespace MegaBios
                         break;
                     case 6:
                         Console.Clear();
-
+                        System.Console.WriteLine($"--------UW RESERVERINGEN-----------\n");
                         foreach (var userReservation in account.Reservations)
                         {
                             Console.WriteLine(Reservation.PrintReservationUser(userReservation));
@@ -298,7 +298,7 @@ namespace MegaBios
                         break;
                     case 7:
                         Console.Clear();
-
+                        System.Console.WriteLine($"--------UW GESCHIEDENIS-----------\n");
                         foreach (var userReservation in account.History)
                         {
                             Console.WriteLine(Reservation.PrintHistory(userReservation));
@@ -614,7 +614,12 @@ namespace MegaBios
             {
                 // Ja
                 case 0:
-                    account.History.Remove(reservation);
+                    for (int i = 0; i < account.Reservations.Count; i++) {
+                        if (account.Reservations[i].ReservationNumber == reservation.ReservationNumber) {
+                            account.Reservations.RemoveAt(i);
+                        }   
+                    }
+                    
                     double totalPrice = 0;
 
                     foreach (Seat seat in seats)
@@ -685,7 +690,11 @@ namespace MegaBios
             {
                 // Ja
                 case 0:
-                    guest.Reservations.Remove(reservation);
+                    for (int i = 0; i < guest.Reservations.Count; i++) {
+                        if (guest.Reservations[i].ReservationNumber == reservation.ReservationNumber) {
+                            guest.Reservations.RemoveAt(i);
+                        }   
+                    }
                     double totalPrice = 0;
 
                     foreach (Seat seat in seats)
@@ -709,7 +718,7 @@ namespace MegaBios
         {
             while (true)
             {
-                List<string> reservationNumbers = account.History
+                List<string> reservationNumbers = account.Reservations
                     .Select(x => x.ReservationNumber)
                     .ToList();
 
@@ -797,12 +806,10 @@ namespace MegaBios
                     // Annuleer de hele reservering
                     case 1:
                         account = CancelReservation(account, selectedReservation, selectedReservation.ReservedSeats);
-
                         if (account == null)
-                        {
+                        {   
                             break;
                         }
-
                         Account.UpdateAccount(account);
                         return;
                 }
@@ -893,7 +900,7 @@ namespace MegaBios
 
                         if (guest == null)
                         {
-                            break; ;
+                            break;
                         }
 
                         Guest.UpdateAccount(guest);

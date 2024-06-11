@@ -30,20 +30,7 @@ namespace MegaBios
             }
         }
 
-        public void ResetAllSeatings()
-        {
-            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
-            {
-                List<RoomShowing> roomshowings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
-
-                for (int j = 0; j < roomshowings.Count; j++)
-                {
-                    roomshowings[i].Seating = ResetSeating(roomshowings[i].Seating);
-                }
-
-                JsonFunctions.WriteToJson($"../../../Room{i}.json", roomshowings);
-            }
-        }
+        
 
         public List<List<Seat>> ResetSeating(List<List<Seat>> seating)
         {
@@ -57,6 +44,24 @@ namespace MegaBios
 
             return seating;
         }
+        public void ResetAllSeatings()
+        {
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
+            {
+                List<RoomShowing> roomshowings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
+                
+                for (int j = 0; j < roomshowings.Count; j++)
+                {
+                    roomshowings[j].Seating = ResetSeating(roomshowings[i].Seating);
+                }
+               
+                JsonFunctions.WriteToJson($"../../../Room{i}.json", roomshowings);
+                
+                
+            }
+            while (true) {}
+        }
+        
 
         public void GenerateShowingData()
         {
@@ -175,9 +180,6 @@ namespace MegaBios
                     Console.WriteLine(e);
                 }
             }
-
-            Console.WriteLine("test");
-
             DateTime generationCurrentTime = generationStartTime;
             TimeSpan generationTs = generationCurrentTime - generationStartTime;
             Random rand = new Random();

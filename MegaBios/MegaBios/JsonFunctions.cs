@@ -94,12 +94,12 @@ namespace MegaBios
                     seat.SeatNumber = $"{i}-{j}";
                     seat.SeatTaken = false;
 
-                    if (i == 0 && (j == 1 || j == 2 || j == 3 || j == width || j == width - 1 || j == width - 2))
+                    if (i == 1 && (j == 1 || j == 2 || j == 3 || j == width || j == width - 1 || j == width - 2))
                     {
                         seat.SeatType = "handicap";
                         seat.Price = 10.00;
                     }
-                    else if (i != 0 && i % 2 != 0 && (j == 1 || j == 2 || j == width || j == width - 1))
+                    else if (i != 1 && i % 2 != 0 && (j == 1 || j == 2 || j == width || j == width - 1))
                     {
                         seat.SeatType = "love seat";
                         seat.Price = 20.00;

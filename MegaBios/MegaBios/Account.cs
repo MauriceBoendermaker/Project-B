@@ -31,7 +31,11 @@ namespace MegaBios
 
         public static Guest CreateGuest()
         {
-            Console.WriteLine("\nCreëer gast account");
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+            {
+                Console.Clear();
+            }
+            Console.WriteLine("\nVoer je gegevens in");
             System.Console.WriteLine("Druk op enter om te bevestigen");
             Console.WriteLine("--------------------");
 
