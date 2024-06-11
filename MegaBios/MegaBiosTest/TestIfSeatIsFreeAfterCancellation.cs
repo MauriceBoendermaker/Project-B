@@ -8,14 +8,22 @@ using System.Threading.Tasks;
 namespace MegaBiosTest
 {
     [TestClass]
+
     public class SeatAvailableAfterCancellation
     {
+        private string filePath = "../../../Room1.json";
+
         [TestInitialize]
         public void TestInitialize()
         {
             // Stel de omgevingsvariabele in voor de testomgeving
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
 
+            // Maak een leeg bestand aan als het origineel niet bestaat
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, "[]");
+            }
         }
 
         [TestMethod]
