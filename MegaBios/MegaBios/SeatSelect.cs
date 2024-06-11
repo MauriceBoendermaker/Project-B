@@ -529,6 +529,7 @@ namespace MegaBios
         // Selecteer de beschikbare plaatsen voor een groep werd uiteindelijk toch niet gebruikt vanwege onduidelijkheden van de PO
         // De onderste twee methoden zijn echter nodig voor het testen en worden niet gebruikt in onze applicatie
         // Kunnen eigenlijk beter in comments
+        // Express de methodes niet verwijderd en in comments gezet voor PO om te zien dat we aan deze twee methodes wel hebben gewerkt maar later verwijderd
 
 
         // public List<Seat> SelectGroupSeats(int groupAmount)
