@@ -8,14 +8,16 @@ namespace MegaBiosTest
         [TestMethod]
         public void DisplaySeats_SeatTaken_Test()
         {
-            
+
             var seating = new List<List<Seat>>
             {
                 new List<Seat>
                 {
                     new Seat { SeatType = "normal", SeatTaken = false },
                     new Seat { SeatType = "normal", SeatTaken = true }, // De stoel is bezet en moet rood zijn
-                    new Seat { SeatType = "normal", SeatTaken = false }
+                    new Seat { SeatType = "Love seat", SeatTaken = false },
+                    new Seat { SeatType = "handicap", SeatTaken = true }
+
                 }
             };
 
