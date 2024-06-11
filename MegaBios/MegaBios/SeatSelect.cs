@@ -19,13 +19,15 @@ namespace MegaBios
         public string RoomNumber { get; set; }
         public DateTime ShowTime { get; set; }
         public Account ReservingAccount { get; set; }
+        public string MovieTitle {get; set;}
 
-        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime, Account reservingAccount = null!)
+        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime, Account reservingAccount, string movieTitle)
         {
             RoomShowings = roomShowings;
             RoomNumber = roomNumber;
             ShowTime = showTime;
             ReservingAccount = reservingAccount;
+            MovieTitle = movieTitle;
 
             foreach (RoomShowing showing in roomShowings)
             {
@@ -172,7 +174,7 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../{roomNumber}.json", roomShowings);
         }
 
-        public List<Seat> SelectSeats()
+        public Reservation SelectSeats()
         {
             List<int> cursorPos = new() { 1, 1 };
             DisplaySeats(cursorPos);
@@ -201,7 +203,10 @@ namespace MegaBios
                 _selectedSeats[i].SeatTaken = true;
             }
 
-            return _selectedSeats;
+            string reservationNumber = Reservation.generateReservationNumber();
+            Reservation reservation = new(reservationNumber, MovieTitle, _selectedSeats, RoomNumber, ShowTime, Reservation.ReturnDiscount(ReservingAccount));
+            reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, ReservingAccount);
+            return reservation;
         }
 
         public void DisplaySeats(List<int> cursorPos)

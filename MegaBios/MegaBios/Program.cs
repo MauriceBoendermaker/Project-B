@@ -507,11 +507,10 @@ namespace MegaBios
 
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
 
-            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, account);
-            List<Seat> selectedSeats;
-            selectedSeats = seatSelect.SelectSeats();
-            string reservationNumber = Reservation.generateReservationNumber();
-            Reservation reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
+            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, account, selectedMovie);
+            
+            Reservation reservation = seatSelect.SelectSeats();
+            
 
             return reservation;
         }

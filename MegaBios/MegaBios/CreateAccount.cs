@@ -58,9 +58,9 @@ namespace MegaBios
             string geboorteDatum;
             while (true)
             {
-                Console.Write("Voer geboortedatum in (YYYY-MM-DD): ");
+                Console.Write("Voer geboortedatum in (DD-MM-YYYY): ");
                 geboorteDatum = Console.ReadLine()!;
-                if (DateTime.TryParseExact(geboorteDatum, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out _))
+                if (DateTime.TryParseExact(geboorteDatum, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out _))
                 {
                     break;
                 }
@@ -69,20 +69,41 @@ namespace MegaBios
                     Console.WriteLine("Ongeldige invoer. Voer een geldige datum in het formaat YYYY-MM-DD in.");
                 }
             }
-
             Dictionary<string, string> adres = new Dictionary<string, string>();
-            Console.Write("Voer straatnaam in: ");
-            adres["straat"] = Console.ReadLine()!;
+            while (true)
+            {
+                Console.Write("Bent u student? (Ja/Nee): ");
+                string wantLetters = Console.ReadLine()?.ToLower(); // Convert input naar lowercase
+                
+                if (wantLetters == "ja")
+                {
+                    Console.Write("Voer straatnaam in: ");
+                    adres["straat"] = Console.ReadLine()!;
 
-            Console.Write("Voer huisnummer in: ");
-            adres["huisnummer"] = Console.ReadLine()!;
+                    Console.Write("Voer huisnummer in: ");
+                    adres["huisnummer"] = Console.ReadLine()!;
 
-            Console.Write("Voer woonplaats in: ");
-            adres["woonplaats"] = Console.ReadLine()!;
+                    Console.Write("Voer woonplaats in: ");
+                    adres["woonplaats"] = Console.ReadLine()!;
 
-            Console.Write("Voer postcode in: ");
-            adres["postcode"] = Console.ReadLine()!;
+                    Console.Write("Voer postcode in: ");
+                    adres["postcode"] = Console.ReadLine()!;
 
+                    break;
+                }
+                else if (wantLetters == "nee") {
+                    adres["straat"] = "";
+                    adres["huisnummer"] = "";
+                    adres["woonplaats"] = "";
+                    adres["postcode"] = "";
+                    break;
+                }
+                else 
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer 'Ja' of 'Nee' in.");
+                }
+            }    
+            
             string email;
             while (true)
             {

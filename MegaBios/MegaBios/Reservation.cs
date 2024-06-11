@@ -22,6 +22,9 @@ namespace MegaBios
 
         [JsonPropertyName("date_of_reservation")]
         public DateTime ReservationDate { get; set; }
+        [JsonPropertyName("discount")]
+        public double Discount { get; set; }
+
 
         public Reservation(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime showingDate)
         {
@@ -31,6 +34,17 @@ namespace MegaBios
             ReservationRoom = reservationRoom;
             ShowingDate = showingDate;
             ReservationDate = DateTime.Now;
+            Discount = 0;
+        }
+        public Reservation(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime showingDate, double discount)
+        {
+            ReservationNumber = reservationNumber;
+            MovieTitle = movieTitle;
+            ReservedSeats = reservedSeats;
+            ReservationRoom = reservationRoom;
+            ShowingDate = showingDate;
+            ReservationDate = DateTime.Now;
+            Discount = discount;
         }
 
         public static void AddReservation(Account account, Reservation reservation)
@@ -125,6 +139,9 @@ namespace MegaBios
             reservationPrint.AppendLine($"Film: {reservation.MovieTitle} \nRoom: {roomString}");
             reservationPrint.AppendLine($"Stoelen: \n{stoelenString}");
             reservationPrint.AppendLine($"Totaalprijs: {totalPrice:F2} Euro");
+            if (reservation.Discount > 0) {
+                reservationPrint.AppendLine($"Korting: {reservation.Discount * 100}");
+            }
             reservationPrint.AppendLine($"Tenstoonstellingsdatum: {reservation.ShowingDate}");
             reservationPrint.AppendLine("\nSelecteer \"ja\" om de bestelling te bevestigen\n");
 
@@ -144,13 +161,27 @@ namespace MegaBios
                 totalPrice += seat.Price;
             }
             string roomString = reservation.ReservationRoom.Substring(0, 4) + " " + reservation.ReservationRoom.Substring(4);
-            return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
-                $"Film: {reservation.MovieTitle}\n" +
-                $"Gereserveerde stoelen:\n{stoelenString}" +
-                $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
-                $"Reserveringszaal: {roomString}\n" +
-                $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
-                $"Bestellingsdatum: {reservation.ReservationDate}\n";
+            if (reservation.Discount > 0) {
+                return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                    $"Film: {reservation.MovieTitle}\n" +
+                    $"Gereserveerde stoelen:\n{stoelenString}" +
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Korting: {reservation.Discount*100}" +
+                    $"Reserveringszaal: {roomString}\n" +
+                    $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
+                    $"Bestellingsdatum: {reservation.ReservationDate}\n";
+
+            }
+            else {
+                return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                    $"Film: {reservation.MovieTitle}\n" +
+                    $"Gereserveerde stoelen:\n{stoelenString}" +
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Reserveringszaal: {roomString}\n" +
+                    $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
+                    $"Bestellingsdatum: {reservation.ReservationDate}\n";
+            }
+           
                 
         }
 
@@ -167,12 +198,25 @@ namespace MegaBios
                 totalPrice += seat.Price;
             }
 
-            return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
-                $"Film: {reservation.MovieTitle}\n" +
-                $"Gereserveerde stoelen:\n{stoelenString}" +
-                $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
-                $"Reserveringszaal: {roomString}\n" +
-                $"Reserveringsdatum: {reservation.ShowingDate}\n";
+            if (reservation.Discount > 0) {
+                return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                    $"Film: {reservation.MovieTitle}\n" +
+                    $"Gereserveerde stoelen:\n{stoelenString}" +
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Korting: {reservation.Discount*100}" +
+                    $"Reserveringszaal: {roomString}\n" +
+                    $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
+                    $"Bestellingsdatum: {reservation.ReservationDate}\n";
+            }
+            else {
+                return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                    $"Film: {reservation.MovieTitle}\n" +
+                    $"Gereserveerde stoelen:\n{stoelenString}" +
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Reserveringszaal: {roomString}\n" +
+                    $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
+                    $"Bestellingsdatum: {reservation.ReservationDate}\n";
+            } 
         }
 
         public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Account user)
@@ -192,6 +236,16 @@ namespace MegaBios
             }
 
             return selectedSeats;
+        }
+        public static double ReturnDiscount(Account user) {
+            double discount = 0;
+            int leeftijd = DateTime.Now.Year - Convert.ToDateTime(user.GeboorteDatum).Year;
+
+            if (user.IsStudent || leeftijd >= 65)
+            {
+                discount = 0.15;
+            }
+            return discount;
         }
     }
 }
