@@ -198,5 +198,24 @@
     "is_student": false,
     "reservations": [],
     "history": []
+  },
+  {
+    "voornaam": "xander",
+    "tussenvoegsel": "",
+    "achternaam": "bos",
+    "geboorte_datum": "2004-08-25",
+    "adres": {
+      "straat": "testlaan",
+      "huisnummer": "123",
+      "woonplaats": "berkel en rodenrijs",
+      "postcode": "2651 DE"
+    },
+    "email": "xanderbos@mail.com",
+    "wachtwoord": "test123",
+    "telefoonnummer": "0612345678",
+    "voorkeur_betaalwijze": "ideal",
+    "is_student": true,
+    "reservations": [],
+    "history": []
   }
 ]

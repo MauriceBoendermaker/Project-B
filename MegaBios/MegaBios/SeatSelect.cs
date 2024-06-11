@@ -480,7 +480,7 @@ namespace MegaBios
             // Controleer of de geselecteerde stoel zich op de rechterrij bevindt en of de geselecteerde stoel grenst aan de momenteel geselecteerde stoelen of niet
             else if (cursor[1] == _selectedSeatsRow)
             {
-                if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) > 1)
+                if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) < -1)
                 {
                     return false;
                 }

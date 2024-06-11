@@ -7,6 +7,7 @@ namespace MegaBios
         public static void CreateNewAccount(List<Account> jsonData)
         {
             Console.WriteLine("\nCreëer nieuw account");
+            System.Console.WriteLine("Druk op enter om je input te bevestigen");
             Console.WriteLine("--------------------");
 
             string voornaam;
