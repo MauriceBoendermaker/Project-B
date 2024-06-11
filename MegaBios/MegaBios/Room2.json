@@ -58791,7 +58791,7 @@
         },
         {
           "seat_number": "6-6",
-          "is_taken": false,
+          "is_taken": true,
           "type": "normal",
           "price": 10
         },

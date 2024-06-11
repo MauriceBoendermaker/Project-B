@@ -271,7 +271,7 @@ namespace MegaBios
                             break;
                         }
 
-                        reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, account);
+                        
                         bool confirmedPayment = Reservation.ConfirmPayment(reservation);
 
                         if (confirmedPayment)
@@ -507,7 +507,7 @@ namespace MegaBios
 
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
 
-            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, account, selectedMovie);
+            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, selectedMovie, account);
             
             Reservation reservation = seatSelect.SelectSeats();
             

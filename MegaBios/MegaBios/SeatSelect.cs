@@ -21,7 +21,7 @@ namespace MegaBios
         public Account ReservingAccount { get; set; }
         public string MovieTitle {get; set;}
 
-        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime, Account reservingAccount, string movieTitle)
+        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime, string movieTitle, Account reservingAccount = null!)
         {
             RoomShowings = roomShowings;
             RoomNumber = roomNumber;
@@ -204,8 +204,17 @@ namespace MegaBios
             }
 
             string reservationNumber = Reservation.generateReservationNumber();
-            Reservation reservation = new(reservationNumber, MovieTitle, _selectedSeats, RoomNumber, ShowTime, Reservation.ReturnDiscount(ReservingAccount));
-            reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, ReservingAccount);
+            double discount;
+            if (ReservingAccount == null) {
+                discount = 0;
+            }
+            else {
+                discount = Reservation.ReturnDiscount(ReservingAccount);
+            }
+            Reservation reservation = new(reservationNumber, MovieTitle, _selectedSeats, RoomNumber, ShowTime, discount);
+            if (ReservingAccount != null) {
+                reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, ReservingAccount);
+            }
             return reservation;
         }
 

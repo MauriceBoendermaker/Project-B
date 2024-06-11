@@ -72,7 +72,7 @@ namespace MegaBios
             Dictionary<string, string> adres = new Dictionary<string, string>();
             while (true)
             {
-                Console.Write("Bent u student? (Ja/Nee): ");
+                Console.Write("Wilt u nieuwsbrieven ontvangen?\nHiervoor moet u uw adres invullen (Ja/Nee): ");
                 string wantLetters = Console.ReadLine()?.ToLower(); // Convert input naar lowercase
                 
                 if (wantLetters == "ja")
