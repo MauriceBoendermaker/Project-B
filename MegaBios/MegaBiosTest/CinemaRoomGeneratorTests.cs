@@ -30,10 +30,7 @@ namespace MegaBiosTest.Services
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", null);
             var existingFiles = Directory.GetFiles(basePath, filePattern);
 
-            foreach (var file in existingFiles)
-            {
-                File.Delete(file);
-            }
+
         }
 
         private void SuppressConsoleOutput(Action action)
