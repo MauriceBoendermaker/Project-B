@@ -208,8 +208,8 @@
       "woonplaats": "asd",
       "postcode": "asd"
     },
-    "email": "admin@testmail.com",
-    "wachtwoord": "adminwachtwoord",
+    "email": "admin",
+    "wachtwoord": "admin",
     "telefoonnummer": "9878",
     "voorkeur_betaalwijze": "hff",
     "is_student": true,
