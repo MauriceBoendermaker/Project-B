@@ -28,6 +28,12 @@ namespace MegaBiosTest.Services
         {
             // Verwijder de omgevingsvariabele na de test
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", null);
+            var existingFiles = Directory.GetFiles(basePath, filePattern);
+
+            foreach (var file in existingFiles)
+            {
+                File.Delete(file);
+            }
         }
 
         private void SuppressConsoleOutput(Action action)
