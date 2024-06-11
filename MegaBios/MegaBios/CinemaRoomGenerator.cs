@@ -12,7 +12,7 @@ namespace MegaBios
 
             Console.WriteLine("Wilt u zalen genereren of een zaal bewerken?");
 
-            userChoice = MenuFunctions.Menu(menuOptions);
+            userChoice = MenuFunctions.Menu(menuOptions, null, true);
 
             switch (userChoice)
             {
@@ -135,9 +135,10 @@ namespace MegaBios
                         seating = JsonFunctions.GenerateSeating(roomHeight, roomWidth);
                         break;
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         Console.WriteLine("Ongeldige invoer. Probeer het opnieuw.");
+                        System.Console.WriteLine(ex);
                     }
                 }
 

@@ -25,7 +25,7 @@ namespace MegaBios
             RoomShowings = roomShowings;
             RoomNumber = roomNumber;
             ShowTime = showTime;
-            reservingAccount = reservingAccount;
+            ReservingAccount = reservingAccount;
 
             foreach (RoomShowing showing in roomShowings)
             {
@@ -219,7 +219,7 @@ namespace MegaBios
             // Voeg de stoelnummers toe aan de legenda
             seatingText.Append("   ");
 
-            for (int i = 0; i < seating[0].Count; i++)
+            for (int i = 1; i <= seating[0].Count; i++)
             {
                 seatingText.Append(i.ToString().Length == 1 ? "0 " : $"{i.ToString().ToCharArray()[0]} ");
             }
@@ -227,7 +227,7 @@ namespace MegaBios
             seatingText.Append("\n");
             seatingText.Append("   ");
 
-            for (int i = 0; i < seating[0].Count; i++)
+            for (int i = 1; i <= seating[0].Count; i++)
             {
                 seatingText.Append(i.ToString().Length == 1 ? $"{i} " : $"{i.ToString().ToCharArray()[1]} ");
             }
@@ -237,7 +237,7 @@ namespace MegaBios
             for (int i = 0; i < seating.Count; i++)
             {
                 // Voeg de rijnummers toe aan de legenda
-                seatingText.Append(i.ToString().Length == 1 ? $" {i} " : $"{i} ");
+                seatingText.Append((i+1).ToString().Length == 1 ? $" {i+1} " : $"{i+1} ");
 
                 for (int j = 0; j < seating[i].Count; j++)
                 {
@@ -293,7 +293,7 @@ namespace MegaBios
 
             PrintLegend();
 
-            Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op 'Space' om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op 'Backspace' om stoelselectie te wissen");
+            Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op de spatiebalk om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op 'Backspace' om stoelselectie te wissen");
             Console.WriteLine(_extraMessage);
         }
 
@@ -448,7 +448,7 @@ namespace MegaBios
         {
             StringBuilder legendText = new StringBuilder();
             legendText.Append($"Legenda:\n");
-            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro), \x1b[35m[]\x1b[0m = Loveseats (20.00 euro), [] = Normale Stoelen (10.00 euro), \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
+            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro)\n\x1b[35m[]\x1b[0m = Loveseats (20.00 euro)\n[] = Normale Stoelen (10.00 euro)\n\x1b[41m[]\x1b[0m = Bezette Stoelen\n\x1b[42m[]\x1b[0m = Gekozen Stoelen]\n\x1b[43m[]\x1b[0m = Huidige Stoel");
 
             Console.WriteLine(legendText);
         }

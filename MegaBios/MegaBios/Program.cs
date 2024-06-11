@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Globalization;
+using Microsoft.VisualBasic;
 
 namespace MegaBios
 {
@@ -19,8 +21,10 @@ namespace MegaBios
 
             while (true)
             {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Welkom bij MegaBios!");
                 List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login" };
-                int userChoice = MenuFunctions.Menu(menuOptions, false) + 1;
+                int userChoice = MenuFunctions.Menu(menuOptions, sb, false) + 1;
 
                 Console.Clear();
 
@@ -527,6 +531,9 @@ namespace MegaBios
                     }
                 }
             }
+            showingOptions = showingOptions
+                .OrderBy(x => x.Value)
+                .ToDictionary();
 
             return showingOptions;
         }
@@ -536,6 +543,7 @@ namespace MegaBios
             List<DateTime> showDays = new();
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room1.json");
             DateTime startDate = roomShowings[0].ShowingTime.Date;
+            string dateFormat = "dd-MM-yyyy HH:mm:ss";
 
             for (int i = 0; i < 7; i++)
             {
@@ -544,7 +552,6 @@ namespace MegaBios
                     showDays.Add(startDate.AddDays(i));
                 }
             }
-
             return showDays;
         }
 

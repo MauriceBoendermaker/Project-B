@@ -84,7 +84,7 @@ namespace MegaBios
         {
             List<List<Seat>> seating = new List<List<Seat>>(height);
 
-            for (int i = 0; i < height; i++)
+            for (int i = 1; i <= height; i++)
             {
                 seating.Add(new List<Seat>(height));
 
@@ -110,7 +110,7 @@ namespace MegaBios
                         seat.Price = 10.00;
                     }
 
-                    seating[i].Add(seat);
+                    seating[i-1].Add(seat);
                 }
             }
 

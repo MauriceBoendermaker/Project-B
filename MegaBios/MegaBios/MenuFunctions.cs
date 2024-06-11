@@ -5,7 +5,7 @@ namespace MegaBios
     public static class MenuFunctions
     {
         // Menu maar met optioneel bericht
-        public static int Menu<T>(List<T> menuOptions, StringBuilder optionalMessage, bool canGoBack = true)
+        public static int Menu<T>(List<T> menuOptions, StringBuilder optionalMessage = null, bool canGoBack = true)
         {
             int cursorPos = 0;
 
@@ -15,8 +15,10 @@ namespace MegaBios
                 {
                     Console.Clear();
                 }
-
-                Console.WriteLine(optionalMessage);
+                if (optionalMessage != null) {
+                    Console.WriteLine(optionalMessage);
+                }
+                
                 Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op 'Enter' om je keuze te bevestigen.");
 
                 if (canGoBack)
@@ -42,11 +44,11 @@ namespace MegaBios
                 Console.WriteLine(menuText);
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
-                if (keyInfo.Key == ConsoleKey.Enter && canGoBack)
+                if (keyInfo.Key == ConsoleKey.Enter)
                 {
                     return cursorPos;
                 }
-                else if (keyInfo.Key == ConsoleKey.Backspace)
+                else if (keyInfo.Key == ConsoleKey.Backspace && canGoBack)
                 {
                     Console.WriteLine("Weet je zeker dat je terug wilt gaan? Druk dan op 'Backspace'");
 
@@ -84,24 +86,27 @@ namespace MegaBios
                 {
                     if (showTimes)
                     {
+                        string dateTimeString = menuOptions[i].ToString("dd/MM/yyyy Hh:mm:ss");
                         if (cursorPos == i)
                         {
-                            menuText.AppendLine($"\x1b[42m{menuOptions[i]}\x1b[0m");
+                            
+                            menuText.AppendLine($"\x1b[42m{dateTimeString}\x1b[0m");
                         }
                         else
                         {
-                            menuText.AppendLine($"{menuOptions[i]}");
+                            menuText.AppendLine($"{dateTimeString}");
                         }
                     }
                     else
                     {
+                        string dateString = menuOptions[i].ToString("dd/MM/yyyy");
                         if (cursorPos == i)
                         {
-                            menuText.AppendLine($"\x1b[42m{menuOptions[i].ToString("yyyy/MM/dd")}\x1b[0m");
+                            menuText.AppendLine($"\x1b[42m{dateString}\x1b[0m");
                         }
                         else
                         {
-                            menuText.AppendLine($"{menuOptions[i].ToString("yyyy/MM/dd")}");
+                            menuText.AppendLine($"{dateString}");
                         }
                     }
                 }
@@ -130,58 +135,58 @@ namespace MegaBios
         }
 
         // Normaal menu
-        public static int Menu<T>(List<T> menuOptions, bool canGoBack = true)
-        {
-            int cursorPos = 0;
+        // public static int Menu<T>(List<T> menuOptions, bool canGoBack = true)
+        // {
+        //     int cursorPos = 0;
 
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op 'Enter' om je keuze te bevestigen");
+        //     while (true)
+        //     {
+        //         Console.Clear();
+        //         Console.WriteLine("Selecteer een optie met de pijltjestoetsen. Druk op 'Enter' om je keuze te bevestigen");
 
-                if (canGoBack)
-                {
-                    Console.WriteLine("Druk op 'Backspace' om terug te gaan");
-                }
+        //         if (canGoBack)
+        //         {
+        //             Console.WriteLine("Druk op 'Backspace' om terug te gaan");
+        //         }
 
-                Console.WriteLine("");
-                StringBuilder menuText = new StringBuilder();
+        //         Console.WriteLine("");
+        //         StringBuilder menuText = new StringBuilder();
 
-                for (int i = 0; i < menuOptions.Count; i++)
-                {
-                    if (cursorPos == i)
-                    {
-                        menuText.AppendLine($"\x1b[42m{menuOptions[i]}\x1b[0m");
-                    }
-                    else
-                    {
-                        menuText.AppendLine($"{menuOptions[i]}");
-                    }
-                }
+        //         for (int i = 0; i < menuOptions.Count; i++)
+        //         {
+        //             if (cursorPos == i)
+        //             {
+        //                 menuText.AppendLine($"\x1b[42m{menuOptions[i]}\x1b[0m");
+        //             }
+        //             else
+        //             {
+        //                 menuText.AppendLine($"{menuOptions[i]}");
+        //             }
+        //         }
 
-                Console.WriteLine(menuText);
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+        //         Console.WriteLine(menuText);
+        //         ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
-                if (keyInfo.Key == ConsoleKey.Enter)
-                {
-                    return cursorPos;
-                }
-                else if (keyInfo.Key == ConsoleKey.Backspace && canGoBack)
-                {
-                    Console.WriteLine("Weet je zeker dat je terug wilt gaan? Druk dan op 'Backspace'");
+        //         if (keyInfo.Key == ConsoleKey.Enter)
+        //         {
+        //             return cursorPos;
+        //         }
+        //         else if (keyInfo.Key == ConsoleKey.Backspace && canGoBack)
+        //         {
+        //             Console.WriteLine("Weet je zeker dat je terug wilt gaan? Druk dan op 'Backspace'");
 
-                    if (Console.ReadKey(true).Key == ConsoleKey.Backspace)
-                    {
-                        cursorPos = -1;
-                        return cursorPos;
-                    }
-                }
-                else
-                {
-                    cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
-                }
-            }
-        }
+        //             if (Console.ReadKey(true).Key == ConsoleKey.Backspace)
+        //             {
+        //                 cursorPos = -1;
+        //                 return cursorPos;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             cursorPos = MenuFunctions.MoveCursor(cursorPos, keyInfo, menuOptions.Count);
+        //         }
+        //     }
+        // }
 
         public static int MoveCursor(int currentPos, ConsoleKeyInfo pressedKeyInfo, int maxRange)
         {

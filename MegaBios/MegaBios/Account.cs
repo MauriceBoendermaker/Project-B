@@ -32,6 +32,7 @@ namespace MegaBios
         public static Guest CreateGuest()
         {
             Console.WriteLine("\nCreëer gast account");
+            System.Console.WriteLine("Druk op enter om te bevestigen");
             Console.WriteLine("--------------------");
 
             Console.Write("Voer voornaam in: ");

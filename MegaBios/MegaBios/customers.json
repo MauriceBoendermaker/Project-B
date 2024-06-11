@@ -93,6 +93,27 @@
         "reservation_room": "Room3",
         "showing_date": "2024-08-27T11:50:00",
         "date_of_reservation": "2024-06-11T00:43:06.8506402+02:00"
+      },
+      {
+        "reservation_number": "862",
+        "movie_title": "The Godfather",
+        "reserved_seats": [
+          {
+            "seat_number": "4-3",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          },
+          {
+            "seat_number": "4-4",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          }
+        ],
+        "reservation_room": "Room1",
+        "showing_date": "2024-08-27T16:31:00",
+        "date_of_reservation": "2024-06-11T12:33:56.7744718+02:00"
       }
     ],
     "history": [
@@ -116,6 +137,27 @@
         "reservation_room": "Room3",
         "showing_date": "2024-08-27T11:50:00",
         "date_of_reservation": "2024-06-11T00:43:06.8506402+02:00"
+      },
+      {
+        "reservation_number": "862",
+        "movie_title": "The Godfather",
+        "reserved_seats": [
+          {
+            "seat_number": "4-3",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          },
+          {
+            "seat_number": "4-4",
+            "is_taken": true,
+            "type": "normal",
+            "price": 8.5
+          }
+        ],
+        "reservation_room": "Room1",
+        "showing_date": "2024-08-27T16:31:00",
+        "date_of_reservation": "2024-06-11T12:33:56.7744718+02:00"
       }
     ]
   },
