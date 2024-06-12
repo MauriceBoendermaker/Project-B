@@ -224,7 +224,7 @@
       "woonplaats": "asd",
       "postcode": "asd"
     },
-    "wachtwoord": "adminwachtwoord",
+    "wachtwoord": "admin",
     "telefoonnummer": "9878",
     "voorkeur_betaalwijze": "hff",
     "is_student": true,
@@ -232,7 +232,7 @@
     "voornaam": "admin",
     "tussenvoegsel": "n",
     "achternaam": "admin",
-    "email": "admin@testmail.com",
+    "email": "admin",
     "reservations": []
   },
   {
