@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Globalization;
 using Microsoft.VisualBasic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MegaBios
 {
@@ -287,9 +288,11 @@ namespace MegaBios
                     case 6:
                         Console.Clear();
                         System.Console.WriteLine($"--------UW RESERVERINGEN-----------\n");
-                        foreach (var userReservation in account.Reservations)
+                        Reservation[] reservations = account.Reservations
+                            .ToArray();
+                        foreach (Reservation userReservation in reservations)
                         {
-                            Console.WriteLine(Reservation.PrintReservationUser(userReservation));
+                            System.Console.WriteLine(Reservation.PrintReservationUser(userReservation));
                             System.Console.WriteLine($"-----------------------------------------------------");
                         }
 
@@ -300,7 +303,9 @@ namespace MegaBios
                     case 7:
                         Console.Clear();
                         System.Console.WriteLine($"--------UW GESCHIEDENIS-----------\n");
-                        foreach (var userReservation in account.History)
+                        Reservation[] history = account.History
+                            .ToArray();
+                        foreach (Reservation userReservation in history)
                         {
                             Console.WriteLine(Reservation.PrintHistory(userReservation));
                             System.Console.WriteLine($"-----------------------------------------------------");
