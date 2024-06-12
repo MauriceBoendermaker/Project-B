@@ -238,9 +238,6 @@ namespace MegaBios
         [JsonPropertyName("telefoonnummer")]
         public string TelefoonNr { get; set; }
 
-        [JsonPropertyName("voorkeur_betaalwijze")]
-        public string Voorkeur_Betaalwijze { get; set; }
-
         [JsonPropertyName("is_student")]
         public bool IsStudent { get; set; }
 
@@ -256,7 +253,6 @@ namespace MegaBios
                             string email,
                             string wachtwoord,
                             string telefoonNr,
-                            string voorkeur_Betaalwijze,
                             bool isStudent,
                             List<Reservation> reservations,
                             List<Reservation> history = null) : base(voornaam, tussenvoegsel, achternaam, email, reservations)
@@ -265,7 +261,6 @@ namespace MegaBios
             Adres = adres;
             Wachtwoord = wachtwoord;
             TelefoonNr = telefoonNr;
-            Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
             if (history != null)
             {

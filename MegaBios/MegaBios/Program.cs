@@ -454,16 +454,16 @@ namespace MegaBios
                 Console.Clear();
                 Console.WriteLine("Selecteer een dag met de pijltjestoetsen, druk op 'Enter' om je selectie te bevestigen");
 
-                List<DateTime> menuOptions = GetShowDays();
+                List<DateTime> menuDays = GetShowDays();
 
-                int selectedOption = MenuFunctions.Menu(menuOptions, false, true);
+                int selectedIndex = MenuFunctions.Menu(menuDays, false, true);
 
-                if (selectedOption == -1)
+                if (selectedIndex == -1)
                 {
                     return null;
                 }
 
-                selectedDate = menuOptions[selectedOption];
+                selectedDate = menuDays[selectedIndex];
                 initialDate = selectedDate;
                 showingOptions = GetShowingOptions(selectedDate, selectedMovie);
 
@@ -488,9 +488,9 @@ namespace MegaBios
 
             if (redirectedDate)
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append($"Er zijn geen tentoonstellingen beschikbaar voor {selectedMovie} op {initialDate.Date}\nOp {selectedDate.Date} zijn er wel films beschikbaar. Hierbij de films van die dag:");
-                cursorPos = MenuFunctions.Menu(keys, sb);
+                StringBuilder sb1 = new StringBuilder();
+                sb1.Append($"Er zijn geen tentoonstellingen beschikbaar voor {selectedMovie} op {initialDate.Date}\nOp {selectedDate.Date} zijn er wel films beschikbaar. Hierbij de films van die dag:");
+                cursorPos = MenuFunctions.Menu(keys, sb1);
 
                 if (cursorPos == -1)
                 {
@@ -515,8 +515,12 @@ namespace MegaBios
             SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, selectedMovie, account);
             
             Reservation reservation = seatSelect.SelectSeats();
-            
-
+            List<string> menuOptions = new() {"IDeal", "PayPal", "Klarna", "Contant"};
+            StringBuilder sb = new();
+            sb.Append("Welke betaalmethode wilt u gebruiken?");
+            int selectedOption = MenuFunctions.Menu(menuOptions, sb);
+            string selectedPayment = menuOptions[selectedOption];
+            reservation.Betaalwijze = selectedPayment;
             return reservation;
         }
 

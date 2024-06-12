@@ -145,9 +145,6 @@ namespace MegaBios
             Console.Write("Voer telefoonnummer in: ");
             string telefoonNr = Console.ReadLine()!;
 
-            Console.Write("Voer uw voorkeur voor betaalwijze in: ");
-            string betaalwijze = Console.ReadLine()!;
-
             bool is_student;
             while (true)
             {
@@ -169,9 +166,9 @@ namespace MegaBios
                 }
             }
 
-            Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new List<Reservation>(), new List<Reservation>());
-            jsonData.Add(newAccount);
 
+            Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, is_student, new List<Reservation>(), new List<Reservation>());
+            jsonData.Add(newAccount);
             Console.WriteLine("Nieuw account toegevoegd aan de lijst.");
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);

@@ -211,7 +211,8 @@ namespace MegaBios
             else {
                 discount = Reservation.ReturnDiscount(ReservingAccount);
             }
-            Reservation reservation = new(reservationNumber, MovieTitle, _selectedSeats, RoomNumber, ShowTime, discount);
+
+            Reservation reservation = new(reservationNumber, MovieTitle, _selectedSeats, RoomNumber, ShowTime, "", discount);
             if (ReservingAccount != null) {
                 reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, ReservingAccount);
             }

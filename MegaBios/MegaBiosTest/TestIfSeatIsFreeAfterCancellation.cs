@@ -44,7 +44,6 @@ namespace MegaBiosTest
                 "daan.bakker@example.com",
                 "G3heim!",
                 "+31 10 98765432",
-                "Creditcard",
                 false,
                 new List<Reservation>(),
                 new List<Reservation>()
@@ -59,7 +58,7 @@ namespace MegaBiosTest
             };
             List<Seat> reservedSeatsList = new List<Seat> { reservedSeat };
 
-            Reservation reservation = new Reservation("12345", "testfilm", reservedSeatsList, "Test_Room1", Convert.ToDateTime("2024-08-25T09:00:00"));
+            Reservation reservation = new Reservation("12345", "testfilm", reservedSeatsList, "Test_Room1", Convert.ToDateTime("2024-08-25T09:00:00"), "IDeal");
             SeatSelect.MarkSeatsAsSelected(reservedSeatsList, reservation.ShowingDate, reservation.ReservationRoom);
 
 

@@ -24,8 +24,10 @@ namespace MegaBios
         public DateTime ReservationDate { get; set; }
         [JsonPropertyName("discount")]
         public double Discount { get; set; }
+        [JsonPropertyName("betaalwijze")]
+        public string Betaalwijze { get; set; }
 
-        public Reservation(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime showingDate, double discount = 0)
+        public Reservation(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime showingDate, string betaalWijze,double discount = 0)
         {
             ReservationNumber = reservationNumber;
             MovieTitle = movieTitle;
@@ -34,6 +36,7 @@ namespace MegaBios
             ShowingDate = showingDate;
             ReservationDate = DateTime.Now;
             Discount = discount;
+            Betaalwijze = betaalWijze;
         }
 
         public static void AddReservation(Account account, Reservation reservation)
@@ -128,6 +131,7 @@ namespace MegaBios
             reservationPrint.AppendLine($"Film: {reservation.MovieTitle} \nRoom: {roomString}");
             reservationPrint.AppendLine($"Stoelen: \n{stoelenString}");
             reservationPrint.AppendLine($"Totaalprijs: {totalPrice:F2} Euro");
+            reservationPrint.AppendLine($"Betaalwijze: {reservation.Betaalwijze}");
             if (reservation.Discount > 0) {
                 reservationPrint.AppendLine($"Korting: {reservation.Discount * 100}%");
             }
@@ -154,8 +158,9 @@ namespace MegaBios
                 return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
                     $"Film: {reservation.MovieTitle}\n" +
                     $"Gereserveerde stoelen:\n{stoelenString}" +
-                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" +
                     $"Korting: {reservation.Discount*100}%" +
+                    $"Betaalwijze: {reservation.Betaalwijze}" +
                     $"Reserveringszaal: {roomString}\n" +
                     $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
                     $"Bestellingsdatum: {reservation.ReservationDate}\n";
@@ -165,7 +170,8 @@ namespace MegaBios
                 return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
                     $"Film: {reservation.MovieTitle}\n" +
                     $"Gereserveerde stoelen:\n{stoelenString}" +
-                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + 
+                    $"Betaalwijze: {reservation.Betaalwijze}" +
                     $"Reserveringszaal: {roomString}\n" +
                     $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
                     $"Bestellingsdatum: {reservation.ReservationDate}\n";
