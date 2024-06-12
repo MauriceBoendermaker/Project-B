@@ -8,19 +8,27 @@ using System.Threading.Tasks;
 namespace MegaBiosTest
 {
     [TestClass]
+
     public class SeatAvailableAfterCancellation
     {
+        private string filePath = "../../../Test_Room1.json";
+
         [TestInitialize]
         public void TestInitialize()
         {
             // Stel de omgevingsvariabele in voor de testomgeving
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
 
+            // Maak een leeg bestand aan als het origineel niet bestaat
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, "[]");
+            }
         }
+
         [TestMethod]
         public void CancelSeat_SeatBecomesAvailable()
         {
-            // Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
             Account reservingAccount = new Account(
                 "Daan",
                 "", // Tussenvoegsel
@@ -51,15 +59,15 @@ namespace MegaBiosTest
             };
             List<Seat> reservedSeatsList = new List<Seat> { reservedSeat };
 
-            Reservation reservation = new Reservation("12345", "testfilm", reservedSeatsList, "Room1", Convert.ToDateTime("2024-08-25T09:00:00"));
-            SeatSelect.MarkSeatsAsSelected(reservedSeatsList, reservation.ReservationDate, reservation.ReservationRoom);
+            Reservation reservation = new Reservation("12345", "testfilm", reservedSeatsList, "Test_Room1", Convert.ToDateTime("2024-08-25T09:00:00"));
+            SeatSelect.MarkSeatsAsSelected(reservedSeatsList, reservation.ShowingDate, reservation.ReservationRoom);
 
 
 
             Reservation updatedReservation = Program.CancelSeat(reservingAccount, reservation, reservedSeat);
 
             Assert.IsNotNull(updatedReservation);
-            Assert.IsFalse(updatedReservation.ReservedSeats.Contains(reservedSeat)); // Check if the reserved seat is removed
+            Assert.IsFalse(updatedReservation.ReservedSeats.Contains(reservedSeat)); // Controleer of de gereserveerde seat is verwijderd
         }
     }
 }

@@ -1,78 +1,31 @@
 [
   {
-    "voornaam": "test",
-    "tussenvoegsel": "test",
-    "achternaam": "test",
-    "email": "test@gmail.com",
-    "reservations": []
-  },
-  {
-    "voornaam": "test",
+    "voornaam": "1",
     "tussenvoegsel": "",
-    "achternaam": "test",
+    "achternaam": "1",
     "email": "test@mail.com",
-    "reservations": []
-  },
-  {
-    "voornaam": "buck",
-    "tussenvoegsel": "de",
-    "achternaam": "gier",
-    "email": "buckdegier@gmail.com",
-    "reservations": []
-  },
-  {
-    "voornaam": "john",
-    "tussenvoegsel": "",
-    "achternaam": "doe",
-    "email": "johndoe@outlook.com",
     "reservations": [
       {
-        "reservation_number": "5821",
-        "movie_title": "The Shawshank Redemption",
+        "reservation_number": "9706",
+        "movie_title": "The Godfather",
         "reserved_seats": [
           {
-            "seat_number": "3-1",
+            "seat_number": "6-5",
             "is_taken": true,
-            "type": "love seat",
-            "price": 20
+            "type": "normal",
+            "price": 10
           },
           {
-            "seat_number": "3-2",
+            "seat_number": "6-6",
             "is_taken": true,
-            "type": "love seat",
-            "price": 20
+            "type": "normal",
+            "price": 10
           }
         ],
         "reservation_room": "Room2",
-        "reservation_date": "2024-08-25T09:00:00"
-      }
-    ]
-  },
-  {
-    "voornaam": "john",
-    "tussenvoegsel": "",
-    "achternaam": "stallone",
-    "email": "stallone@gmail.com",
-    "reservations": [
-      {
-        "reservation_number": "3205",
-        "movie_title": "The Shawshank Redemption",
-        "reserved_seats": [
-          {
-            "seat_number": "5-1",
-            "is_taken": true,
-            "type": "love seat",
-            "price": 20
-          },
-          {
-            "seat_number": "5-2",
-            "is_taken": true,
-            "type": "love seat",
-            "price": 20
-          }
-        ],
-        "reservation_room": "Room2",
-        "reservation_date": "2024-08-25T09:00:00"
+        "showing_date": "2024-08-30T09:09:00",
+        "date_of_reservation": "2024-06-11T21:47:40.758899+02:00",
+        "discount": 0
       }
     ]
   }

@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Globalization;
+using Microsoft.VisualBasic;
 
 namespace MegaBios
 {
@@ -19,8 +21,10 @@ namespace MegaBios
 
             while (true)
             {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Welkom bij MegaBios!");
                 List<string> menuOptions = new() { "Ga verder als gast", "Creëer Account", "Login" };
-                int userChoice = MenuFunctions.Menu(menuOptions, false) + 1;
+                int userChoice = MenuFunctions.Menu(menuOptions, sb, false) + 1;
 
                 Console.Clear();
 
@@ -33,6 +37,7 @@ namespace MegaBios
                         CreateAccount.CreateNewAccount(jsonData);
                         bool firstLogin = true;
                         int attempts = 0;
+
                         while (true)
                         {
                             if (attempts >= 3)
@@ -59,6 +64,7 @@ namespace MegaBios
                     case 3:
                         firstLogin = true;
                         attempts = 0;
+
                         while (true)
                         {
                             if (attempts >= 3)
@@ -84,6 +90,7 @@ namespace MegaBios
                         break;
                     default:
                         Console.WriteLine("Ongeldige keuze. Probeer het alstublieft opnieuw.");
+
                         break;
                 }
             }
@@ -105,8 +112,6 @@ namespace MegaBios
                 sb.Append("Welkom bij MegaBios!");
                 userChoice = MenuFunctions.Menu(menuOptions, sb) + 1;
 
-                // Console.WriteLine(userChoice);
-
                 switch (userChoice)
                 {
                     case 0:
@@ -127,7 +132,7 @@ namespace MegaBios
 
                         if (confirmedPayment)
                         {
-                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
+                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ShowingDate, reservation.ReservationRoom);
                             Reservation.AddReservation(guest, reservation);
                         }
 
@@ -179,6 +184,7 @@ namespace MegaBios
             }
 
             Console.WriteLine("Login Formulier");
+            System.Console.WriteLine("Druk enter om je input te bevestigen");
             Console.WriteLine("-----------");
 
             Console.Write("Voer email in: ");
@@ -265,12 +271,12 @@ namespace MegaBios
                             break;
                         }
 
-                        reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, account);
+                        
                         bool confirmedPayment = Reservation.ConfirmPayment(reservation);
 
                         if (confirmedPayment)
                         {
-                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ReservationDate, reservation.ReservationRoom);
+                            SeatSelect.MarkSeatsAsSelected(reservation.ReservedSeats, reservation.ShowingDate, reservation.ReservationRoom);
                             Reservation.AddReservation(account, reservation);
                         }
 
@@ -280,10 +286,11 @@ namespace MegaBios
                         break;
                     case 6:
                         Console.Clear();
-
+                        System.Console.WriteLine($"--------UW RESERVERINGEN-----------\n");
                         foreach (var userReservation in account.Reservations)
                         {
                             Console.WriteLine(Reservation.PrintReservationUser(userReservation));
+                            System.Console.WriteLine($"-----------------------------------------------------");
                         }
 
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
@@ -292,10 +299,11 @@ namespace MegaBios
                         break;
                     case 7:
                         Console.Clear();
-
+                        System.Console.WriteLine($"--------UW GESCHIEDENIS-----------\n");
                         foreach (var userReservation in account.History)
                         {
                             Console.WriteLine(Reservation.PrintHistory(userReservation));
+                            System.Console.WriteLine($"-----------------------------------------------------");
                         }
 
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
@@ -321,7 +329,7 @@ namespace MegaBios
         {
             int roomToEdit = -1;
 
-            // Krijg zaal nummer
+            // Get zaalnummer
             while (true)
             {
                 if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
@@ -337,8 +345,13 @@ namespace MegaBios
                 {
                     return;
                 }
-
-                if (File.Exists($"../../../Room{roomToEdit}.json"))
+                if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") == "true" )
+                {
+                    if (File.Exists($"../../../../MegaBios/obj/Debug/net8.0/../../../Room{roomToEdit}.json")) {
+                        break;
+                    }
+                } 
+                else if (File.Exists($"../../../Room{roomToEdit}.json"))
                 {
                     break;
                 }
@@ -403,7 +416,6 @@ namespace MegaBios
                 {
                     Console.WriteLine("Voer alstublieft een valide nummer in");
                     Console.WriteLine(e);
-                    // while(true) {}
                 }
             }
 
@@ -495,11 +507,10 @@ namespace MegaBios
 
             List<RoomShowing> selectedShowing = JsonFunctions.LoadRoomShowings($"../../../{selectedRoom}.json");
 
-            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, account);
-            List<Seat> selectedSeats;
-            selectedSeats = seatSelect.SelectSeats();
-            string reservationNumber = Reservation.generateReservationNumber();
-            Reservation reservation = new(reservationNumber, selectedMovie, selectedSeats, selectedRoom, selectedDate);
+            SeatSelect seatSelect = new(selectedShowing, selectedRoom, selectedDate, selectedMovie, account);
+            
+            Reservation reservation = seatSelect.SelectSeats();
+            
 
             return reservation;
         }
@@ -515,13 +526,15 @@ namespace MegaBios
                 for (int j = 0; j < showings.Count; j++)
                 {
                     // Als de filmtitel gelijk is en de weergavetijd tussen de opgegeven tijdstempels ligt
-                    // if (showings[i].Movie == selectedMovie && timestamp1 < showings[i].ShowingTime && showings[j].ShowingTime < timestamp2) {
                     if (showings[j].Movie == selectedMovie && date.Date == showings[j].ShowingTime.Date && !SeatSelect.IsFull(showings[i].Seating))
                     {
                         showingOptions.Add($"Room {i} - {showings[j].ShowingTime}", showings[j].ShowingTime);
                     }
                 }
             }
+            showingOptions = showingOptions
+                .OrderBy(x => x.Value)
+                .ToDictionary();
 
             return showingOptions;
         }
@@ -531,6 +544,7 @@ namespace MegaBios
             List<DateTime> showDays = new();
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room1.json");
             DateTime startDate = roomShowings[0].ShowingTime.Date;
+            string dateFormat = "dd-MM-yyyy HH:mm:ss";
 
             for (int i = 0; i < 7; i++)
             {
@@ -539,7 +553,6 @@ namespace MegaBios
                     showDays.Add(startDate.AddDays(i));
                 }
             }
-
             return showDays;
         }
 
@@ -560,7 +573,7 @@ namespace MegaBios
 
             if (selectedOption == -1)
             {
-                return reservation; // Returning the original reservation in case of invalid option selection
+                return reservation; // Return de orginele reservering in het geval dat er een ongeldige optie wordt geselecteerd
             }
 
             switch (selectedOption)
@@ -568,7 +581,7 @@ namespace MegaBios
                 // Ja
                 case 0:
                     reservation.ReservedSeats.Remove(seat);
-                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ShowingDate, reservation.ReservationRoom);
 
                     if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
                     {
@@ -581,7 +594,7 @@ namespace MegaBios
                 case 1:
                     return reservation;
                 default:
-                    return reservation; // Default case to handle any unexpected values
+                    return reservation; // Standaardcase voor het verwerken van onverwachte waarden
             }
         }
 
@@ -602,7 +615,12 @@ namespace MegaBios
             {
                 // Ja
                 case 0:
-                    account.History.Remove(reservation);
+                    for (int i = 0; i < account.Reservations.Count; i++) {
+                        if (account.Reservations[i].ReservationNumber == reservation.ReservationNumber) {
+                            account.Reservations.RemoveAt(i);
+                        }   
+                    }
+                    
                     double totalPrice = 0;
 
                     foreach (Seat seat in seats)
@@ -610,7 +628,7 @@ namespace MegaBios
                         totalPrice += seat.Price;
                     }
 
-                    SeatSelect.MarkSeatsAsFree(seats, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(seats, reservation.ShowingDate, reservation.ReservationRoom);
 
                     Console.WriteLine($"U heeft {totalPrice} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
                     Console.ReadKey(true);
@@ -642,7 +660,7 @@ namespace MegaBios
                 // Ja
                 case 0:
                     reservation.ReservedSeats.Remove(seat);
-                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(new List<Seat> { seat }, reservation.ShowingDate, reservation.ReservationRoom);
 
                     Console.WriteLine($"U heeft {seat.Price} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
                     Console.ReadKey(true);
@@ -673,7 +691,11 @@ namespace MegaBios
             {
                 // Ja
                 case 0:
-                    guest.Reservations.Remove(reservation);
+                    for (int i = 0; i < guest.Reservations.Count; i++) {
+                        if (guest.Reservations[i].ReservationNumber == reservation.ReservationNumber) {
+                            guest.Reservations.RemoveAt(i);
+                        }   
+                    }
                     double totalPrice = 0;
 
                     foreach (Seat seat in seats)
@@ -681,7 +703,7 @@ namespace MegaBios
                         totalPrice += seat.Price;
                     }
 
-                    SeatSelect.MarkSeatsAsFree(seats, reservation.ReservationDate, reservation.ReservationRoom);
+                    SeatSelect.MarkSeatsAsFree(seats, reservation.ShowingDate, reservation.ReservationRoom);
 
                     Console.WriteLine($"U heeft {totalPrice} Euro teruggekregen. Druk op een willekeurige knop om terug te keren");
                     Console.ReadKey(true);
@@ -697,7 +719,7 @@ namespace MegaBios
         {
             while (true)
             {
-                List<string> reservationNumbers = account.History
+                List<string> reservationNumbers = account.Reservations
                     .Select(x => x.ReservationNumber)
                     .ToList();
 
@@ -708,8 +730,13 @@ namespace MegaBios
 
                     return;
                 }
-
-                int selectedOption = MenuFunctions.Menu(reservationNumbers);
+                StringBuilder sb = new StringBuilder();
+                foreach (var userReservation in account.Reservations)
+                    {
+                        sb.Append(Reservation.PrintReservationUser(userReservation));
+                        sb.Append($"-----------------------------------------------------\n");
+                    }
+                int selectedOption = MenuFunctions.Menu(reservationNumbers, sb);
                 if (selectedOption == -1)
                 {
                     return;
@@ -722,7 +749,12 @@ namespace MegaBios
                 List<string> menuOptions = new List<string>() { "Annuleer 1 stoel", "Annuleer hele reservering" };
 
                 // Vraag de gebruiker om te selecteren of hij 1 stoel of alle stoelen wil annuleren
-                StringBuilder sb = new StringBuilder();
+                sb = new StringBuilder();
+                foreach (var userReservation in account.Reservations)
+                    {
+                        sb.Append(Reservation.PrintReservationUser(userReservation));
+                        sb.Append($"-----------------------------------------------------\n");
+                    }
                 sb.Append("Wat voor annulering wilt u uitvoeren?");
                 selectedOption = MenuFunctions.Menu(menuOptions, sb);
 
@@ -739,6 +771,11 @@ namespace MegaBios
                             .Select(x => x.SeatNumber)
                             .ToList();
                         sb = new StringBuilder();
+                        foreach (var userReservation in account.Reservations)
+                        {
+                            sb.Append(Reservation.PrintReservationUser(userReservation));
+                            sb.Append($"-----------------------------------------------------\n");
+                        }
                         sb.Append("Welke stoel wilt u annuleren?");
                         selectedOption = MenuFunctions.Menu(seatNumbers, sb);
 
@@ -785,12 +822,10 @@ namespace MegaBios
                     // Annuleer de hele reservering
                     case 1:
                         account = CancelReservation(account, selectedReservation, selectedReservation.ReservedSeats);
-
                         if (account == null)
-                        {
+                        {   
                             break;
                         }
-
                         Account.UpdateAccount(account);
                         return;
                 }
@@ -804,7 +839,13 @@ namespace MegaBios
                 List<string> reservationNumbers = guest.Reservations
                     .Select(x => x.ReservationNumber)
                     .ToList();
-                int selectedOption = MenuFunctions.Menu(reservationNumbers);
+                StringBuilder sb = new StringBuilder();
+                foreach (var userReservation in guest.Reservations)
+                {
+                    sb.Append(Reservation.PrintReservationUser(userReservation));
+                    sb.Append($"-----------------------------------------------------\n");
+                }
+                int selectedOption = MenuFunctions.Menu(reservationNumbers, sb);
 
                 if (selectedOption == -1)
                 {
@@ -818,7 +859,12 @@ namespace MegaBios
                 List<string> menuOptions = new List<string>() { "Annuleer 1 stoel", "Annuleer hele reservering" };
 
                 // Vraag de gebruiker om te selecteren of hij 1 stoel of alle stoelen wil annuleren
-                StringBuilder sb = new StringBuilder();
+                sb = new StringBuilder();
+                foreach (var userReservation in guest.Reservations)
+                {
+                    sb.Append(Reservation.PrintReservationUser(userReservation));
+                    sb.Append($"-----------------------------------------------------\n");
+                }
                 sb.Append("Wat voor annulering wilt u uitvoeren?");
                 selectedOption = MenuFunctions.Menu(menuOptions, sb);
 
@@ -835,6 +881,11 @@ namespace MegaBios
                             .Select(x => x.SeatNumber)
                             .ToList();
                         sb = new StringBuilder();
+                        foreach (var userReservation in guest.Reservations)
+                        {
+                            sb.Append(Reservation.PrintReservationUser(userReservation));
+                            sb.Append($"-----------------------------------------------------\n");
+                        }
                         sb.Append("Welke stoel wilt u annuleren?");
                         selectedOption = MenuFunctions.Menu(seatNumbers, sb);
 
@@ -881,7 +932,7 @@ namespace MegaBios
 
                         if (guest == null)
                         {
-                            break; ;
+                            break;
                         }
 
                         Guest.UpdateAccount(guest);

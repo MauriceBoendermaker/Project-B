@@ -36,7 +36,12 @@ namespace MegaBios
 
         public static Guest CreateGuest()
         {
-            Console.WriteLine("\nCreëer gast account");
+            if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
+            {
+                Console.Clear();
+            }
+            Console.WriteLine("\nVoer je gegevens in");
+            System.Console.WriteLine("Druk op enter om te bevestigen");
             Console.WriteLine("--------------------");
 
             Console.Write("Voer voornaam in: ");
@@ -310,7 +315,7 @@ namespace MegaBios
 
         public bool IsAdmin()
         {
-            return Voornaam == "admin" && Achternaam == "admin" && Email == "admin@testmail.com" && Wachtwoord == "adminwachtwoord";
+            return Voornaam == "admin" && Achternaam == "admin" && Email == "admin" && Wachtwoord == "admin";
         }
 
         public Account ReloadAccount()

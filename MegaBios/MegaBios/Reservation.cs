@@ -17,22 +17,24 @@ namespace MegaBios
         [JsonPropertyName("reservation_room")]
         public string ReservationRoom { get; set; }
 
-        [JsonPropertyName("reservation_date")]
-        public DateTime ReservationDate { get; set; }
-        // [JsonPropertyName("total_price")]
-        // public double TotalPrice {get; set;}
+        [JsonPropertyName("showing_date")]
+        public DateTime ShowingDate { get; set; }
 
-        public Reservation(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime reservationDate)
+        [JsonPropertyName("date_of_reservation")]
+        public DateTime ReservationDate { get; set; }
+        [JsonPropertyName("discount")]
+        public double Discount { get; set; }
+
+        public Reservation(string reservationNumber, string movieTitle, List<Seat> reservedSeats, string reservationRoom, DateTime showingDate, double discount = 0)
         {
             ReservationNumber = reservationNumber;
             MovieTitle = movieTitle;
             ReservedSeats = reservedSeats;
             ReservationRoom = reservationRoom;
-            ReservationDate = reservationDate;
-            // TotalPrice = totalPrice;
+            ShowingDate = showingDate;
+            ReservationDate = DateTime.Now;
+            Discount = discount;
         }
-
-        // TODO: Add property that saves the reserved seat(s) so it can be iterated over to unoccupy seats in case of ticket cancellation
 
         public static void AddReservation(Account account, Reservation reservation)
         {
@@ -44,7 +46,9 @@ namespace MegaBios
                 {
                     accounts[i].Reservations.Add(reservation);
                     accounts[i].History.Add(reservation);
+
                     JsonFunctions.WriteToJson("../../../customers.json", accounts);
+
                     break;
                 }
             }
@@ -118,12 +122,16 @@ namespace MegaBios
                 stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
                 totalPrice += seat.Price;
             }
-
+            string roomString = reservation.ReservationRoom.Substring(0, 4) + " " + reservation.ReservationRoom.Substring(4);
             reservationPrint.AppendLine($"--------RESERVERING DATA-----------\n");
             reservationPrint.AppendLine($"Reservation Number: {reservation.ReservationNumber}");
-            reservationPrint.AppendLine($"Film: {reservation.MovieTitle} \nRoom: {reservation.ReservationRoom}");
+            reservationPrint.AppendLine($"Film: {reservation.MovieTitle} \nRoom: {roomString}");
             reservationPrint.AppendLine($"Stoelen: \n{stoelenString}");
             reservationPrint.AppendLine($"Totaalprijs: {totalPrice:F2} Euro");
+            if (reservation.Discount > 0) {
+                reservationPrint.AppendLine($"Korting: {reservation.Discount * 100}%");
+            }
+            reservationPrint.AppendLine($"Tenstoonstellingsdatum: {reservation.ShowingDate}");
             reservationPrint.AppendLine("\nSelecteer \"ja\" om de bestelling te bevestigen\n");
 
             return reservationPrint;
@@ -141,14 +149,29 @@ namespace MegaBios
                 stoelenString += $"{seat.SeatNumber}: {seat.Price:F2} Euro\n";
                 totalPrice += seat.Price;
             }
+            string roomString = reservation.ReservationRoom.Substring(0, 4) + " " + reservation.ReservationRoom.Substring(4);
+            if (reservation.Discount > 0) {
+                return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                    $"Film: {reservation.MovieTitle}\n" +
+                    $"Gereserveerde stoelen:\n{stoelenString}" +
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Korting: {reservation.Discount*100}%" +
+                    $"Reserveringszaal: {roomString}\n" +
+                    $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
+                    $"Bestellingsdatum: {reservation.ReservationDate}\n";
 
-            return $"--------UW BESTELLINGEN-----------\n\n" +
-                $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
-                $"Film: {reservation.MovieTitle}\n" +
-                $"Gereserveerde stoelen:\n{stoelenString}" +
-                $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
-                $"Reserveringszaal: {reservation.ReservationRoom}\n" +
-                $"Reserveringsdatum: {reservation.ReservationDate}";
+            }
+            else {
+                return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                    $"Film: {reservation.MovieTitle}\n" +
+                    $"Gereserveerde stoelen:\n{stoelenString}" +
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Reserveringszaal: {roomString}\n" +
+                    $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
+                    $"Bestellingsdatum: {reservation.ReservationDate}\n";
+            }
+           
+                
         }
 
         public static string PrintHistory(Reservation reservation)
@@ -156,7 +179,7 @@ namespace MegaBios
             string stoelenString = "";
             double totalPrice = 0;
             Seat seat; // Declare seat buiten de loop
-
+            string roomString = reservation.ReservationRoom.Substring(0, 4) + " " + reservation.ReservationRoom.Substring(4);
             for (int i = 0; i < reservation.ReservedSeats.Count; i++)
             {
                 seat = reservation.ReservedSeats[i]; // Assign value in de loop
@@ -164,19 +187,32 @@ namespace MegaBios
                 totalPrice += seat.Price;
             }
 
-            return $"--------UW GESCHIEDENIS-----------\n\n" +
-                $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
-                $"Film: {reservation.MovieTitle}\n" +
-                $"Gereserveerde stoelen:\n{stoelenString}" +
-                $"Totaalprijs: {totalPrice} Euro\n" + // Gebruik stoelenString hier
-                $"Reserveringszaal: {reservation.ReservationRoom}\n" +
-                $"Reserveringsdatum: {reservation.ReservationDate}";
+            if (reservation.Discount > 0) {
+                return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                    $"Film: {reservation.MovieTitle}\n" +
+                    $"Gereserveerde stoelen:\n{stoelenString}" +
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Korting: {reservation.Discount*100}%" +
+                    $"Reserveringszaal: {roomString}\n" +
+                    $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
+                    $"Bestellingsdatum: {reservation.ReservationDate}\n";
+            }
+            else {
+                return $"Reserveringsnummer: {reservation.ReservationNumber}\n" +
+                    $"Film: {reservation.MovieTitle}\n" +
+                    $"Gereserveerde stoelen:\n{stoelenString}" +
+                    $"Totaalprijs: {totalPrice:F2} Euro\n" + // Gebruik stoelenString hier
+                    $"Reserveringszaal: {roomString}\n" +
+                    $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
+                    $"Bestellingsdatum: {reservation.ReservationDate}\n";
+            } 
         }
 
         public static List<Seat> ApplyDiscount(List<Seat> selectedSeats, Account user)
         {
             double discount = 0;
             int leeftijd = DateTime.Now.Year - Convert.ToDateTime(user.GeboorteDatum).Year;
+
             if (user.IsStudent || leeftijd >= 65)
             {
                 discount = 0.15;
@@ -189,6 +225,16 @@ namespace MegaBios
             }
 
             return selectedSeats;
+        }
+        public static double ReturnDiscount(Account user) {
+            double discount = 0;
+            int leeftijd = DateTime.Now.Year - Convert.ToDateTime(user.GeboorteDatum).Year;
+
+            if (user.IsStudent || leeftijd >= 65)
+            {
+                discount = 0.15;
+            }
+            return discount;
         }
     }
 }

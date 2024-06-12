@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Threading;
 using MegaBios;
+using System.Linq.Expressions;
 
 namespace MegaBiosTest.Services
 {
@@ -12,18 +13,14 @@ namespace MegaBiosTest.Services
         private string basePath = "../../../";
         private string filePattern = "Room*.json";
 
+
         [TestInitialize]
         public void TestInitialize()
         {
             // Stel de omgevingsvariabele in voor de testomgeving
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
 
-            // Verwijder alle bestaande testbestanden
-            var existingFiles = Directory.GetFiles(basePath, filePattern);
-            foreach (var file in existingFiles)
-            {
-                File.Delete(file);
-            }
+
         }
 
         [TestCleanup]
@@ -31,13 +28,9 @@ namespace MegaBiosTest.Services
         {
             // Verwijder de omgevingsvariabele na de test
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", null);
-
-            // Verwijder alle testbestanden
             var existingFiles = Directory.GetFiles(basePath, filePattern);
-            foreach (var file in existingFiles)
-            {
-                File.Delete(file);
-            }
+
+
         }
 
         private void SuppressConsoleOutput(Action action)
@@ -88,7 +81,7 @@ namespace MegaBiosTest.Services
             // Assert
             Thread.Sleep(500); // Kleine vertraging om bestandssysteem te laten verwerken
             var fileExists = File.Exists(nextRoomFilePath);
-            Assert.IsTrue(fileExists, $"Room{nextRoomNumber}.json is niet aangemaakt.");
+            Assert.IsTrue(fileExists, $"Room{nextRoomNumber}.json is niet aangemaakt. in {Path.GetFullPath(nextRoomFilePath)}");
         }
 
         [TestMethod]
@@ -108,9 +101,9 @@ namespace MegaBiosTest.Services
             });
 
             // Assert
-            Thread.Sleep(500); // Kleine vertraging om bestandssysteem te laten verwerken
+            Thread.Sleep(1000); // Kleine vertraging om bestandssysteem te laten verwerken
             var newRoomCount = GetCurrentRoomCount();
-            Assert.AreEqual(initialRoomCount + 1, newRoomCount, "Het aantal zalen is niet met 1 toegenomen.");
+            Assert.AreEqual(initialRoomCount + 1, newRoomCount, $"Het aantal zalen is niet met 1 toegenomen. {initialRoomCount} {newRoomCount}");
         }
     }
 }

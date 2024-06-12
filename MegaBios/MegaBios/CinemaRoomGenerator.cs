@@ -12,7 +12,7 @@ namespace MegaBios
 
             Console.WriteLine("Wilt u zalen genereren of een zaal bewerken?");
 
-            userChoice = MenuFunctions.Menu(menuOptions);
+            userChoice = MenuFunctions.Menu(menuOptions, null, true);
 
             switch (userChoice)
             {
@@ -30,20 +30,7 @@ namespace MegaBios
             }
         }
 
-        public void ResetAllSeatings()
-        {
-            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
-            {
-                List<RoomShowing> roomshowings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
-
-                for (int j = 0; j < roomshowings.Count; j++)
-                {
-                    roomshowings[i].Seating = ResetSeating(roomshowings[i].Seating);
-                }
-
-                JsonFunctions.WriteToJson($"../../../Room{i}.json", roomshowings);
-            }
-        }
+        
 
         public List<List<Seat>> ResetSeating(List<List<Seat>> seating)
         {
@@ -57,6 +44,23 @@ namespace MegaBios
 
             return seating;
         }
+        public void ResetAllSeatings()
+        {
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
+            {
+                List<RoomShowing> roomshowings = JsonFunctions.LoadRoomShowings($"../../../Room{i}.json");
+                
+                for (int j = 0; j < roomshowings.Count; j++)
+                {
+                    roomshowings[j].Seating = ResetSeating(roomshowings[i].Seating);
+                }
+               
+                JsonFunctions.WriteToJson($"../../../Room{i}.json", roomshowings);
+                
+                
+            }
+        }
+        
 
         public void GenerateShowingData()
         {
@@ -128,9 +132,10 @@ namespace MegaBios
                         seating = JsonFunctions.GenerateSeating(roomHeight, roomWidth);
                         break;
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         Console.WriteLine("Ongeldige invoer. Probeer het opnieuw.");
+                        System.Console.WriteLine(ex);
                     }
                 }
 
@@ -144,7 +149,7 @@ namespace MegaBios
         public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating)
         {
             List<RoomShowing> roomShowings = new();
-            string moviesFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\MegaBios\Movies.json");
+            string moviesFilePath = Path.Combine("../../../Movies.json");
             List<Movie> movies = JsonFunctions.LoadMovies(moviesFilePath);
             DateTime generationStartTime;
 
@@ -167,9 +172,6 @@ namespace MegaBios
                     Console.WriteLine(e);
                 }
             }
-
-            Console.WriteLine("test");
-
             DateTime generationCurrentTime = generationStartTime;
             TimeSpan generationTs = generationCurrentTime - generationStartTime;
             Random rand = new Random();
@@ -187,7 +189,5 @@ namespace MegaBios
 
             return roomShowings;
         }
-
-
     }
 }

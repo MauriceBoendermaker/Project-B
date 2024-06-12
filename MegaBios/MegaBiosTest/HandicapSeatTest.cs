@@ -1,9 +1,4 @@
 ﻿using MegaBios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MegaBiosTest
 {
@@ -14,9 +9,10 @@ namespace MegaBiosTest
         public void CheckForHandicapSeats()
         {
             // Arrange
-            var roomShowings = new List<RoomShowing>(); // valid room showings
+            var roomShowings = new List<RoomShowing>(); // Valid room showings
             string roomNumber = "Room 1";
             DateTime showTime = DateTime.Now;
+
             Account reservingAccount = new Account(
                 "Daan",
                 "", // Tussenvoegsel
@@ -38,10 +34,7 @@ namespace MegaBiosTest
                 new List<Reservation>()
             );
 
-
-
-            List<List<Seat>> seating = new List<List<Seat>>
-    {
+            List<List<Seat>> seating = new List<List<Seat>> {
         new List<Seat>
         {
             new Seat { SeatType = "normal", SeatTaken = false },
@@ -65,6 +58,5 @@ namespace MegaBiosTest
             // Assert
             Assert.IsTrue(hasHandicapSeats);
         }
-
     }
 }

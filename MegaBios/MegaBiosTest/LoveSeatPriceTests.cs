@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MegaBios;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using MegaBios;
 
 namespace MegaBiosTest.Services
 {
@@ -21,17 +18,17 @@ namespace MegaBiosTest.Services
                 }
             };
 
-
             // Assert
             Assert.AreEqual(10.00, seatingPlan[0][0].Price); // Normal seat
             Assert.AreEqual(20.00, seatingPlan[0][1].Price); // Love seat 1
             Assert.AreEqual(20.00, seatingPlan[0][2].Price); // Love seat 2
         }
+
         [TestMethod]
         public void CheckForLoveSeats()
         {
             // Arrange
-            var roomShowings = new List<RoomShowing>(); // valid room showings
+            var roomShowings = new List<RoomShowing>(); // Valid room showings
             string roomNumber = "Room 1";
             DateTime showTime = DateTime.Now;
             Account reservingAccount = new Account(

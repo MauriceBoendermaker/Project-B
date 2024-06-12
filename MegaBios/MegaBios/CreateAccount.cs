@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace MegaBios
 {
@@ -9,6 +7,7 @@ namespace MegaBios
         public static void CreateNewAccount(List<Account> jsonData)
         {
             Console.WriteLine("\nCreëer nieuw account");
+            System.Console.WriteLine("Druk op enter om je input te bevestigen");
             Console.WriteLine("--------------------");
 
             string voornaam;
@@ -59,9 +58,9 @@ namespace MegaBios
             string geboorteDatum;
             while (true)
             {
-                Console.Write("Voer geboortedatum in (YYYY-MM-DD): ");
+                Console.Write("Voer geboortedatum in (DD-MM-YYYY): ");
                 geboorteDatum = Console.ReadLine()!;
-                if (DateTime.TryParseExact(geboorteDatum, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out _))
+                if (DateTime.TryParseExact(geboorteDatum, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out _))
                 {
                     break;
                 }
@@ -70,20 +69,41 @@ namespace MegaBios
                     Console.WriteLine("Ongeldige invoer. Voer een geldige datum in het formaat YYYY-MM-DD in.");
                 }
             }
-
             Dictionary<string, string> adres = new Dictionary<string, string>();
-            Console.Write("Voer straatnaam in: ");
-            adres["straat"] = Console.ReadLine()!;
+            while (true)
+            {
+                Console.Write("Wilt u nieuwsbrieven ontvangen?\nHiervoor moet u uw adres invullen (Ja/Nee): ");
+                string wantLetters = Console.ReadLine()?.ToLower(); // Convert input naar lowercase
+                
+                if (wantLetters == "ja")
+                {
+                    Console.Write("Voer straatnaam in: ");
+                    adres["straat"] = Console.ReadLine()!;
 
-            Console.Write("Voer huisnummer in: ");
-            adres["huisnummer"] = Console.ReadLine()!;
+                    Console.Write("Voer huisnummer in: ");
+                    adres["huisnummer"] = Console.ReadLine()!;
 
-            Console.Write("Voer woonplaats in: ");
-            adres["woonplaats"] = Console.ReadLine()!;
+                    Console.Write("Voer woonplaats in: ");
+                    adres["woonplaats"] = Console.ReadLine()!;
 
-            Console.Write("Voer postcode in: ");
-            adres["postcode"] = Console.ReadLine()!;
+                    Console.Write("Voer postcode in: ");
+                    adres["postcode"] = Console.ReadLine()!;
 
+                    break;
+                }
+                else if (wantLetters == "nee") {
+                    adres["straat"] = "";
+                    adres["huisnummer"] = "";
+                    adres["woonplaats"] = "";
+                    adres["postcode"] = "";
+                    break;
+                }
+                else 
+                {
+                    Console.WriteLine("Ongeldige invoer. Voer 'Ja' of 'Nee' in.");
+                }
+            }    
+            
             string email;
             while (true)
             {
@@ -132,13 +152,15 @@ namespace MegaBios
             while (true)
             {
                 Console.Write("Bent u student? (Ja/Nee): ");
-                string is_studentString = Console.ReadLine()?.ToLower(); // Convert input to lowercase
+                string is_studentString = Console.ReadLine()?.ToLower(); // Convert input naar lowercase
 
                 if (is_studentString == "ja" || is_studentString == "nee")
                 {
                     // Convert "Ja" to true, "Nee" to false
                     is_student = (is_studentString == "ja");
+
                     Console.WriteLine("Geldige student status ingevoerd.");
+
                     break;
                 }
                 else
@@ -149,11 +171,12 @@ namespace MegaBios
 
             Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, betaalwijze, is_student, new List<Reservation>(), new List<Reservation>());
             jsonData.Add(newAccount);
+
             Console.WriteLine("Nieuw account toegevoegd aan de lijst.");
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);
-            Console.WriteLine("Account opgeslagen in JSON bestand.");
 
+            Console.WriteLine("Account opgeslagen in JSON bestand.");
             Console.WriteLine("Succesvol nieuw account gemaakt!");
         }
 

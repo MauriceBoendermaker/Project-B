@@ -1,8 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MegaBios;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using MegaBios;
 using System.Text.Json;
 
 namespace MegaBiosTest.Services
@@ -71,7 +67,7 @@ namespace MegaBiosTest.Services
             }
 
             // Simuleer gebruikersinvoer
-            var input = new StringReader("Bob\n\nVos\n2000-01-01\nstraat\n123\nDen Haag\n1234VV\njohn.doe@example.com\npassword123\npassword123\n1234567890\nCreditCard\ntrue\n");
+            var input = new StringReader("Bob\n\nVos\n2000-01-01\nstraat\n123\nDen Haag\n1234VV\njohn.doe@example.com\npassword123\npassword123\n1234567890\nCreditCard\nja\n");
             Console.SetIn(input);
 
             // Act
@@ -90,11 +86,13 @@ namespace MegaBiosTest.Services
             Assert.AreEqual("Vos", createdAccount.Achternaam, "Last name mismatch.");
             Assert.AreEqual("john.doe@example.com", createdAccount.Email, "Email mismatch.");
         }
+
         [TestMethod]
         public void DeleteAccount_AccountRemovedFromJsonFile()
         {
             // Arrange
             var jsonData = new List<Account>();
+
             if (File.Exists(filePath))
             {
                 var json = File.ReadAllText(filePath);
@@ -122,7 +120,6 @@ namespace MegaBiosTest.Services
             // Assert
             var updatedJson = File.ReadAllText(filePath);
             var updatedJsonData = JsonSerializer.Deserialize<List<Account>>(updatedJson);
-
             var deletedAccount = updatedJsonData.Find(account => account.Email == "aziaatyt@gmail.com");
             Assert.IsNull(deletedAccount, "Account should be null.");
         }

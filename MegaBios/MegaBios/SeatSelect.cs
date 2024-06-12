@@ -4,7 +4,6 @@ namespace MegaBios
 {
     public class SeatSelect
     {
-        // public static List<string> rowLetters = new() { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
         private List<Seat> _selectedSeats = new();
         private bool _confirmedSeats = false;
         private Seat _selectedSeat;
@@ -19,15 +18,16 @@ namespace MegaBios
         public RoomShowing Showing { get; set; }
         public string RoomNumber { get; set; }
         public DateTime ShowTime { get; set; }
-        public Account ReservingAccount {get; set;}
-        // public bool FinishedSelectingSeats = false;
+        public Account ReservingAccount { get; set; }
+        public string MovieTitle {get; set;}
 
-        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime, Account reservingAccount = null!)
+        public SeatSelect(List<RoomShowing> roomShowings, string roomNumber, DateTime showTime, string movieTitle, Account reservingAccount = null!)
         {
             RoomShowings = roomShowings;
             RoomNumber = roomNumber;
             ShowTime = showTime;
-            reservingAccount = reservingAccount;
+            ReservingAccount = reservingAccount;
+            MovieTitle = movieTitle;
 
             foreach (RoomShowing showing in roomShowings)
             {
@@ -43,7 +43,6 @@ namespace MegaBios
         {
             // Get de row en seat nummer van de selected love seat
             int rowIndex = int.Parse(loveSeat.SeatNumber.Split('-')[0]);
-            // int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
             int seatIndex = int.Parse(loveSeat.SeatNumber.Split('-')[1]);
 
             // Get het overeenkomende seat nummer
@@ -69,7 +68,6 @@ namespace MegaBios
         {
             // Get de row en seat nummer van de selected love seat
             int rowIndex = int.Parse(loveSeat.SeatNumber.Split('-')[0]);
-            // int rowIndex = rowLetters.IndexOf(loveSeat.SeatNumber.Substring(0, 1));
             int seatIndex = int.Parse(loveSeat.SeatNumber.Split('-')[1]);
 
             // Get het overeenkomende seat nummer
@@ -147,7 +145,6 @@ namespace MegaBios
                     updatedShowing = currentShowing;
                 }
             }
-
             // Iterate over de 2D List and markeer elke geselecteerde seat als selected in de 2D list
             for (int i = 0; i < updatedShowing.Seating.Count; i++)
             {
@@ -177,7 +174,7 @@ namespace MegaBios
             JsonFunctions.WriteToJson($"../../../{roomNumber}.json", roomShowings);
         }
 
-        public List<Seat> SelectSeats()
+        public Reservation SelectSeats()
         {
             List<int> cursorPos = new() { 1, 1 };
             DisplaySeats(cursorPos);
@@ -200,14 +197,25 @@ namespace MegaBios
 
             Console.WriteLine(selectedSeatsString);
             Console.WriteLine("Druk op een willekeurige knop om terug te gaan");
-            // ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
             for (int i = 0; i < _selectedSeats.Count; i++)
             {
                 _selectedSeats[i].SeatTaken = true;
             }
 
-            return _selectedSeats;
+            string reservationNumber = Reservation.generateReservationNumber();
+            double discount;
+            if (ReservingAccount == null) {
+                discount = 0;
+            }
+            else {
+                discount = Reservation.ReturnDiscount(ReservingAccount);
+            }
+            Reservation reservation = new(reservationNumber, MovieTitle, _selectedSeats, RoomNumber, ShowTime, discount);
+            if (ReservingAccount != null) {
+                reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, ReservingAccount);
+            }
+            return reservation;
         }
 
         public void DisplaySeats(List<int> cursorPos)
@@ -215,7 +223,6 @@ namespace MegaBios
             List<List<Seat>> seating = Seats;
 
             Console.Clear();
-            // Console.WriteLine("\n\x1b[0m");
 
             StringBuilder seatingText = new StringBuilder();
 
@@ -225,7 +232,7 @@ namespace MegaBios
             // Voeg de stoelnummers toe aan de legenda
             seatingText.Append("   ");
 
-            for (int i = 0; i < seating[0].Count; i++)
+            for (int i = 1; i <= seating[0].Count; i++)
             {
                 seatingText.Append(i.ToString().Length == 1 ? "0 " : $"{i.ToString().ToCharArray()[0]} ");
             }
@@ -233,17 +240,17 @@ namespace MegaBios
             seatingText.Append("\n");
             seatingText.Append("   ");
 
-            for (int i = 0; i < seating[0].Count; i++)
+            for (int i = 1; i <= seating[0].Count; i++)
             {
                 seatingText.Append(i.ToString().Length == 1 ? $"{i} " : $"{i.ToString().ToCharArray()[1]} ");
             }
 
             seatingText.Append("\n");
-
+            
             for (int i = 0; i < seating.Count; i++)
             {
                 // Voeg de rijnummers toe aan de legenda
-                seatingText.Append(i.ToString().Length == 1 ? $" {i} " : $"{i} ");
+                seatingText.Append((i + 1).ToString().Length == 1 ? $" {i + 1} " : $"{i + 1} ");
 
                 for (int j = 0; j < seating[i].Count; j++)
                 {
@@ -298,8 +305,7 @@ namespace MegaBios
             Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice:0.00} euro\n"); // Totaalprijs
 
             PrintLegend();
-
-            Console.WriteLine("\nDruk op pijltoetsen om te navigeren. Druk op 'Space' om stoel te selecteren. Druk op enter om stoelselectie te bevestigen. Druk op 'Backspace' om stoelselectie te wissen");
+            System.Console.WriteLine("\nPijltoetsen => Navigatie\nEnter => Bevestiging\nBackspace => Wis Stoelselectie");
             Console.WriteLine(_extraMessage);
         }
 
@@ -351,7 +357,7 @@ namespace MegaBios
                         {
                             _selectedSeats.Add(_selectedSeat);
                             UpdateSeatBounds(_selectedSeat);
-
+                            _extraMessage = "";
                             if (_selectedSeat.SeatType == "love seat")
                             {
                                 Seat rightCorrespondingSeat = GetCorrespondingLoveSeatRight(_selectedSeat);
@@ -454,14 +460,14 @@ namespace MegaBios
         {
             StringBuilder legendText = new StringBuilder();
             legendText.Append($"Legenda:\n");
-            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro), \x1b[35m[]\x1b[0m = Loveseats (20.00 euro), [] = Normale Stoelen (10.00 euro), \x1b[41m  \x1b[0m = Bezette Stoelen, \x1b[42m  \x1b[0m = Gekozen Stoelen, \x1b[43m  \x1b[0m = Huidige Stoel");
+            legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro)\n\x1b[35m[]\x1b[0m = Loveseats (20.00 euro)\n[] = Normale Stoelen (10.00 euro)\n\x1b[41m[]\x1b[0m = Bezette Stoelen\n\x1b[42m[]\x1b[0m = Gekozen Stoelen\n\x1b[43m[]\x1b[0m = Huidige Stoel");
 
             Console.WriteLine(legendText);
         }
 
         public void UpdateSeatBounds(Seat seat)
         {
-            int seatIndex = int.Parse(seat.SeatNumber.Substring(2)) - 1;
+            int seatIndex = int.Parse(seat.SeatNumber.Split('-')[1]) - 1;
 
             if (seatIndex < _selectedSeatsLeftBound)
             {
@@ -486,14 +492,15 @@ namespace MegaBios
             // Controleer of de geselecteerde stoel zich op de rechterrij bevindt en of de geselecteerde stoel grenst aan de momenteel geselecteerde stoelen of niet
             else if (cursor[1] == _selectedSeatsRow)
             {
-                if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) > 1)
-                {
-                    return false;
-                }
-                else if (Math.Abs(cursor[0] - _selectedSeatsRightBound) == 1 || Math.Abs(cursor[0] - _selectedSeatsLeftBound) == 1)
+                if (Math.Abs(cursor[0] - _selectedSeatsRightBound) == 1 || Math.Abs(cursor[0] - _selectedSeatsLeftBound) == 1)
                 {
                     return true;
                 }
+                else if (Math.Abs(cursor[0] - _selectedSeatsRightBound) > 1 && Math.Abs(cursor[0] - _selectedSeatsLeftBound) < -1)
+                {
+                    return false;
+                }
+                
 
                 return false;
             }
@@ -531,60 +538,67 @@ namespace MegaBios
             return true;
         }
 
-        public List<Seat> SelectGroupSeats(int groupAmount)
-        {
-            List<Seat> availableSeats = FindAvailableGroupSeats(groupAmount);
+        // Selecteer de beschikbare plaatsen voor een groep werd uiteindelijk toch niet gebruikt vanwege onduidelijkheden van de PO
+        // De onderste twee methoden zijn echter nodig voor het testen en worden niet gebruikt in onze applicatie
+        // Kunnen eigenlijk beter in comments
 
-            if (availableSeats != null && availableSeats.Count > 0)
-            {
-                Console.WriteLine("De volgende plaatsen zijn beschikbaar voor uw groep:");
 
-                foreach (var seat in availableSeats)
-                {
-                    Console.Write(seat.SeatNumber + " ");
-                    _selectedSeats.Add(seat);
-                }
+        // public List<Seat> SelectGroupSeats(int groupAmount)
+        // {
+        //     List<Seat> availableSeats = FindAvailableGroupSeats(groupAmount);
 
-                Console.WriteLine();
-                return _selectedSeats;
-            }
-            else
-            {
-                Console.WriteLine("Sorry, we konden niet genoeg aangrenzende plaatsen vinden voor uw groep.");
-                return new List<Seat>();
-            }
-        }
+        //     if (availableSeats != null && availableSeats.Count > 0)
+        //     {
+        //         Console.WriteLine("De volgende plaatsen zijn beschikbaar voor uw groep:");
 
-        private List<Seat> FindAvailableGroupSeats(int groupAmount)
-        {
-            List<List<Seat>> allSeats = Seats;
-            List<Seat> contiguousSeats = new List<Seat>();
+        //         foreach (var seat in availableSeats)
+        //         {
+        //             Console.Write(seat.SeatNumber + " ");
+        //             _selectedSeats.Add(seat);
+        //         }
 
-            foreach (var row in allSeats)
-            {
-                List<Seat> currentRowSeats = new List<Seat>();
+        //         Console.WriteLine();
+        //         return _selectedSeats;
+        //     }
+        //     else
+        //     {
+        //         Console.WriteLine("Sorry, we konden niet genoeg aangrenzende plaatsen vinden voor uw groep.");
+        //         return new List<Seat>();
+        //     }
+        // }
 
-                foreach (var seat in row)
-                {
-                    if (!seat.SeatTaken && seat.SeatType == "normal")
-                    {
-                        currentRowSeats.Add(seat);
+        // private List<Seat> FindAvailableGroupSeats(int groupAmount)
+        // {
+        //     List<List<Seat>> allSeats = Seats;
+        //     List<Seat> contiguousSeats = new List<Seat>();
 
-                        if (currentRowSeats.Count == groupAmount)
-                        {
-                            contiguousSeats.AddRange(currentRowSeats);
-                            return contiguousSeats;
-                        }
-                    }
-                    else
-                    {
-                        currentRowSeats.Clear();
-                    }
-                }
-            }
+        //     foreach (var row in allSeats)
+        //     {
+        //         List<Seat> currentRowSeats = new List<Seat>();
 
-            return new List<Seat>();
-        }
+        //         foreach (var seat in row)
+        //         {
+        //             if (!seat.SeatTaken && seat.SeatType == "normal")
+        //             {
+        //                 currentRowSeats.Add(seat);
+
+        //                 if (currentRowSeats.Count == groupAmount)
+        //                 {
+        //                     contiguousSeats.AddRange(currentRowSeats);
+        //                     return contiguousSeats;
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 currentRowSeats.Clear();
+        //             }
+        //         }
+        //     }
+
+        //     return new List<Seat>();
+        // }
+
+        // Onderste twee methoden zijn nodig voor het testen, toegevoegd voor de check of er handicap of loveseats zijn in onze menu tijdens het bestellen
         public bool HasHandicapSeats()
         {
             foreach (List<Seat> row in Seats)
