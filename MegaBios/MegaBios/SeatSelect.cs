@@ -292,7 +292,7 @@ namespace MegaBios
                 seatingText.AppendLine("\x1b[0m");
             }
 
-            string doekString = String.Concat(Enumerable.Repeat(" -", (displayWidth - 6) / 30)) + " Scherm " + String.Concat(Enumerable.Repeat(" -", (displayWidth - 6) / 30));
+            string doekString = String.Concat(Enumerable.Repeat(" -", (displayWidth - 6) / 30)) + " SCHERM " + String.Concat(Enumerable.Repeat(" -", (displayWidth - 6) / 30));
 
             Console.WriteLine(seatingText.ToString());
             Console.WriteLine(doekString);
@@ -302,8 +302,11 @@ namespace MegaBios
 
             double totalPrice = CalculateTotalPrice();
 
-            Console.WriteLine($"\n\nHuidige stoel prijs: {currentSeatPrice:0.00} euro");
-            Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice:0.00} euro\n"); // Totaalprijs
+            Console.WriteLine($"\n\nHuidige stoel prijs: {currentSeatPrice * (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro");
+            if (Reservation.ReturnDiscount(ReservingAccount) > 0) {
+                System.Console.WriteLine($"U krijgt {Reservation.ReturnDiscount(ReservingAccount)*100}% korting!");
+            }
+            Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice* (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro\n"); // Totaalprijs
 
             PrintLegend();
             System.Console.WriteLine("\nPijltoetsen => Navigatie\nEnter => Bevestiging\nBackspace => Wis Stoelselectie");
