@@ -225,8 +225,8 @@ namespace MegaBios
                         return;
                     case 1:
                         Console.Clear();
-
-                        ReadAccount.DisplayUserInfo(account);
+                        ReadAccount readAccount = new();
+                        readAccount.DisplayUserInfo(account);
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
                         ConsoleKeyInfo returnKeyPress = Console.ReadKey(true);
 

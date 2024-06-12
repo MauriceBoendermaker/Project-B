@@ -2,8 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-    public class Guest
-    {
+    public abstract class User {
         [JsonPropertyName("voornaam")]
         public string Voornaam { get; set; }
 
@@ -19,15 +18,21 @@ namespace MegaBios
         [JsonPropertyName("reservations")]
         public List<Reservation> Reservations { get; set; }
 
-        [JsonConstructor]
-        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<Reservation> reservations)
-        {
+        protected User(string voornaam, string tussenvoegsel, string achternaam, string email, List<Reservation> reservations) {
             Voornaam = voornaam;
             Tussenvoegsel = tussenvoegsel;
             Achternaam = achternaam;
             Email = email;
             Reservations = reservations;
         }
+    }
+
+    public class Guest : User
+    {
+
+        [JsonConstructor]
+        public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<Reservation> reservations) : base(voornaam, tussenvoegsel, achternaam, email, reservations)
+        {}
 
         public static Guest CreateGuest()
         {
@@ -140,25 +145,87 @@ namespace MegaBios
         }
     }
 
-    public class Account
+    // public class Account : Guest
+    // {
+    //     [JsonPropertyName("voornaam")]
+    //     public string Voornaam { get; set; }
+
+    //     [JsonPropertyName("tussenvoegsel")]
+    //     public string Tussenvoegsel { get; set; }
+
+    //     [JsonPropertyName("achternaam")]
+    //     public string Achternaam { get; set; }
+
+    //     [JsonPropertyName("geboorte_datum")]
+    //     public string GeboorteDatum { get; set; }
+
+    //     [JsonPropertyName("adres")]
+    //     public Dictionary<string, string> Adres { get; set; }
+
+    //     [JsonPropertyName("email")]
+    //     public string Email { get; set; }
+
+    //     [JsonPropertyName("wachtwoord")]
+    //     public string Wachtwoord { get; set; }
+
+    //     [JsonPropertyName("telefoonnummer")]
+    //     public string TelefoonNr { get; set; }
+
+    //     [JsonPropertyName("voorkeur_betaalwijze")]
+    //     public string Voorkeur_Betaalwijze { get; set; }
+
+    //     [JsonPropertyName("is_student")]
+    //     public bool IsStudent { get; set; }
+
+    //     [JsonPropertyName("reservations")]
+    //     public List<Reservation> Reservations { get; set; }
+
+    //     [JsonPropertyName("history")]
+    //     public List<Reservation> History { get; set; }
+
+    //     [JsonConstructor]
+    //     public Account(string voornaam,
+    //                         string tussenvoegsel,
+    //                         string achternaam,
+    //                         string geboorteDatum,
+    //                         Dictionary<string, string> adres,
+    //                         string email,
+    //                         string wachtwoord,
+    //                         string telefoonNr,
+    //                         string voorkeur_Betaalwijze,
+    //                         bool isStudent,
+    //                         List<Reservation> reservations,
+    //                         List<Reservation> history = null)
+    //     {
+    //         Voornaam = voornaam;
+    //         Tussenvoegsel = tussenvoegsel;
+    //         Achternaam = achternaam;
+    //         GeboorteDatum = geboorteDatum;
+    //         Adres = adres;
+    //         Email = email;
+    //         Wachtwoord = wachtwoord;
+    //         TelefoonNr = telefoonNr;
+    //         Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
+    //         IsStudent = isStudent;
+    //         Reservations = reservations;
+    //         if (history != null)
+    //         {
+    //             History = history;
+    //         }
+    //         else
+    //         {
+    //             History = new();
+    //         }
+    //     }
+
+    public class Account : User
     {
-        [JsonPropertyName("voornaam")]
-        public string Voornaam { get; set; }
-
-        [JsonPropertyName("tussenvoegsel")]
-        public string Tussenvoegsel { get; set; }
-
-        [JsonPropertyName("achternaam")]
-        public string Achternaam { get; set; }
 
         [JsonPropertyName("geboorte_datum")]
         public string GeboorteDatum { get; set; }
 
         [JsonPropertyName("adres")]
         public Dictionary<string, string> Adres { get; set; }
-
-        [JsonPropertyName("email")]
-        public string Email { get; set; }
 
         [JsonPropertyName("wachtwoord")]
         public string Wachtwoord { get; set; }
@@ -171,9 +238,6 @@ namespace MegaBios
 
         [JsonPropertyName("is_student")]
         public bool IsStudent { get; set; }
-
-        [JsonPropertyName("reservations")]
-        public List<Reservation> Reservations { get; set; }
 
         [JsonPropertyName("history")]
         public List<Reservation> History { get; set; }
@@ -190,19 +254,14 @@ namespace MegaBios
                             string voorkeur_Betaalwijze,
                             bool isStudent,
                             List<Reservation> reservations,
-                            List<Reservation> history = null)
+                            List<Reservation> history = null) : base(voornaam, tussenvoegsel, achternaam, email, reservations)
         {
-            Voornaam = voornaam;
-            Tussenvoegsel = tussenvoegsel;
-            Achternaam = achternaam;
             GeboorteDatum = geboorteDatum;
             Adres = adres;
-            Email = email;
             Wachtwoord = wachtwoord;
             TelefoonNr = telefoonNr;
             Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
             IsStudent = isStudent;
-            Reservations = reservations;
             if (history != null)
             {
                 History = history;
