@@ -46,7 +46,6 @@ namespace MegaBiosTest.Services
                 "daan.bakker@example.com",
                 "G3heim!",
                 "+31 10 98765432",
-                "Creditcard",
                 false,
                 new List<Reservation>(),
                 new List<Reservation>()
@@ -68,7 +67,7 @@ namespace MegaBiosTest.Services
                 }
             };
 
-            SeatSelect seatSelect = new SeatSelect(roomShowings, roomNumber, showTime, reservingAccount);
+            SeatSelect seatSelect = new SeatSelect(roomShowings, roomNumber, showTime, "Inception", reservingAccount);
             seatSelect.Seats = seating;
 
             bool hasLoveSeats = seatSelect.HasLoveSeats();

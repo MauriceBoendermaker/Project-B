@@ -67,7 +67,7 @@ namespace MegaBiosTest.Services
             }
 
             // Simuleer gebruikersinvoer
-            var input = new StringReader("Bob\n\nVos\n2000-01-01\nstraat\n123\nDen Haag\n1234VV\njohn.doe@example.com\npassword123\npassword123\n1234567890\nCreditCard\nja\n");
+            var input = new StringReader("Bob\n\nVos\n01-01-2000\nja\nstraat\n123\nDen Haag\n1234VV\njohn.doe@example.com\npassword123\npassword123\n1234567890\nCreditCard\nja\n");
             Console.SetIn(input);
 
             // Act
@@ -106,7 +106,7 @@ namespace MegaBiosTest.Services
                 { "huisnummer", "122b" },
                 { "woonplaats", "Rotterdam" },
                 { "postcode", "3074VJ" }
-            }, "aziaatyt@gmail.com", "alper123", "0640518191", "IDeal", true, new List<Reservation>(), new List<Reservation>());
+            }, "aziaatyt@gmail.com", "alper123", "0640518191", true, new List<Reservation>(), new List<Reservation>());
 
             jsonData.Add(testAccount);
             JsonFunctions.WriteToJson(filePath, jsonData);

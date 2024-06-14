@@ -24,7 +24,6 @@ namespace MegaBiosTest.Services
                 "john.doe@example.com",
                 "password123",
                 "1234567890",
-                "CreditCard",
                 true,
                 new List<Reservation>(),
                 new List<Reservation>()
@@ -57,7 +56,6 @@ namespace MegaBiosTest.Services
                 "jane.doe@example.com",
                 "password123",
                 "1234567890",
-                "CreditCard",
                 false,
                 new List<Reservation>(),
                 new List<Reservation>()
@@ -90,7 +88,6 @@ namespace MegaBiosTest.Services
                 "jack.doe@example.com",
                 "password123",
                 "1234567890",
-                "CreditCard",
                 false,
                 new List<Reservation>(),
                 new List<Reservation>()
