@@ -518,6 +518,7 @@ namespace MegaBios
             int selectedOption = MenuFunctions.Menu(menuOptions, sb);
             string selectedPayment = menuOptions[selectedOption];
             reservation.Betaalwijze = selectedPayment;
+
             return reservation;
         }
 
@@ -538,6 +539,7 @@ namespace MegaBios
                     }
                 }
             }
+
             showingOptions = showingOptions
                 .OrderBy(x => x.Value)
                 .ToDictionary();
@@ -565,6 +567,7 @@ namespace MegaBios
         public static Reservation CancelSeat(Account account, Reservation reservation, Seat seat)
         {
             int selectedOption = -1;
+
             if (Environment.GetEnvironmentVariable("IS_TEST_ENVIRONMENT") != "true")
             {
                 Console.Clear();
@@ -736,13 +739,17 @@ namespace MegaBios
 
                     return;
                 }
+
                 StringBuilder sb = new StringBuilder();
+
                 foreach (var userReservation in account.Reservations)
                     {
                         sb.Append(Reservation.PrintReservationUser(userReservation));
                         sb.Append($"-----------------------------------------------------\n");
                     }
+
                 int selectedOption = MenuFunctions.Menu(reservationNumbers, sb);
+
                 if (selectedOption == -1)
                 {
                     return;
@@ -756,11 +763,13 @@ namespace MegaBios
 
                 // Vraag de gebruiker om te selecteren of hij 1 stoel of alle stoelen wil annuleren
                 sb = new StringBuilder();
+
                 foreach (var userReservation in account.Reservations)
                     {
                         sb.Append(Reservation.PrintReservationUser(userReservation));
                         sb.Append($"-----------------------------------------------------\n");
                     }
+
                 sb.Append("Wat voor annulering wilt u uitvoeren?");
                 selectedOption = MenuFunctions.Menu(menuOptions, sb);
 
@@ -777,11 +786,13 @@ namespace MegaBios
                             .Select(x => x.SeatNumber)
                             .ToList();
                         sb = new StringBuilder();
+
                         foreach (var userReservation in account.Reservations)
                         {
                             sb.Append(Reservation.PrintReservationUser(userReservation));
                             sb.Append($"-----------------------------------------------------\n");
                         }
+
                         sb.Append("Welke stoel wilt u annuleren?");
                         selectedOption = MenuFunctions.Menu(seatNumbers, sb);
 
@@ -828,10 +839,12 @@ namespace MegaBios
                     // Annuleer de hele reservering
                     case 1:
                         account = CancelReservation(account, selectedReservation, selectedReservation.ReservedSeats);
+
                         if (account == null)
                         {   
                             break;
                         }
+
                         Account.UpdateAccount(account);
                         return;
                 }
@@ -846,11 +859,13 @@ namespace MegaBios
                     .Select(x => x.ReservationNumber)
                     .ToList();
                 StringBuilder sb = new StringBuilder();
+
                 foreach (var userReservation in guest.Reservations)
                 {
                     sb.Append(Reservation.PrintReservationUser(userReservation));
                     sb.Append($"-----------------------------------------------------\n");
                 }
+
                 int selectedOption = MenuFunctions.Menu(reservationNumbers, sb);
 
                 if (selectedOption == -1)
@@ -866,11 +881,13 @@ namespace MegaBios
 
                 // Vraag de gebruiker om te selecteren of hij 1 stoel of alle stoelen wil annuleren
                 sb = new StringBuilder();
+
                 foreach (var userReservation in guest.Reservations)
                 {
                     sb.Append(Reservation.PrintReservationUser(userReservation));
                     sb.Append($"-----------------------------------------------------\n");
                 }
+
                 sb.Append("Wat voor annulering wilt u uitvoeren?");
                 selectedOption = MenuFunctions.Menu(menuOptions, sb);
 
@@ -887,11 +904,13 @@ namespace MegaBios
                             .Select(x => x.SeatNumber)
                             .ToList();
                         sb = new StringBuilder();
+
                         foreach (var userReservation in guest.Reservations)
                         {
                             sb.Append(Reservation.PrintReservationUser(userReservation));
                             sb.Append($"-----------------------------------------------------\n");
                         }
+
                         sb.Append("Welke stoel wilt u annuleren?");
                         selectedOption = MenuFunctions.Menu(seatNumbers, sb);
 

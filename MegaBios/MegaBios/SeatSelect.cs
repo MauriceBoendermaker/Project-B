@@ -145,6 +145,7 @@ namespace MegaBios
                     updatedShowing = currentShowing;
                 }
             }
+
             // Iterate over de 2D List and markeer elke geselecteerde seat als selected in de 2D list
             for (int i = 0; i < updatedShowing.Seating.Count; i++)
             {
@@ -206,6 +207,7 @@ namespace MegaBios
             string reservationNumber = Reservation.generateReservationNumber();
             double discount;
             if (ReservingAccount == null) {
+
                 discount = 0;
             }
             else {
@@ -214,8 +216,10 @@ namespace MegaBios
 
             Reservation reservation = new(reservationNumber, MovieTitle, _selectedSeats, RoomNumber, ShowTime, "", discount);
             if (ReservingAccount != null) {
+
                 reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, ReservingAccount);
             }
+
             return reservation;
         }
 
@@ -310,6 +314,7 @@ namespace MegaBios
 
             PrintLegend();
             System.Console.WriteLine("\nPijltoetsen => Navigatie\nEnter => Bevestiging\nBackspace => Wis Stoelselectie");
+
             Console.WriteLine(_extraMessage);
         }
 
@@ -362,6 +367,7 @@ namespace MegaBios
                             _selectedSeats.Add(_selectedSeat);
                             UpdateSeatBounds(_selectedSeat);
                             _extraMessage = "";
+
                             if (_selectedSeat.SeatType == "love seat")
                             {
                                 Seat rightCorrespondingSeat = GetCorrespondingLoveSeatRight(_selectedSeat);
@@ -463,6 +469,7 @@ namespace MegaBios
         public void PrintLegend()
         {
             StringBuilder legendText = new StringBuilder();
+
             legendText.Append($"Legenda:\n");
             legendText.Append("\x1b[34m[]\x1b[0m = Handicap Stoelen (10.00 euro)\n\x1b[35m[]\x1b[0m = Loveseats (20.00 euro)\n[] = Normale Stoelen (10.00 euro)\n\x1b[41m[]\x1b[0m = Bezette Stoelen\n\x1b[42m[]\x1b[0m = Gekozen Stoelen\n\x1b[43m[]\x1b[0m = Huidige Stoel");
 

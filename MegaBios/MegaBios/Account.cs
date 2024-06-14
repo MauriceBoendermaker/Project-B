@@ -39,6 +39,7 @@ namespace MegaBios
             {
                 Console.Clear();
             }
+
             Console.WriteLine("\nVoer je gegevens in");
             System.Console.WriteLine("Druk op enter om te bevestigen");
             Console.WriteLine("--------------------");
@@ -57,6 +58,7 @@ namespace MegaBios
             while (true)
             {
                 Console.Write("Voer email in: ");
+
                 email = Console.ReadLine()!;
 
                 if (CreateAccount.IsValidEmail(email))
@@ -256,11 +258,13 @@ namespace MegaBios
                             List<Reservation> reservations,
                             List<Reservation> history = null) : base(voornaam, tussenvoegsel, achternaam, email, reservations)
         {
+
             GeboorteDatum = geboorteDatum;
             Adres = adres;
             Wachtwoord = wachtwoord;
             TelefoonNr = telefoonNr;
             IsStudent = isStudent;
+
             if (history != null)
             {
                 History = history;
@@ -302,6 +306,7 @@ namespace MegaBios
                 {
                     customers[i] = account;
                     JsonFunctions.WriteToJson("../../../customers.json", customers);
+
                     break;
                 }
             }

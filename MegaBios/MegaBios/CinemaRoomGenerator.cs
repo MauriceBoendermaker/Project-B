@@ -42,6 +42,7 @@ namespace MegaBios
 
             return seating;
         }
+
         public void ResetAllSeatings()
         {
             for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
@@ -53,6 +54,7 @@ namespace MegaBios
                     roomshowings[j].Seating = ResetSeating(roomshowings[i].Seating);
                 }
                
+
                 JsonFunctions.WriteToJson($"../../../Room{i}.json", roomshowings);
             }
         }
