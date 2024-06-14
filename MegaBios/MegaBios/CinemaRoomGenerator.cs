@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace MegaBios
 {
@@ -11,7 +12,7 @@ namespace MegaBios
 
             Console.Clear();
 
-            List<string> menuOptions = new() { "Genereer nieuwe zalen", "Reset alle seatings", "Werk filmlijst bij"};
+            List<string> menuOptions = new() { "Genereer nieuwe zalen", "Verwijder zaal", "Reset alle seatings", "Werk filmlijst bij"};
 
             Console.WriteLine("Wilt u zalen genereren of een zaal bewerken?");
 
@@ -25,15 +26,45 @@ namespace MegaBios
                     GenerateShowingData();
                     break;
                 case 1:
+                    RemoveRoom();
+                    break;
+                case 2:
                     ResetAllSeatings();
                     break;
-                case 2: 
+                case 3: 
                     EditMovies();
                     break;
                 default:
                     Console.WriteLine("Ongeldige invoer");
                     break;
             }
+        }
+
+        public void RemoveRoom() {
+            List<string> menuOptions = new();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Welke zaal wilt u verwijderen?");
+            for (int i = 1; File.Exists($"../../../Room{i}.json"); i++) {
+                menuOptions.Append($"Room {i}");
+            }
+            int selectedOption = MenuFunctions.Menu(menuOptions, sb, true) + 1;
+            Console.WriteLine("Weet u zeker dat u uw account wilt verwijderen? (ja/nee)\n");
+            string confirmInput = Console.ReadLine()!;
+
+            if (confirmInput == "ja")
+            {
+                File.Delete($"../../../Room{selectedOption}.json");
+                return;
+            }
+            else if (confirmInput == "nee")
+            {
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Invalide keuze. Probeer het alstublieft opnieuw.");
+            }
+            
         }
 
         public void EditMovies() {
