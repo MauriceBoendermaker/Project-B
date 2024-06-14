@@ -206,17 +206,20 @@ namespace MegaBios
 
             string reservationNumber = Reservation.generateReservationNumber();
             double discount;
-            if (ReservingAccount == null) {
 
+            if (ReservingAccount == null)
+            {
                 discount = 0;
             }
-            else {
+            else
+            {
                 discount = Reservation.ReturnDiscount(ReservingAccount);
             }
 
             Reservation reservation = new(reservationNumber, MovieTitle, _selectedSeats, RoomNumber, ShowTime, "", discount);
-            if (ReservingAccount != null) {
 
+            if (ReservingAccount != null)
+            {
                 reservation.ReservedSeats = Reservation.ApplyDiscount(reservation.ReservedSeats, ReservingAccount);
             }
 

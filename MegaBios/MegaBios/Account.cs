@@ -275,7 +275,8 @@ namespace MegaBios
             }
         }
 
-        public static bool Equals(Account a1, Account a2) {
+        public static bool Equals(Account a1, Account a2)
+        {
             if (a1 == null! || a2 == null!) {
                 return a1! == a2!;
             }

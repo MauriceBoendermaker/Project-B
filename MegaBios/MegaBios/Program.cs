@@ -282,9 +282,8 @@ namespace MegaBios
                         break;
                     case 6:
                         Console.Clear();
-                        System.Console.WriteLine($"--------UW RESERVERINGEN-----------\n");
-                        Reservation[] reservations = account.Reservations
-                            .ToArray();
+                        Console.WriteLine($"--------UW RESERVERINGEN-----------\n");
+                        Reservation[] reservations = account.Reservations.ToArray();
                         foreach (Reservation userReservation in reservations)
                         {
                             Console.WriteLine(Reservation.PrintReservationUser(userReservation));
@@ -297,9 +296,8 @@ namespace MegaBios
                         break;
                     case 7:
                         Console.Clear();
-                        System.Console.WriteLine($"--------UW GESCHIEDENIS-----------\n");
-                        Reservation[] history = account.History
-                            .ToArray();
+                        Console.WriteLine($"--------UW GESCHIEDENIS-----------\n");
+                        Reservation[] history = account.History.ToArray();
                         foreach (Reservation userReservation in history)
                         {
                             Console.WriteLine(Reservation.PrintHistory(userReservation));
@@ -572,7 +570,8 @@ namespace MegaBios
                 sb.Append("Weet je zeker dat je deze reservering wilt annuleren?");
                 selectedOption = MenuFunctions.Menu(new List<string> { "Ja", "Nee" }, sb);
             }
-            else {
+            else
+            {
                 selectedOption = 0;
             }
             
@@ -621,8 +620,10 @@ namespace MegaBios
             {
                 // Ja
                 case 0:
-                    for (int i = 0; i < account.Reservations.Count; i++) {
-                        if (account.Reservations[i].ReservationNumber == reservation.ReservationNumber) {
+                    for (int i = 0; i < account.Reservations.Count; i++)
+                    {
+                        if (account.Reservations[i].ReservationNumber == reservation.ReservationNumber)
+                        {
                             account.Reservations.RemoveAt(i);
                         }   
                     }
@@ -697,8 +698,10 @@ namespace MegaBios
             {
                 // Ja
                 case 0:
-                    for (int i = 0; i < guest.Reservations.Count; i++) {
-                        if (guest.Reservations[i].ReservationNumber == reservation.ReservationNumber) {
+                    for (int i = 0; i < guest.Reservations.Count; i++)
+                    {
+                        if (guest.Reservations[i].ReservationNumber == reservation.ReservationNumber)
+                        {
                             guest.Reservations.RemoveAt(i);
                         }   
                     }
