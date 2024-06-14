@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-
     public class RoomShowing
     {
         [JsonPropertyName("room_number")]
@@ -22,7 +21,7 @@ namespace MegaBios
 
         public RoomShowing()
         {
-            // Default constructor nodig voor deserialization
+            ; // Default constructor nodig voor deserialization
         }
 
         public RoomShowing(string roomNumber, List<List<Seat>> seating, string movie, DateTime showTime, bool inMaintenance)
@@ -48,7 +47,6 @@ namespace MegaBios
 
         [JsonPropertyName("price")]
         public double Price { get; set; }
-
     }
 
     public class MovieSchedule

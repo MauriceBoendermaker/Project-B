@@ -13,14 +13,11 @@ namespace MegaBiosTest.Services
         private string basePath = "../../../";
         private string filePattern = "Room*.json";
 
-
         [TestInitialize]
         public void TestInitialize()
         {
             // Stel de omgevingsvariabele in voor de testomgeving
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", "true");
-
-
         }
 
         [TestCleanup]
@@ -29,8 +26,6 @@ namespace MegaBiosTest.Services
             // Verwijder de omgevingsvariabele na de test
             Environment.SetEnvironmentVariable("IS_TEST_ENVIRONMENT", null);
             var existingFiles = Directory.GetFiles(basePath, filePattern);
-
-
         }
 
         private void SuppressConsoleOutput(Action action)

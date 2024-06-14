@@ -30,8 +30,6 @@ namespace MegaBios
             }
         }
 
-        
-
         public List<List<Seat>> ResetSeating(List<List<Seat>> seating)
         {
             for (int i = 0; i < seating.Count; i++)
@@ -44,6 +42,7 @@ namespace MegaBios
 
             return seating;
         }
+
         public void ResetAllSeatings()
         {
             for (int i = 1; File.Exists($"../../../Room{i}.json"); i++)
@@ -54,14 +53,11 @@ namespace MegaBios
                 {
                     roomshowings[j].Seating = ResetSeating(roomshowings[i].Seating);
                 }
-               
+
                 JsonFunctions.WriteToJson($"../../../Room{i}.json", roomshowings);
-                
-                
             }
         }
         
-
         public void GenerateShowingData()
         {
             int numberOfRooms = 0;
@@ -144,7 +140,6 @@ namespace MegaBios
                 Console.WriteLine($"Room{i}.json is aangemaakt");
             }
         }
-
 
         public List<RoomShowing> GenerateRoomShowings(string roomName, bool inMaintenance, List<List<Seat>> seating)
         {

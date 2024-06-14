@@ -29,7 +29,6 @@ namespace MegaBios
 
     public class Guest : User
     {
-
         [JsonConstructor]
         public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<Reservation> reservations) : base(voornaam, tussenvoegsel, achternaam, email, reservations)
         {}
@@ -40,8 +39,9 @@ namespace MegaBios
             {
                 Console.Clear();
             }
+
             Console.WriteLine("\nVoer je gegevens in");
-            System.Console.WriteLine("Druk op enter om te bevestigen");
+            Console.WriteLine("Druk op enter om te bevestigen");
             Console.WriteLine("--------------------");
 
             Console.Write("Voer voornaam in: ");
@@ -58,6 +58,7 @@ namespace MegaBios
             while (true)
             {
                 Console.Write("Voer email in: ");
+
                 email = Console.ReadLine()!;
 
                 if (CreateAccount.IsValidEmail(email))
@@ -150,79 +151,6 @@ namespace MegaBios
         }
     }
 
-    // public class Account : Guest
-    // {
-    //     [JsonPropertyName("voornaam")]
-    //     public string Voornaam { get; set; }
-
-    //     [JsonPropertyName("tussenvoegsel")]
-    //     public string Tussenvoegsel { get; set; }
-
-    //     [JsonPropertyName("achternaam")]
-    //     public string Achternaam { get; set; }
-
-    //     [JsonPropertyName("geboorte_datum")]
-    //     public string GeboorteDatum { get; set; }
-
-    //     [JsonPropertyName("adres")]
-    //     public Dictionary<string, string> Adres { get; set; }
-
-    //     [JsonPropertyName("email")]
-    //     public string Email { get; set; }
-
-    //     [JsonPropertyName("wachtwoord")]
-    //     public string Wachtwoord { get; set; }
-
-    //     [JsonPropertyName("telefoonnummer")]
-    //     public string TelefoonNr { get; set; }
-
-    //     [JsonPropertyName("voorkeur_betaalwijze")]
-    //     public string Voorkeur_Betaalwijze { get; set; }
-
-    //     [JsonPropertyName("is_student")]
-    //     public bool IsStudent { get; set; }
-
-    //     [JsonPropertyName("reservations")]
-    //     public List<Reservation> Reservations { get; set; }
-
-    //     [JsonPropertyName("history")]
-    //     public List<Reservation> History { get; set; }
-
-    //     [JsonConstructor]
-    //     public Account(string voornaam,
-    //                         string tussenvoegsel,
-    //                         string achternaam,
-    //                         string geboorteDatum,
-    //                         Dictionary<string, string> adres,
-    //                         string email,
-    //                         string wachtwoord,
-    //                         string telefoonNr,
-    //                         string voorkeur_Betaalwijze,
-    //                         bool isStudent,
-    //                         List<Reservation> reservations,
-    //                         List<Reservation> history = null)
-    //     {
-    //         Voornaam = voornaam;
-    //         Tussenvoegsel = tussenvoegsel;
-    //         Achternaam = achternaam;
-    //         GeboorteDatum = geboorteDatum;
-    //         Adres = adres;
-    //         Email = email;
-    //         Wachtwoord = wachtwoord;
-    //         TelefoonNr = telefoonNr;
-    //         Voorkeur_Betaalwijze = voorkeur_Betaalwijze;
-    //         IsStudent = isStudent;
-    //         Reservations = reservations;
-    //         if (history != null)
-    //         {
-    //             History = history;
-    //         }
-    //         else
-    //         {
-    //             History = new();
-    //         }
-    //     }
-
     public class Account : User
     {
 
@@ -257,11 +185,13 @@ namespace MegaBios
                             List<Reservation> reservations,
                             List<Reservation> history = null) : base(voornaam, tussenvoegsel, achternaam, email, reservations)
         {
+
             GeboorteDatum = geboorteDatum;
             Adres = adres;
             Wachtwoord = wachtwoord;
             TelefoonNr = telefoonNr;
             IsStudent = isStudent;
+
             if (history != null)
             {
                 History = history;
@@ -272,7 +202,8 @@ namespace MegaBios
             }
         }
 
-        public static bool Equals(Account a1, Account a2) {
+        public static bool Equals(Account a1, Account a2)
+        {
             if (a1 == null! || a2 == null!) {
                 return a1! == a2!;
             }
@@ -303,6 +234,7 @@ namespace MegaBios
                 {
                     customers[i] = account;
                     JsonFunctions.WriteToJson("../../../customers.json", customers);
+
                     break;
                 }
             }

@@ -15,6 +15,7 @@ namespace MegaBios
             {
                 Console.Write("Voer voornaam in: ");
                 voornaam = Console.ReadLine()!;
+
                 if (Regex.IsMatch(voornaam, @"^[a-zA-Z]+$"))
                 {
                     break;
@@ -30,6 +31,7 @@ namespace MegaBios
             {
                 Console.Write("Voer tussenvoegsel in (als u een tussenvoegsel heeft): ");
                 tussenvoegsel = Console.ReadLine()!;
+
                 if (string.IsNullOrEmpty(tussenvoegsel) || Regex.IsMatch(tussenvoegsel, @"^[a-zA-Z]+$"))
                 {
                     break;
@@ -45,6 +47,7 @@ namespace MegaBios
             {
                 Console.Write("Voer achternaam in: ");
                 achternaam = Console.ReadLine()!;
+
                 if (Regex.IsMatch(achternaam, @"^[a-zA-Z]+$"))
                 {
                     break;
@@ -60,6 +63,7 @@ namespace MegaBios
             {
                 Console.Write("Voer geboortedatum in (DD-MM-YYYY): ");
                 geboorteDatum = Console.ReadLine()!;
+
                 if (DateTime.TryParseExact(geboorteDatum, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out _))
                 {
                     break;
@@ -69,7 +73,9 @@ namespace MegaBios
                     Console.WriteLine("Ongeldige invoer. Voer een geldige datum in het formaat YYYY-MM-DD in.");
                 }
             }
+
             Dictionary<string, string> adres = new Dictionary<string, string>();
+
             while (true)
             {
                 Console.Write("Wilt u nieuwsbrieven ontvangen?\nHiervoor moet u uw adres invullen (Ja/Nee): ");
@@ -166,9 +172,9 @@ namespace MegaBios
                 }
             }
 
-
             Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, is_student, new List<Reservation>(), new List<Reservation>());
             jsonData.Add(newAccount);
+
             Console.WriteLine("Nieuw account toegevoegd aan de lijst.");
 
             JsonFunctions.WriteToJson("../../../customers.json", jsonData);
