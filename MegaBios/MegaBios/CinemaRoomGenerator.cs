@@ -120,9 +120,19 @@ namespace MegaBios
             
             System.Console.WriteLine("Wat is/zijn de genre(s). Verdeel elk genre met een \',\'\n(Enter => bevestigen)");
             string genres = Console.ReadLine();
-            
-            System.Console.WriteLine("Wat is de beoordeling? Voer in met 1 getal achter de komma\n(Enter => bevestigen)");
-            double beoordeling = Convert.ToDouble(Console.ReadLine());
+            double beoordeling;
+            while(true) {
+                System.Console.WriteLine("Wat is de beoordeling? Voer in met 1 getal achter de komma\n(Enter => bevestigen)");
+                string beoordelingStr = Console.ReadLine();
+                try {
+                    beoordeling = Convert.ToDouble(beoordelingStr);
+                    break;
+                }
+                catch {
+                    System.Console.WriteLine("Verkeerde input. voer een getal in");
+                }
+            }
+
             movies.Add(new Movie {Title = moveieName, Description = description, Duration = duration, StartDate = startDatum, EndDate = eindDatum, Rating = beoordeling});
             JsonFunctions.WriteToJson("../../../Movies.json", movies);
             System.Console.WriteLine($"Film {moveieName} is verwijderd. Druk op een willekeurige knop om terug te keren");
