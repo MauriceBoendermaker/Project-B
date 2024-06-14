@@ -53,7 +53,6 @@ namespace MegaBios
                 {
                     roomshowings[j].Seating = ResetSeating(roomshowings[i].Seating);
                 }
-               
 
                 JsonFunctions.WriteToJson($"../../../Room{i}.json", roomshowings);
             }
