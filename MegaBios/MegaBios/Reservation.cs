@@ -182,7 +182,7 @@ namespace MegaBios
                     $"Reserveringszaal: {roomString}\n" +
                     $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
                     $"Bestellingsdatum: {reservation.ReservationDate}\n";
-            }
+            }                
         }
 
         public static string PrintHistory(Reservation reservation)
