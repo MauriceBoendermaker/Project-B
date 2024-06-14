@@ -316,8 +316,8 @@ namespace MegaBios
             Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice* (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro\n"); // Totaalprijs
 
             PrintLegend();
-            System.Console.WriteLine("\nPijltoetsen => Navigatie\nEnter => Bevestiging\nBackspace => Wis Stoelselectie");
 
+            Console.WriteLine("\nPijltoetsen => Navigatie\nEnter => Bevestiging\nBackspace => Wis Stoelselectie");
             Console.WriteLine(_extraMessage);
         }
 
