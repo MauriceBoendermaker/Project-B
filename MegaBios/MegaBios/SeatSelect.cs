@@ -551,65 +551,6 @@ namespace MegaBios
             return true;
         }
 
-        // Selecteer de beschikbare plaatsen voor een groep werd uiteindelijk toch niet gebruikt vanwege onduidelijkheden van de PO
-        // De onderste twee methoden zijn echter nodig voor het testen en worden niet gebruikt in onze applicatie
-        // Kunnen eigenlijk beter in comments
-
-        // public List<Seat> SelectGroupSeats(int groupAmount)
-        // {
-        //     List<Seat> availableSeats = FindAvailableGroupSeats(groupAmount);
-
-        //     if (availableSeats != null && availableSeats.Count > 0)
-        //     {
-        //         Console.WriteLine("De volgende plaatsen zijn beschikbaar voor uw groep:");
-
-        //         foreach (var seat in availableSeats)
-        //         {
-        //             Console.Write(seat.SeatNumber + " ");
-        //             _selectedSeats.Add(seat);
-        //         }
-
-        //         Console.WriteLine();
-        //         return _selectedSeats;
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine("Sorry, we konden niet genoeg aangrenzende plaatsen vinden voor uw groep.");
-        //         return new List<Seat>();
-        //     }
-        // }
-
-        // private List<Seat> FindAvailableGroupSeats(int groupAmount)
-        // {
-        //     List<List<Seat>> allSeats = Seats;
-        //     List<Seat> contiguousSeats = new List<Seat>();
-
-        //     foreach (var row in allSeats)
-        //     {
-        //         List<Seat> currentRowSeats = new List<Seat>();
-
-        //         foreach (var seat in row)
-        //         {
-        //             if (!seat.SeatTaken && seat.SeatType == "normal")
-        //             {
-        //                 currentRowSeats.Add(seat);
-
-        //                 if (currentRowSeats.Count == groupAmount)
-        //                 {
-        //                     contiguousSeats.AddRange(currentRowSeats);
-        //                     return contiguousSeats;
-        //                 }
-        //             }
-        //             else
-        //             {
-        //                 currentRowSeats.Clear();
-        //             }
-        //         }
-        //     }
-
-        //     return new List<Seat>();
-        // }
-
         // Onderste twee methoden zijn nodig voor het testen, toegevoegd voor de check of er handicap of loveseats zijn in onze menu tijdens het bestellen
         public bool HasHandicapSeats()
         {
