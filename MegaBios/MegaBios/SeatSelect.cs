@@ -309,11 +309,19 @@ namespace MegaBios
 
             double totalPrice = CalculateTotalPrice();
 
-            Console.WriteLine($"\n\nHuidige stoel prijs: {currentSeatPrice * (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro");
-            if (Reservation.ReturnDiscount(ReservingAccount) > 0) {
-                Console.WriteLine($"U krijgt {Reservation.ReturnDiscount(ReservingAccount)*100}% korting!");
+            if (ReservingAccount != null) {
+                if (Reservation.ReturnDiscount(ReservingAccount) > 0) {
+                    Console.WriteLine($"U krijgt {Reservation.ReturnDiscount(ReservingAccount)*100}% korting!");
+                    Console.WriteLine($"\n\nHuidige stoel prijs: {currentSeatPrice * (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro");
+                    Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice* (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro\n"); // Totaalprijs
+
+                }
             }
-            Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice* (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro\n"); // Totaalprijs
+            else {
+                Console.WriteLine($"\n\nHuidige stoel prijs: {currentSeatPrice:F2} euro");
+                Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice:F2} euro\n"); // Totaalprijs
+
+            }
 
             PrintLegend();
 

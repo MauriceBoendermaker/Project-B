@@ -217,7 +217,7 @@ namespace MegaBios
                 if (account.IsAdmin())
                 {
                     menuOptions.Add("Pas zaal grootte aan");
-                    menuOptions.Add("Misc admin methods");
+                    menuOptions.Add("Admin methods");
                 }
 
                 int userChoice = MenuFunctions.Menu(menuOptions) + 1;
