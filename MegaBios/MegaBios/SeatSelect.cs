@@ -308,7 +308,7 @@ namespace MegaBios
 
             Console.WriteLine($"\n\nHuidige stoel prijs: {currentSeatPrice * (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro");
             if (Reservation.ReturnDiscount(ReservingAccount) > 0) {
-                System.Console.WriteLine($"U krijgt {Reservation.ReturnDiscount(ReservingAccount)*100}% korting!");
+                Console.WriteLine($"U krijgt {Reservation.ReturnDiscount(ReservingAccount)*100}% korting!");
             }
             Console.WriteLine($"Totaalprijs van geselecteerde stoelen: {totalPrice* (1- Reservation.ReturnDiscount(ReservingAccount)):F2} euro\n"); // Totaalprijs
 

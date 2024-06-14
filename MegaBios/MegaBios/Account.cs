@@ -41,7 +41,7 @@ namespace MegaBios
             }
 
             Console.WriteLine("\nVoer je gegevens in");
-            System.Console.WriteLine("Druk op enter om te bevestigen");
+            Console.WriteLine("Druk op enter om te bevestigen");
             Console.WriteLine("--------------------");
 
             Console.Write("Voer voornaam in: ");

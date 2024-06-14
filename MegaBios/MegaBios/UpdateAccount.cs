@@ -80,8 +80,8 @@ namespace MegaBios
                     break;
             }
             JsonFunctions.WriteToJson("../../../customers.json", Program.jsonData);
-            System.Console.WriteLine("Uw gegevens zijn geupdated!. Druk op een willekeurige knop om terug te keren");
 
+            Console.WriteLine("Uw gegevens zijn geupdated!. Druk op een willekeurige knop om terug te keren");
             Console.ReadKey(true);
 
             return;

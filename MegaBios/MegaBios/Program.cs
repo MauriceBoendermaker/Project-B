@@ -44,7 +44,7 @@ namespace MegaBios
                             if (attempts >= 3)
                             {
                                 Console.Clear();
-                                System.Console.WriteLine("U heeft 3 foute inlogpogingen gedaan. Druk op een willekeurige toets om terug te keren naar het menu");
+                                Console.WriteLine("U heeft 3 foute inlogpogingen gedaan. Druk op een willekeurige toets om terug te keren naar het menu");
                                 Console.ReadKey(true);
                                 break;
                             }
@@ -71,7 +71,7 @@ namespace MegaBios
                             if (attempts >= 3)
                             {
                                 Console.Clear();
-                                System.Console.WriteLine("U heeft 3 foute inlogpogingen gedaan. Druk op een willekeurige toets om terug te keren naar het menu");
+                                Console.WriteLine("U heeft 3 foute inlogpogingen gedaan. Druk op een willekeurige toets om terug te keren naar het menu");
                                 Console.ReadKey(true);
                                 break;
                             }
@@ -184,7 +184,7 @@ namespace MegaBios
             }
 
             Console.WriteLine("Login Formulier");
-            System.Console.WriteLine("Druk enter om je input te bevestigen");
+            Console.WriteLine("Druk enter om je input te bevestigen");
             Console.WriteLine("-----------");
 
             Console.Write("Voer email in: ");
@@ -290,8 +290,8 @@ namespace MegaBios
                             .ToArray();
                         foreach (Reservation userReservation in reservations)
                         {
-                            System.Console.WriteLine(Reservation.PrintReservationUser(userReservation));
-                            System.Console.WriteLine($"-----------------------------------------------------");
+                            Console.WriteLine(Reservation.PrintReservationUser(userReservation));
+                            Console.WriteLine($"-----------------------------------------------------");
                         }
 
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
@@ -306,7 +306,7 @@ namespace MegaBios
                         foreach (Reservation userReservation in history)
                         {
                             Console.WriteLine(Reservation.PrintHistory(userReservation));
-                            System.Console.WriteLine($"-----------------------------------------------------");
+                            Console.WriteLine($"-----------------------------------------------------");
                         }
 
                         Console.WriteLine("\nDruk op een willekeurige toets om terug te gaan");
