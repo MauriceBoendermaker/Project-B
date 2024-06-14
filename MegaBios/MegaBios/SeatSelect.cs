@@ -555,7 +555,6 @@ namespace MegaBios
         // De onderste twee methoden zijn echter nodig voor het testen en worden niet gebruikt in onze applicatie
         // Kunnen eigenlijk beter in comments
 
-
         // public List<Seat> SelectGroupSeats(int groupAmount)
         // {
         //     List<Seat> availableSeats = FindAvailableGroupSeats(groupAmount);
