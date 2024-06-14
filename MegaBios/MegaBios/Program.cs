@@ -547,7 +547,6 @@ namespace MegaBios
             List<DateTime> showDays = new();
             List<RoomShowing> roomShowings = JsonFunctions.LoadRoomShowings($"../../../Room1.json");
             DateTime startDate = roomShowings[0].ShowingTime.Date;
-            string dateFormat = "dd-MM-yyyy HH:mm:ss";
 
             for (int i = 0; i < 7; i++)
             {

@@ -1,3 +1,6 @@
+using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
+
 namespace MegaBios
 {
     public class CinemaRoomGenerator
@@ -8,7 +11,7 @@ namespace MegaBios
 
             Console.Clear();
 
-            List<string> menuOptions = new() { "Genereer nieuwe zalen", "Reset alle seatings" };
+            List<string> menuOptions = new() { "Genereer nieuwe zalen", "Reset alle seatings", "Werk filmlijst bij"};
 
             Console.WriteLine("Wilt u zalen genereren of een zaal bewerken?");
 
@@ -24,10 +27,90 @@ namespace MegaBios
                 case 1:
                     ResetAllSeatings();
                     break;
+                case 2: 
+                    EditMovies();
+                    break;
                 default:
                     Console.WriteLine("Ongeldige invoer");
                     break;
             }
+        }
+
+        public void EditMovies() {
+            List<string> menuOptions = new() {"Voeg film toe", "Verwijder film"};
+            int userChoice = MenuFunctions.Menu(menuOptions, null, true);
+
+            switch (userChoice)
+            {
+                case -1:
+                    return;
+                case 0:
+                    AddMovie();
+                    break;
+                case 1:
+                    RemoveMovie();
+                    break;
+                default:
+                    Console.WriteLine("Ongeldige invoer");
+                    break;
+            }
+        }
+
+        public void AddMovie() {
+            List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
+            
+            System.Console.WriteLine("Wat is de filmnaam?\n(Enter => bevestigen)");
+            string moveieName = Console.ReadLine();
+           
+            System.Console.WriteLine("Wat is de beschrijving?\n(Enter => bevestigen)");
+            string description = Console.ReadLine();
+            
+            System.Console.WriteLine("Wat is de filmlengte in minuten?\n(Enter => bevestigen)");
+            int duration = Convert.ToInt32(Console.ReadLine());
+            DateTime startDatum;
+            while(true) {
+                System.Console.WriteLine("Wat is de startdatum? (dd-mm-yy)\n(Enter => bevestigen)");
+                string startDatumStr = Console.ReadLine();
+                if (DateTime.TryParseExact(startDatumStr, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out _)) {
+                    startDatum = Convert.ToDateTime(DateTime.ParseExact(startDatumStr, "dd-MM-yyyy", CultureInfo.InvariantCulture));
+                    break;
+                }
+            }
+            DateTime eindDatum;
+            while(true) {
+                System.Console.WriteLine("Wat is de einddatum? (dd-mm-yy)\n(Enter => bevestigen)");
+                string eindDatumStr = Console.ReadLine();
+                if (DateTime.TryParseExact(eindDatumStr, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out _)) {
+                    eindDatum = Convert.ToDateTime(DateTime.ParseExact(eindDatumStr, "dd-MM-yyyy", CultureInfo.InvariantCulture));
+                    break;
+                }
+            }
+            
+            
+            System.Console.WriteLine("Wat is/zijn de genre(s). Verdeel elk genre met een \',\'\n(Enter => bevestigen)");
+            string genres = Console.ReadLine();
+            
+            System.Console.WriteLine("Wat is de beoordeling? Voer in met 1 getal achter de komma\n(Enter => bevestigen)");
+            double beoordeling = Convert.ToDouble(Console.ReadLine());
+            movies.Add(new Movie {Title = moveieName, Description = description, Duration = duration, StartDate = startDatum, EndDate = eindDatum, Rating = beoordeling});
+            JsonFunctions.WriteToJson("../../../Movies.json", movies);
+            System.Console.WriteLine($"Film {moveieName} is verwijderd. Druk op een willekeurige knop om terug te keren");
+            Console.ReadKey(true);
+        }
+        public void RemoveMovie() {
+            List<Movie> movies = JsonFunctions.LoadMovies("../../../Movies.json");
+            System.Console.WriteLine("Welke film wil je verwijderen?\n(Enter => bevestigen)");
+            string moveieName = Console.ReadLine();
+            
+            for (int i = 0; i < movies.Count; i++ ){
+                if (movies[i].Title == moveieName) {
+                    movies.RemoveAt(i);
+                }
+            }
+            JsonFunctions.WriteToJson("../../../Movies.json", movies);
+            System.Console.WriteLine($"Film {moveieName} is verwijderd. Druk op een willekeurige knop om terug te keren");
+            Console.ReadKey(true);
+            
         }
 
         public List<List<Seat>> ResetSeating(List<List<Seat>> seating)
