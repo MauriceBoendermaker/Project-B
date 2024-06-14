@@ -176,8 +176,6 @@ namespace MegaBios
                     $"Tenstoonstellingsdatum: {reservation.ShowingDate}\n" +
                     $"Bestellingsdatum: {reservation.ReservationDate}\n";
             }
-           
-                
         }
 
         public static string PrintHistory(Reservation reservation)
@@ -224,7 +222,6 @@ namespace MegaBios
                 discount = 0.15;
             }
             
-
             for (int i = 0; i < selectedSeats.Count; i++)
             {
                 selectedSeats[i].Price *= 1 - discount;

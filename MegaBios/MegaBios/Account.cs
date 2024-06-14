@@ -29,7 +29,6 @@ namespace MegaBios
 
     public class Guest : User
     {
-
         [JsonConstructor]
         public Guest(string voornaam, string tussenvoegsel, string achternaam, string email, List<Reservation> reservations) : base(voornaam, tussenvoegsel, achternaam, email, reservations)
         {}

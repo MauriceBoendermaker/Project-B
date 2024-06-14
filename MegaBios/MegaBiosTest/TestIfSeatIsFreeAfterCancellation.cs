@@ -61,8 +61,6 @@ namespace MegaBiosTest
             Reservation reservation = new Reservation("12345", "testfilm", reservedSeatsList, "Test_Room1", Convert.ToDateTime("2024-08-25T09:00:00"), "IDeal");
             SeatSelect.MarkSeatsAsSelected(reservedSeatsList, reservation.ShowingDate, reservation.ReservationRoom);
 
-
-
             Reservation updatedReservation = Program.CancelSeat(reservingAccount, reservation, reservedSeat);
 
             Assert.IsNotNull(updatedReservation);

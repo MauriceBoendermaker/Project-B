@@ -166,7 +166,6 @@ namespace MegaBios
                 }
             }
 
-
             Account newAccount = new Account(voornaam, tussenvoegsel, achternaam, geboorteDatum, adres, email, wachtwoord, telefoonNr, is_student, new List<Reservation>(), new List<Reservation>());
             jsonData.Add(newAccount);
             Console.WriteLine("Nieuw account toegevoegd aan de lijst.");

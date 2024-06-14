@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 
 namespace MegaBios
 {
-
     public class RoomShowing
     {
         [JsonPropertyName("room_number")]
@@ -48,7 +47,6 @@ namespace MegaBios
 
         [JsonPropertyName("price")]
         public double Price { get; set; }
-
     }
 
     public class MovieSchedule

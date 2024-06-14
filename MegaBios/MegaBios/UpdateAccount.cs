@@ -22,9 +22,6 @@ namespace MegaBios
             List<string> menuOptions = new() {"E-Mail", "Wachtwoord", "Student status"};
             // Console.WriteLine("1. Email2. Wachtwoord\n3. Student status");
             int selectedChoice = MenuFunctions.Menu(menuOptions, null, true);
-
-
-
             
             switch (selectedChoice)
             {
@@ -80,7 +77,6 @@ namespace MegaBios
                         }
                     }
                     break;
-                
             }
             JsonFunctions.WriteToJson("../../../customers.json", Program.jsonData);
             System.Console.WriteLine("Uw gegevens zijn geupdated!. Druk op een willekeurige knop om terug te keren");

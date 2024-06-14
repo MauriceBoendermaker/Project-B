@@ -8,7 +8,6 @@ namespace MegaBiosTest
         [TestMethod]
         public void DisplaySeats_SeatTaken_Test()
         {
-
             var seating = new List<List<Seat>>
             {
                 new List<Seat>

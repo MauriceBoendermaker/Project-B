@@ -91,7 +91,6 @@ namespace MegaBios
                         break;
                     default:
                         Console.WriteLine("Ongeldige keuze. Probeer het alstublieft opnieuw.");
-
                         break;
                 }
             }
@@ -272,7 +271,6 @@ namespace MegaBios
                             break;
                         }
 
-                        
                         bool confirmedPayment = Reservation.ConfirmPayment(reservation);
 
                         if (confirmedPayment)
@@ -426,7 +424,6 @@ namespace MegaBios
 
             JsonFunctions.WriteToJson($"../../../Room{roomToEdit}.json", roomShowings);
         }
-
 
         public static Reservation? TicketReservation(Account account = null)
         {
